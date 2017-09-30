@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import GoogleAddressBar from 'components/ApplicantPage/GoogleAddressBar.jsx';
 
 @connect(state => ({
-  showOfficeModal: state.empControlBar.get('showOfficeModal'),
+  modals: state.empControlBar.get('modals'),
   editedOfficeId: state.empControlBar.get('editedOfficeId'),
   offices: state.empControlBar.get('offices')
 }))
 
 export default class OfficeModal extends Component {
   static propTypes = {
-    showOfficeModal: PropTypes.bool,
+    modals: PropTypes.object,
     editedOfficeId: PropTypes.string,
     offices: PropTypes.array,
     toggleModal: PropTypes.func,
@@ -89,9 +89,9 @@ export default class OfficeModal extends Component {
   }
 
   render() {
-    const header = this.props.editedOfficeId === '_new'  ? 'New Office' : 'Edit Office';
+    const header = this.props.editedOfficeId ? 'Edit Office' : 'New Office';
     return (
-      <div className={this.props.showOfficeModal ? 'modal is-active' : 'modal'}>
+      <div className={this.props.modals.officeModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={this.props.toggleModal}></div>
         <div className='modal-card'>
           <header className='modal-card-head'>

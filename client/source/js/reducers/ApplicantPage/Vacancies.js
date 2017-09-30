@@ -1,5 +1,4 @@
 import { Map } from 'immutable';
-import moment from 'moment';
 
 import {
   APPL_LOAD_VACANCIES_START,
@@ -12,8 +11,6 @@ import {
 const initialState = Map({
   dataLoaded: false,
   pageError: false,
-  startDate: moment().format('YYYY-MM-DD'),
-  endDate: moment().add(6, 'months').format('YYYY-MM-DD'),
   userApplications: [],
   vacancies: [],
   vacancyDates: [],

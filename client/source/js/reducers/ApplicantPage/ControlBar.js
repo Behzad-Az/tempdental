@@ -1,4 +1,5 @@
 import { Map } from 'immutable';
+import moment from 'moment';
 
 import {
   APPL_GET_CONTROL_DATA_START,
@@ -21,6 +22,8 @@ const initialState = Map({
   searchFT: true,
   searchPT: true,
   searchTemp: true,
+  startDate: moment().format('YYYY-MM-DD'),
+  endDate: moment().add(6, 'months').format('YYYY-MM-DD'),
   modals: {
     notifModal: false,
     resumeModal: false,

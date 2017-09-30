@@ -8,8 +8,8 @@ import ControlBar from 'components/ApplicantPage/ControlBar.jsx';
 @connect(state => ({
   dataLoaded: state.applVacancies.get('dataLoaded'),
   pageError: state.applVacancies.get('pageError'),
-  startDate: state.applVacancies.get('startDate'),
-  endDate: state.applVacancies.get('endDate'),
+  startDate: state.applControlBar.get('startDate'),
+  endDate: state.applControlBar.get('endDate'),
   userApplications: state.applVacancies.get('userApplications'),
   vacancies: state.applVacancies.get('vacancies'),
   vacancyDates: state.applVacancies.get('vacancyDates'),

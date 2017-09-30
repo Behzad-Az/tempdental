@@ -7,6 +7,7 @@ import {
   empToggleModal
 } from 'actions/EmployerPage/ControlBar';
 import OfficeModal from './OfficeModal.jsx';
+import PostingModal from './PostingModal.jsx';
 
 @connect(state => ({
   dataLoaded: state.empControlBar.get('dataLoaded'),
@@ -61,7 +62,7 @@ export default class ControlBar extends Component {
   _renderEditOfficeRows() {
     return this.props.offices.map(office => {
       return (
-        <a key={office.id} className='panel-block' onClick={() => this._toggleModal({ modalName: 'showOfficeModal', editedOfficeId: office.id })}>
+        <a key={office.id} className='panel-block' onClick={() => this._toggleModal({ modalName: 'officeModal', editedOfficeId: office.id })}>
           <span className='panel-icon'>
             <i className='fa fa-pencil' />
           </span>
@@ -93,7 +94,10 @@ export default class ControlBar extends Component {
 
             <div className='field'>
               <div className='control'>
-                <button className='button search-btn'><i className='fa fa-plus' /> New Posting</button>
+                <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
+                <button className='button search-btn' onClick={() => this._toggleModal({ modalName: 'postingModal' })}>
+                  <i className='fa fa-plus' /> New Posting
+                </button>
               </div>
             </div>
 
@@ -112,9 +116,9 @@ export default class ControlBar extends Component {
               <p className='panel-heading'>
                 <i className='fa fa-gear' /> My Offices
               </p>
-              <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'showOfficeModal', editedOfficeId: null })} />
+              <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'officeModal' })} />
               { this._renderEditOfficeRows() }
-              <a className='panel-block' onClick={() => this._toggleModal({ modalName: 'showOfficeModal', editedOfficeId: '_new' })}>
+              <a className='panel-block' onClick={() => this._toggleModal({ modalName: 'officeModal', editedOfficeId: '_new' })}>
                 <span className='panel-icon'>
                   <i className='fa fa-plus' />
                 </span>

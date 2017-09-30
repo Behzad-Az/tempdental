@@ -25,8 +25,8 @@ import WithdrawAllAplModal from './WithdrawAllAplModal.jsx';
   searchFT: state.applControlBar.get('searchFT'),
   searchPT: state.applControlBar.get('searchPT'),
   searchTemp: state.applControlBar.get('searchTemp'),
-  startDate: state.applVacancies.get('startDate'),
-  endDate: state.applVacancies.get('endDate')
+  startDate: state.applControlBar.get('startDate'),
+  endDate: state.applControlBar.get('endDate')
 }))
 
 export default class ControlBar extends Component {

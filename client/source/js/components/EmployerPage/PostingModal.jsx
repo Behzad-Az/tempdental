@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
+import PropTypes from 'prop-types';
 
 @connect(state => ({
-  showPostingModal: state.empControlBar.get('showPostingModal'),
+  modals: state.empControlBar.get('modals'),
   editedPostingId: state.empControlBar.get('editedPostingId'),
-  postings: state.empPostings.get('postings')
+  postings: state.empPostings.get('postings'),
+  offices: state.empControlBar.get('offices')
 }))
 
 export default class PostingModal extends Component {
+  static propTypes = {
+    modals: PropTypes.object,
+    editedPostingId: PropTypes.string,
+    postings: PropTypes.array,
+    offices: PropTypes.array,
+    toggleModal: PropTypes.func,
+    dispatch: PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     // this.formLimits = {
@@ -65,11 +73,11 @@ export default class PostingModal extends Component {
 
   render() {
     return (
-      <div className={this.props.showPostingModal ? 'modal is-active' : 'modal'}>
+      <div className={this.props.modals.postingModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={this.props.toggleModal}></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <p className='modal-card-title'>New Vacancy</p>
+            <p className='modal-card-title'>New Posting</p>
             <button className='delete' onClick={this.props.toggleModal}></button>
           </header>
           <section className='modal-card-body'>
@@ -93,35 +101,11 @@ export default class PostingModal extends Component {
                 <label className='label'>
                   Start Date:
                 </label>
-                <DatePicker
-                  selected={this.state.startDate}
-                  selectsStart
-                  isClearable
-                  inline
-                  placeholderText='Pick start date'
-                  minDate={moment()}
-                  maxDate={this.state.endDate || moment().add(6, 'months')}
-                  startDate={this.state.startDate}
-                  endDate={this.state.endDate}
-                  onChange={startDate => this.setState({ startDate })}
-                />
               </div>
               <div className='control'>
                 <label className='label'>
                   End Date:
                 </label>
-                <DatePicker
-                  selected={this.state.endDate}
-                  selectsEnd
-                  isClearable
-                  inline
-                  placeholderText='Pick end date'
-                  minDate={this.state.startDate || moment()}
-                  maxDate={moment().add(6, 'months')}
-                  startDate={this.state.startDate}
-                  endDate={this.state.endDate}
-                  onChange={endDate => this.setState({ endDate })}
-                />
               </div>
             </div>
 
