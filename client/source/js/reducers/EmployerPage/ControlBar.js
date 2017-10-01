@@ -5,7 +5,8 @@ import {
   EMP_GET_CONTROL_DATA_ERROR,
   EMP_GET_CONTROL_DATA_SUCCESS,
   EMP_FILTER_OFFICES,
-  EMP_TOGGLE_MODAL
+  EMP_TOGGLE_MODAL,
+  EMP_MODAL_HANDLE_CHNG
 } from 'actions/EmployerPage/ControlBar';
 
 const initialState = Map({
@@ -20,7 +21,8 @@ const initialState = Map({
   modals: {
     officeModal: false,
     postingModal: false
-  }
+  },
+  modalValues: {}
 });
 
 const actionsMap = {
@@ -34,9 +36,17 @@ const actionsMap = {
 
   [EMP_TOGGLE_MODAL]: (state, action) => {
     const { modalName, editedOfficeId, editedPostingId } = action.args;
+    const modalValues = action.args.modalValues || {};
     let modals = { ...state.get('modals') };
     modals[modalName] = !state.get('modals')[modalName];
-    return state.merge(Map({ modals, editedOfficeId, editedPostingId }));
+    return state.merge(Map({ modals, editedOfficeId, editedPostingId, modalValues }));
+  },
+
+  [EMP_MODAL_HANDLE_CHNG]: (state, action) => {
+    const { name, value } = action.event.target;
+    let modalValues = { ...state.get('modalValues') };
+    modalValues[name] = value;
+    return state.merge(Map({ modalValues }));
   },
 
   [EMP_GET_CONTROL_DATA_START]: (state, action) => {

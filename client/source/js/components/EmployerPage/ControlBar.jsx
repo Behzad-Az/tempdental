@@ -13,7 +13,8 @@ import PostingModal from './PostingModal.jsx';
   dataLoaded: state.empControlBar.get('dataLoaded'),
   pageError: state.empControlBar.get('pageError'),
   offices: state.empControlBar.get('offices'),
-  selectedOffices: state.empControlBar.get('selectedOffices')
+  selectedOffices: state.empControlBar.get('selectedOffices'),
+  postings: state.empPostings.get('postings')
 }))
 
 export default class ControlBar extends Component {
@@ -22,6 +23,7 @@ export default class ControlBar extends Component {
     pageError: PropTypes.bool,
     offices: PropTypes.array,
     selectedOffices: PropTypes.array,
+    postings: PropTypes.array,
     dispatch: PropTypes.func
   }
 
@@ -29,6 +31,7 @@ export default class ControlBar extends Component {
     super();
     this._handleFilterOffice = this._handleFilterOffice.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
+    this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._renderFilterOfficeRows = this._renderFilterOfficeRows.bind(this);
     this._renderEditOfficeRows = this._renderEditOfficeRows.bind(this);
   }
@@ -43,6 +46,30 @@ export default class ControlBar extends Component {
 
   _toggleModal(args) {
     this.props.dispatch(empToggleModal(args));
+  }
+
+  _setUpPostingModal(args) {
+    let modalValues;
+    if (args.editedPostingId === '_new') {
+      modalValues = {
+        dates: [],
+        title: null,
+        description: null,
+        type: null,
+        anonymous: false,
+        officeId: null
+      };
+    } else {
+      modalValues = {
+        dates: [],
+        title: 'balls',
+        description: null,
+        type: null,
+        anonymous: false,
+        officeId: null
+      };
+    }
+    this.props.dispatch(empToggleModal({ ...args, modalValues }));
   }
 
   _renderFilterOfficeRows() {
@@ -95,7 +122,16 @@ export default class ControlBar extends Component {
             <div className='field'>
               <div className='control'>
                 <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
-                <button className='button search-btn' onClick={() => this._toggleModal({ modalName: 'postingModal' })}>
+                <button className='button search-btn' onClick={() => this._setUpPostingModal({ modalName: 'postingModal', editedPostingId: '_new' })}>
+                  <i className='fa fa-plus' /> New Posting
+                </button>
+              </div>
+            </div>
+
+            <div className='field'>
+              <div className='control'>
+                <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
+                <button className='button search-btn' onClick={() => this._setUpPostingModal({ modalName: 'postingModal', editedPostingId: '_newq' })}>
                   <i className='fa fa-plus' /> New Posting
                 </button>
               </div>

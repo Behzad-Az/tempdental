@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { applApplyOrWithDraw } from 'actions/ApplicantPage/Vacancies';
+import { applApplyOrWithdraw } from 'actions/ApplicantPage/Vacancies';
 import { Link } from 'react-router-dom';
 import GoogleMapWindow from './GoogleMapWindow.jsx';
 import moment from 'moment';
+
+@connect()
 
 export default class VacancyRow extends Component {
 
@@ -44,6 +46,7 @@ export default class VacancyRow extends Component {
   }
 
   _handleApply() {
+    const { dispatch } = this.props;
     fetch('/api/applicant/applications', {
       method: 'POST',
       credentials: 'same-origin',
@@ -54,7 +57,7 @@ export default class VacancyRow extends Component {
       body: JSON.stringify({ vacancyId: this.props.vacancy.id })
     })
     .then(response => response.ok ?
-      this.props.dispatch(applApplyOrWithDraw({ action: 'apply', vacancyId: this.props.vacancy.id })) :
+      this.props.dispatch(applApplyOrWithdraw({ action: 'apply', vacancyId: this.props.vacancy.id })) :
       null
     )
     .catch(console.error);
@@ -70,7 +73,7 @@ export default class VacancyRow extends Component {
       }
     })
     .then(response => response.ok ?
-      this.props.dispatch(applApplyOrWithDraw({ action: 'withdraw', vacancyId: this.props.vacancy.id })) :
+      this.props.dispatch(applApplyOrWithdraw({ action: 'withdraw', vacancyId: this.props.vacancy.id })) :
       null
     )
     .catch(console.error);

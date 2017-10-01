@@ -1,46 +1,137 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import { empModalHandleChng } from 'actions/EmployerPage/ControlBar';
 
 @connect(state => ({
   modals: state.empControlBar.get('modals'),
   editedPostingId: state.empControlBar.get('editedPostingId'),
-  postings: state.empPostings.get('postings'),
-  offices: state.empControlBar.get('offices')
+  offices: state.empControlBar.get('offices'),
+  modalValues: state.empControlBar.get('modalValues')
 }))
 
 export default class PostingModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
     editedPostingId: PropTypes.string,
-    postings: PropTypes.array,
     offices: PropTypes.array,
+    modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
     dispatch: PropTypes.func
   }
 
-  constructor(props) {
-    super(props);
-    // this.formLimits = {
-    //   title: { min: 3, max: 30 },
-    //   description: { min: 5, max: 500 }
-    // };
-    // this.state = {
-    //   startDate: moment().subtract(5, 'days'),
-    //   endDate: null,
-    //   title: '',
-    //   description: '',
-    //   officeId: ''
-    // };
-    // this._handleChange = this._handleChange.bind(this);
-    // this._validateForm = this._validateForm.bind(this);
-    // this._handleNewVacancyPost = this._handleNewVacancyPost.bind(this);
+  constructor() {
+    super();
+    this._renderModalBody = this._renderModalBody.bind(this);
+    this._handleChange = this._handleChange.bind(this);
   }
 
-  _handleChange(e) {
-    // let state = {};
-    // state[e.target.name] = e.target.value;
-    // this.setState(state);
+  _renderModalBody() {
+    if (this.props.editedPostingId) {
+      return (
+        <section className='modal-card-body'>
+
+          <div className='field'>
+            <label className='label'>
+              Select Office Location:
+            </label>
+            <div className='control'>
+              <span className='select'>
+                <select name='officeId' onChange={this._handleChange}>
+                  <option value=''>-</option>
+                  { this.props.offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
+                </select>
+              </span>
+            </div>
+          </div>
+
+          <div className='field'>
+            <label className='label'>
+              Position Title:
+            </label>
+            <p className='control'>
+              <input
+                className='input'
+                type='text'
+                name='title'
+                defaultValue={this.props.modalValues.title}
+                placeholder='Example: Temporary Dental Assistant'
+                onChange={this._handleChange} />
+            </p>
+          </div>
+
+          <div className='field is-grouped'>
+            <div className='control'>
+              <label className='label'>
+                Start Date:
+              </label>
+              <DatePicker
+                selected={moment()}
+                selectsStart
+                isClearable
+                inline
+                placeholderText='Pick start date'
+                minDate={moment()}
+                maxDate={moment().add(6, 'months')}
+                startDate={moment()}
+                endDate={moment().add(6, 'months')}
+                onChange={null}
+              />
+            </div>
+            <div className='control'>
+              <label className='label'>
+                End Date:
+              </label>
+              <DatePicker
+                selected={moment()}
+                selectsStart
+                isClearable
+                inline
+                placeholderText='Pick start date'
+                minDate={moment()}
+                maxDate={moment().add(6, 'months')}
+                startDate={moment()}
+                endDate={moment().add(6, 'months')}
+                onChange={null}
+              />
+            </div>
+          </div>
+
+          <div className='field'>
+            <label className='label'>
+              Position Description and Requirements:
+            </label>
+            <p className='control'>
+              <textarea
+                className='textarea'
+                name='description'
+                defaultValue={this.props.modalValues.description}
+                placeholder='Example: blah blah blah blah blah'
+                onChange={this._handleChange} />
+            </p>
+          </div>
+
+        </section>
+
+      );
+    } else {
+      return (
+        <section className='modal-card-body'>
+          <p className='page-msg'>
+            <i className='fa fa-spinner fa-spin fa-3x fa-fw'></i>
+            <span className='sr-only'>Loading...</span>
+          </p>
+        </section>
+      );
+    }
+
+  }
+
+  _handleChange(event) {
+    this.props.dispatch(empModalHandleChng(event));
   }
 
   _validateForm() {
@@ -72,6 +163,7 @@ export default class PostingModal extends Component {
   }
 
   render() {
+    console.log("i'm here 0: ", this.props.modalValues);
     return (
       <div className={this.props.modals.postingModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={this.props.toggleModal}></div>
@@ -80,61 +172,7 @@ export default class PostingModal extends Component {
             <p className='modal-card-title'>New Posting</p>
             <button className='delete' onClick={this.props.toggleModal}></button>
           </header>
-          <section className='modal-card-body'>
-
-            <div className='field'>
-              <label className='label'>
-                Select Office Location:
-              </label>
-              <div className='control'>
-                <span className='select'>
-                  <select name='officeId' onChange={this._handleChange}>
-                    <option value=''>-</option>
-                    { this.props.offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
-                  </select>
-                </span>
-              </div>
-            </div>
-
-            <div className='field is-grouped'>
-              <div className='control'>
-                <label className='label'>
-                  Start Date:
-                </label>
-              </div>
-              <div className='control'>
-                <label className='label'>
-                  End Date:
-                </label>
-              </div>
-            </div>
-
-            <div className='field'>
-              <label className='label'>
-                Position Title:
-              </label>
-              <p className='control'>
-                <input
-                  className='input'
-                  type='text'
-                  name='title'
-                  placeholder='Example: Temporary Dental Assistant' />
-              </p>
-            </div>
-
-            <div className='field'>
-              <label className='label'>
-                Position Description and Requirements:
-              </label>
-              <p className='control'>
-                <textarea
-                  className='textarea'
-                  name='description'
-                  placeholder='Example: blah blah blah blah blah' />
-              </p>
-            </div>
-
-          </section>
+          { this._renderModalBody() }
           <footer className='modal-card-foot'>
             <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleNewVacancyPost}>Submit</button>
             <button className='button' onClick={this.props.toggleModal}>Cancel</button>

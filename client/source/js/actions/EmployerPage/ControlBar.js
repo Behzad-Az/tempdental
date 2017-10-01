@@ -5,6 +5,7 @@ export const EMP_GET_CONTROL_DATA_ERROR = 'EMP_GET_CONTROL_DATA_ERROR';
 export const EMP_GET_CONTROL_DATA_SUCCESS = 'EMP_GET_CONTROL_DATA_SUCCESS';
 export const EMP_FILTER_OFFICES = 'EMP_FILTER_OFFICES';
 export const EMP_TOGGLE_MODAL = 'EMP_TOGGLE_MODAL';
+export const EMP_MODAL_HANDLE_CHNG = 'EMP_MODAL_HANDLE_CHNG';
 
 export function addRemoveSelectedOffice(officeId) {
   return {
@@ -17,6 +18,13 @@ export function empToggleModal(args) {
   return {
     type: EMP_TOGGLE_MODAL,
     args
+  };
+}
+
+export function empModalHandleChng(event) {
+  return {
+    type: EMP_MODAL_HANDLE_CHNG,
+    event
   };
 }
 

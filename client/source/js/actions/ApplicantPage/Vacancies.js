@@ -6,7 +6,7 @@ export const APPL_LOAD_VACANCIES_SUCCESS = 'APPL_LOAD_VACANCIES_SUCCESS';
 export const APPL_APPLY = 'APPL_APPLY';
 export const APPL_WITHDRAW = 'APPL_WITHDRAW';
 
-export function applApplyOrWithDraw(params) {
+export function applApplyOrWithdraw(params) {
   return {
     type: params.action === 'apply' ? APPL_APPLY : APPL_WITHDRAW,
     vacancyId: params.vacancyId

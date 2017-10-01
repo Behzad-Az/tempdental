@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { applApplyOrWithDraw } from 'actions/ApplicantPage/Vacancies';
+import { applApplyOrWithdraw } from 'actions/ApplicantPage/Vacancies';
 
 @connect(state => ({
   modals: state.applControlBar.get('modals')
@@ -29,7 +29,7 @@ export default class WithdrawAllAplModal extends Component {
       }
     })
     .then(response => response.ok ?
-      this.props.dispatch(applApplyOrWithDraw({ action: 'withdraw', vacancyId: 'all' })) :
+      this.props.dispatch(applApplyOrWithdraw({ action: 'withdraw', vacancyId: 'all' })) :
       null
     )
     .catch(console.error)
