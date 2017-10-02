@@ -43,9 +43,16 @@ const actionsMap = {
   },
 
   [EMP_MODAL_HANDLE_CHNG]: (state, action) => {
-    const { name, value } = action.event.target;
+    const { name, value, checked } = action.event.target;
     let modalValues = { ...state.get('modalValues') };
-    modalValues[name] = value;
+    switch (name) {
+      case 'anonymous':
+        modalValues[name] = checked;
+        break;
+      default:
+        modalValues[name] = value;
+        break;
+    }
     return state.merge(Map({ modalValues }));
   },
 

@@ -52,7 +52,9 @@ export default class ControlBar extends Component {
     let modalValues;
     if (args.editedPostingId === '_new') {
       modalValues = {
-        dates: [],
+        // dates: [{ start: null, end: null }, { start: null, end: null }],
+        startDate: null,
+        endDate: null,
         title: null,
         description: null,
         type: null,
@@ -61,7 +63,9 @@ export default class ControlBar extends Component {
       };
     } else {
       modalValues = {
-        dates: [],
+        // dates: [{ start: null, end: null }],
+        startDate: null,
+        endDate: null,
         title: 'balls',
         description: null,
         type: null,
@@ -123,15 +127,6 @@ export default class ControlBar extends Component {
               <div className='control'>
                 <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
                 <button className='button search-btn' onClick={() => this._setUpPostingModal({ modalName: 'postingModal', editedPostingId: '_new' })}>
-                  <i className='fa fa-plus' /> New Posting
-                </button>
-              </div>
-            </div>
-
-            <div className='field'>
-              <div className='control'>
-                <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
-                <button className='button search-btn' onClick={() => this._setUpPostingModal({ modalName: 'postingModal', editedPostingId: '_newq' })}>
                   <i className='fa fa-plus' /> New Posting
                 </button>
               </div>

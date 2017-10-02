@@ -89,7 +89,7 @@ export default class OfficeModal extends Component {
   }
 
   render() {
-    const header = this.props.editedOfficeId ? 'Edit Office' : 'New Office';
+    const header = this.props.editedOfficeId === '_new' ? 'New Office' : 'Edit Office';
     return (
       <div className={this.props.modals.officeModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={this.props.toggleModal}></div>
