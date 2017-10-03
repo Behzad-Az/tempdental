@@ -52,7 +52,7 @@ export default class ControlBar extends Component {
     let modalValues;
     if (args.editedPostingId === '_new') {
       modalValues = {
-        dates: [{ start: null, end: null }, { start: null, end: null }],
+        dates: [{ start: null, end: null }],
         startDate: null,
         endDate: null,
         title: null,
@@ -77,8 +77,9 @@ export default class ControlBar extends Component {
   }
 
   _renderFilterOfficeRows() {
-    return this.props.offices.map(office => {
-      const className = this.props.selectedOffices.includes(office.id) ? 'panel-block selected' : 'panel-block';
+    const { offices, selectedOffices } = this.props;
+    return offices.map(office => {
+      const className = selectedOffices.includes(office.id) ? 'panel-block selected' : 'panel-block';
       return (
         <a key={office.id} className={className} onClick={() => this._handleFilterOffice(office.id)}>
           <span className='panel-icon'>
@@ -104,14 +105,15 @@ export default class ControlBar extends Component {
   }
 
   _renderCompAfterData() {
-    if (this.props.dataLoaded && this.props.pageError) {
+    const { dataLoaded, pageError } = this.props;
+    if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
           <i className='fa fa-exclamation-triangle' aria-hidden='true' />
           Error in loading up the page
         </p>
       );
-    } else if (this.props.dataLoaded) {
+    } else if (dataLoaded) {
       return (
         <div className='card-content'>
 

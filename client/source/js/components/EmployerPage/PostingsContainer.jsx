@@ -34,27 +34,28 @@ export default class PostingsContainer extends Component {
   }
 
   _renderPostingRows() {
-    const { selectedOffices } = this.props;
-    const postings = selectedOffices.length ?
-                     this.props.postings.filter(posting => selectedOffices.includes(posting.office_id)) :
-                     this.props.postings;
-    return postings.map(posting =>
+    const { selectedOffices, postings, vacancyDates } = this.props;
+    const filteredPostings = selectedOffices.length ?
+                     postings.filter(posting => selectedOffices.includes(posting.office_id)) :
+                     postings;
+    return filteredPostings.map(posting =>
       <PostingRow
         key={posting.id}
         posting={posting}
-        dates={this.props.vacancyDates.filter(date => date.vacancy_id === posting.id)} />
+        dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
     );
   }
 
   _renderCompAfterData() {
-    if (this.props.dataLoaded && this.props.pageError) {
+    const { dataLoaded, pageError } = this.props;
+    if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
           <i className='fa fa-exclamation-triangle' aria-hidden='true' />
           Error in loading up the page
         </p>
       );
-    } else if (this.props.dataLoaded) {
+    } else if (dataLoaded) {
       return (
         <div className='postings-container'>
           <h1 className='header'>

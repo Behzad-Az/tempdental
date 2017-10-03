@@ -107,7 +107,9 @@ export default class PostingModal extends Component {
   }
 
   _renderModalBody() {
-    if (this.props.editedPostingId) {
+    const { editedPostingId, offices, modalValues } = this.props;
+
+    if (editedPostingId) {
       return (
         <section className='modal-card-body'>
 
@@ -117,9 +119,9 @@ export default class PostingModal extends Component {
                 Select Office Location:
               </label>
               <span className='select'>
-                <select name='officeId' onChange={this._handleChange}>
+                <select name='officeId' defaultValue={modalValues.officeId} onChange={this._handleChange}>
                   <option value=''>-</option>
-                  { this.props.offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
+                  { offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
                 </select>
               </span>
             </div>
@@ -129,7 +131,7 @@ export default class PostingModal extends Component {
                 Posting Type:
               </label>
               <span className='select'>
-                <select name='type' onChange={this._handleChange}>
+                <select name='type' defaultValue={modalValues.type} onChange={this._handleChange}>
                   <option value=''>-</option>
                   <option value='Temp'>Temporary / Relief</option>
                   <option value='PT'>Permanent Part-Time</option>
@@ -149,7 +151,7 @@ export default class PostingModal extends Component {
                 type='text'
                 name='title'
 
-                defaultValue={this.props.modalValues.title}
+                defaultValue={modalValues.title}
                 placeholder='Example: Temporary Dental Assistant'
                 onChange={this._handleChange} />
             </p>
@@ -165,7 +167,7 @@ export default class PostingModal extends Component {
               <textarea
                 className='textarea'
                 name='description'
-                defaultValue={this.props.modalValues.description}
+                defaultValue={modalValues.description}
                 placeholder='Example: blah blah blah blah blah'
                 onChange={this._handleChange} />
             </p>
@@ -192,13 +194,14 @@ export default class PostingModal extends Component {
   }
 
   _handleNewPosting() {
-    const startDate = this.props.modalValues.startDate.format('YYYY-MM-DD');
-    const endDate = this.props.modalValues.type === 'Temp'  ?
-                    this.props.modalValues.endDate.format('YYYY-MM-DD') :
+    const { modalValues, toggleModal } = this.props;
+    const startDate = modalValues.startDate.format('YYYY-MM-DD');
+    const endDate = modalValues.type === 'Temp'  ?
+                    modalValues.endDate.format('YYYY-MM-DD') :
                     '2099-12-30';
     const dates = [{ startDate, endDate }];
     const data = {
-      ...this.props.modalValues,
+      ...modalValues,
       dates
     };
 
@@ -214,17 +217,18 @@ export default class PostingModal extends Component {
     .then(response => response.json())
     .then(resJSON => console.log("i'm here 0: ", resJSON))
     .catch(console.error)
-    .then(this.props.toggleModal);
+    .then(toggleModal);
   }
 
   render() {
+    const { modals, toggleModal, modalValues } = this.props;
     return (
-      <div className={this.props.modals.postingModal ? 'modal is-active' : 'modal'}>
-        <div className='modal-background' onClick={this.props.toggleModal}></div>
+      <div className={modals.postingModal ? 'modal is-active' : 'modal'}>
+        <div className='modal-background' onClick={toggleModal}></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
             <p className='modal-card-title'>New Posting</p>
-            <button className='delete' onClick={this.props.toggleModal}></button>
+            <button className='delete' onClick={toggleModal}></button>
           </header>
           { this._renderModalBody() }
           <footer className='modal-card-foot'>
@@ -233,11 +237,12 @@ export default class PostingModal extends Component {
                 <input
                   type='checkbox'
                   name='anonymous'
+                  defaultChecked={modalValues.anonymous}
                   onChange={this._handleChange} /> Anonymous Posting
               </label>
             </button>
             <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleNewPosting}>Submit</button>
-            <button className='button' onClick={this.props.toggleModal}>Cancel</button>
+            <button className='button' onClick={toggleModal}>Cancel</button>
           </footer>
         </div>
       </div>

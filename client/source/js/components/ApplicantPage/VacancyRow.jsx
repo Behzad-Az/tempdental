@@ -82,6 +82,7 @@ export default class VacancyRow extends Component {
   render() {
 
     const { type, title, officeName, description, address, created_at, anonymous } = this.props.vacancy;
+    const blurred = anonymous ? 'blurred' : '';
 
     return (
 
@@ -93,11 +94,11 @@ export default class VacancyRow extends Component {
 
             <div className='content'>
               <div>
-                <strong className={anonymous ? 'blurred' : null}>
+                <strong>
                   [{type}] {title}
                 </strong>
                 <br />
-                <strong>
+                <strong className={blurred}>
                   <Link to={`https://www.google.com/maps/place/${address.replace(/ /g,"+")}`} target='_blank'>
                     @{officeName}
                   </Link>
@@ -130,7 +131,7 @@ export default class VacancyRow extends Component {
           </div>
 
           <div className='media-right'>
-            <div className='map-container '>
+            <div className={`map-container ${blurred}`}>
               <GoogleMapWindow lat={this.props.vacancy.lat} lng={this.props.vacancy.lng} />
             </div>
             <div className='btn-container'>

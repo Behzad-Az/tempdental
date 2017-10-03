@@ -18,7 +18,7 @@ const getEmployerPostings = (req, res, knex, user_id) => {
   const getPostings = () => knex('vacancies')
     .leftJoin('offices', 'vacancies.office_id', 'offices.id')
     .select(
-      'vacancies.id', 'vacancies.title', 'vacancies.description', 'vacancies.type', 'vacancies.created_at', 'vacancies.office_id',
+      'vacancies.id', 'vacancies.title', 'vacancies.description', 'vacancies.type', 'vacancies.created_at', 'vacancies.office_id', 'vacancies.anonymous',
       'offices.lat', 'offices.lng', 'offices.address', 'offices.name as officeName', 'offices.more_info as officeInfo'
     )
     .where('offices.owner_id', user_id)
@@ -26,7 +26,7 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     .whereNull('offices.deleted_at');
 
   const getDatesForPostings = postingIds => knex('vacancy_dates')
-    .select('vacancy_id', 'start_date', 'end_date')
+    .select('vacancy_id', 'start_date', 'end_date', 'id')
     .whereIn('vacancy_id', postingIds)
     .whereNull('deleted_at');
 
