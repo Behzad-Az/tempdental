@@ -27,9 +27,9 @@ export default class PostingModal extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._handleDateChange = this._handleDateChange.bind(this);
-    this._disableInput = this._disableInput.bind(this);
     this._renderDateSelectors = this._renderDateSelectors.bind(this);
     this._renderModalBody = this._renderModalBody.bind(this);
+    this._handleNewPosting = this._handleNewPosting.bind(this);
   }
 
   _handleChange(event) {
@@ -38,20 +38,13 @@ export default class PostingModal extends Component {
 
   _handleDateChange(name, value) {
     const event = {
-      target: {
-        name,
-        value
-      }
+      target: { name, value }
     };
     this._handleChange(event);
   }
 
-  _disableInput() {
-    return !this.props.modalValues.officeId || !this.props.modalValues.type;
-  }
-
   _renderDateSelectors() {
-    const { dates, type } = this.props.modalValues;
+    const { dates, type, startDate, endDate } = this.props.modalValues;
     if (type === 'FT' || type === 'PT') {
       return (
         <div className='field is-grouped'>
@@ -60,16 +53,14 @@ export default class PostingModal extends Component {
               Start Date:
             </label>
             <DatePicker
-              selected={null}
+              selected={startDate}
               selectsStart
-              isClearable
-              inline
-              disabled={this._disableInput()}
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
-              startDate={null}
+              startDate={startDate}
               endDate={null}
+              disabledKeyboardNavigation
               onChange={value => this._handleDateChange('startDate', value)}
             />
           </div>
@@ -83,16 +74,14 @@ export default class PostingModal extends Component {
               Start Date:
             </label>
             <DatePicker
-              selected={null}
+              selected={startDate}
               selectsStart
-              isClearable
-              inline
-              disabled={this._disableInput()}
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
-              startDate={null}
-              endDate={null}
+              startDate={startDate}
+              endDate={endDate}
+              disabledKeyboardNavigation
               onChange={value => this._handleDateChange('startDate', value)}
             />
           </div>
@@ -101,16 +90,14 @@ export default class PostingModal extends Component {
               End Date:
             </label>
             <DatePicker
-              selected={null}
+              selected={endDate}
               selectsStart
-              isClearable
-              inline
-              disabled={this._disableInput()}
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
-              startDate={null}
-              endDate={null}
+              startDate={startDate}
+              endDate={endDate}
+              disabledKeyboardNavigation
               onChange={value => this._handleDateChange('endDate', value)}
             />
           </div>
@@ -161,7 +148,7 @@ export default class PostingModal extends Component {
                 className='input'
                 type='text'
                 name='title'
-                disabled={this._disableInput()}
+
                 defaultValue={this.props.modalValues.title}
                 placeholder='Example: Temporary Dental Assistant'
                 onChange={this._handleChange} />
@@ -178,7 +165,6 @@ export default class PostingModal extends Component {
               <textarea
                 className='textarea'
                 name='description'
-                disabled={this._disableInput()}
                 defaultValue={this.props.modalValues.description}
                 placeholder='Example: blah blah blah blah blah'
                 onChange={this._handleChange} />
@@ -205,28 +191,30 @@ export default class PostingModal extends Component {
     return true;
   }
 
-  _handleNewVacancyPost() {
-    // const data = {
-    //   startDate: this.state.startDate.format('YYYY-MM-DD'),
-    //   endDate: this.state.endDate.format('YYYY-MM-DD'),
-    //   title: this.state.title,
-    //   description: this.state.description,
-    //   officeId: this.state.officeId
-    // };
+  _handleNewPosting() {
+    const startDate = this.props.modalValues.startDate.format('YYYY-MM-DD');
+    const endDate = this.props.modalValues.type === 'Temp'  ?
+                    this.props.modalValues.endDate.format('YYYY-MM-DD') :
+                    '2099-12-30';
+    const dates = [{ startDate, endDate }];
+    const data = {
+      ...this.props.modalValues,
+      dates
+    };
 
-    // fetch('/api/vacancies', {
-    //   method: 'POST',
-    //   credentials: 'same-origin',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    // .then(response => response.json())
-    // .then(resJSON => console.log("i'm here 0: ", resJSON))
-    // .catch(console.error)
-    // .then(this.props.toggleModal);
+    fetch('/api/employer/vacancies', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(resJSON => console.log("i'm here 0: ", resJSON))
+    .catch(console.error)
+    .then(this.props.toggleModal);
   }
 
   render() {
@@ -241,15 +229,14 @@ export default class PostingModal extends Component {
           { this._renderModalBody() }
           <footer className='modal-card-foot'>
             <button className='button is-warning'>
-              <label className='checkbox' disabled={this._disableInput()}>
+              <label className='checkbox'>
                 <input
                   type='checkbox'
                   name='anonymous'
-                  disabled={this._disableInput()}
                   onChange={this._handleChange} /> Anonymous Posting
               </label>
             </button>
-            <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleNewVacancyPost}>Submit</button>
+            <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleNewPosting}>Submit</button>
             <button className='button' onClick={this.props.toggleModal}>Cancel</button>
           </footer>
         </div>

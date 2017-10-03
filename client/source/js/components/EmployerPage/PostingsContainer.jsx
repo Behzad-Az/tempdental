@@ -12,7 +12,7 @@ import PostingRow from './PostingRow.jsx';
   selectedOffices: state.empControlBar.get('selectedOffices')
 }))
 
-export default class VacanciesContainer extends Component {
+export default class PostingsContainer extends Component {
   static propTypes = {
     dataLoaded: PropTypes.bool,
     pageError: PropTypes.bool,

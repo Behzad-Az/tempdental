@@ -1,10 +1,11 @@
 const postNewVacancy = (req, res, knex, user_id, randIdString, twilioClient) => {
 
-  const start_date = req.body.startDate.trim();
-  const end_date = req.body.endDate.trim();
+  const office_id = req.body.officeId.trim();
+  const type = req.body.type.trim();
   const title = req.body.title.trim();
   const description = req.body.description.trim();
-  const office_id = req.body.officeId.trim();
+  const anonymous = req.body.anonymous;
+  const dates = req.body.dates;
   let officeGisLocation, officeAddress, officeName, nearByUsers, vacancy_id;
 
   const verifyOfficeOwner = () => knex('offices')
@@ -13,18 +14,19 @@ const postNewVacancy = (req, res, knex, user_id, randIdString, twilioClient) => 
     .whereNull('deleted_at')
     .limit(1);
 
-  const insertNewVacancy = (newVacancyObj, trx) => knex('vacancies')
-    .transacting(trx)
+  const insertNewVacancy = (newVacancyObj) => knex('vacancies')
     .insert(newVacancyObj)
     .returning('id');
+
+  const insertVacancyDates = (dateObjs) => knex('vacancy_dates')
+    .insert(dateObjs);
 
   const findNearbyUsers = gisLocation => knex('users')
     .select('full_name', 'phone_number', 'id')
     .whereRaw(`ST_DWithin (users.geog_gis_loc, '${gisLocation}', 50000)`)
     .whereNull('deleted_at');
 
-  const insertCandidateProfiles = (candidateArr, trx) => knex('applications')
-    .transacting(trx)
+  const insertCandidateProfiles = (candidateArr) => knex('applications')
     .insert(candidateArr)
     .returning(['candidate_id', 'rand_msg_num']);
 
@@ -37,12 +39,12 @@ const postNewVacancy = (req, res, knex, user_id, randIdString, twilioClient) => 
       officeAddress = foundOffice[0].address;
       officeName = foundOffice[0].name;
       return insertNewVacancy({
-        start_date,
-        end_date,
+        id: randIdString(11),
+        type,
         title,
         description,
-        office_id,
-        id: randIdString(11)
+        anonymous,
+        office_id
       });
     } else {
       throw 'office_id and owner_id do not match';
@@ -50,8 +52,16 @@ const postNewVacancy = (req, res, knex, user_id, randIdString, twilioClient) => 
   })
   .then(newVacancyId => {
     vacancy_id = newVacancyId[0];
-    return findNearbyUsers(officeGisLocation);
+    const dateObjs = dates.map(date => {
+      return {
+        start_date: date.startDate.trim(),
+        end_date: date.endDate.trim(),
+        vacancy_id
+      };
+    });
+    return insertVacancyDates(dateObjs)
   })
+  .then(() => findNearbyUsers(officeGisLocation))
   .then(foundUsers => {
     nearByUsers = foundUsers;
     return insertCandidateProfiles(nearByUsers.map(user => {

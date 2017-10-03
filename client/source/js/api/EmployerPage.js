@@ -12,7 +12,7 @@ function empGetControlData() {
 }
 
 function empGetPostings() {
-  return fetch('/api/employer/postings', {
+  return fetch('/api/employer/vacancies', {
     method: 'GET',
     credentials: 'same-origin'
   })

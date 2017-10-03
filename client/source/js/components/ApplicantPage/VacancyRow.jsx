@@ -39,7 +39,7 @@ export default class VacancyRow extends Component {
 
   _renderVacancyDates() {
     if (this.props.vacancy.type === 'Temp') {
-      return this.props.dates.map((dateRow, index) => <p key={index}><i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}</p>);
+      return this.props.dates.map(dateRow => <p key={dateRow.id}><i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}</p>);
     } else {
       return <p><i className='fa fa-calendar' /> {this._findDateInfo(this.props.dates[0].start_date)} (expected start date)</p>;
     }
@@ -81,6 +81,8 @@ export default class VacancyRow extends Component {
 
   render() {
 
+    const { type, title, officeName, description, address, created_at, anonymous } = this.props.vacancy;
+
     return (
 
       <div className='box vacancy-row'>
@@ -91,13 +93,13 @@ export default class VacancyRow extends Component {
 
             <div className='content'>
               <div>
-                <strong>
-                  [{this.props.vacancy.type}] {this.props.vacancy.title}
+                <strong className={anonymous ? 'blurred' : null}>
+                  [{type}] {title}
                 </strong>
                 <br />
                 <strong>
-                  <Link to={`https://www.google.com/maps/place/${this.props.vacancy.address.replace(/ /g,"+")}`} target='_blank'>
-                    @{this.props.vacancy.officeName}
+                  <Link to={`https://www.google.com/maps/place/${address.replace(/ /g,"+")}`} target='_blank'>
+                    @{officeName}
                   </Link>
                 </strong>
                 <hr />
@@ -105,7 +107,7 @@ export default class VacancyRow extends Component {
                   Qualifications:
                 </strong>
                 <br />
-                {this.props.vacancy.description}
+                {description}
                 <hr />
 
                 <strong>
@@ -116,11 +118,11 @@ export default class VacancyRow extends Component {
                 <hr />
                 <i className='fa fa-clock-o' /> 9AM to 5PM
                 <br />
-                <Link to={`https://www.google.com/maps/place/${this.props.vacancy.address.replace(/ /g,"+")}`} target='_blank'>
-                  <i className='fa fa-map-marker' /> {this.props.vacancy.address}
+                <Link to={`https://www.google.com/maps/place/${address.replace(/ /g,"+")}`} target='_blank'>
+                  <i className='fa fa-map-marker' /> {address}
                 </Link>
                 <br />
-                Created { this._findTimePassed(this.props.vacancy.created_at) }
+                Created { this._findTimePassed(created_at) }
               </div>
 
             </div>

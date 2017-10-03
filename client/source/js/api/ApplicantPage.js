@@ -7,7 +7,7 @@ function applLoadVacancies(args) {
   const { manualSearch, offsetQuery, startDate, endDate, freshReload } = args;
   const url = manualSearch ?
     `/api/applicant/vacancies-manual?offsetQuery=${offsetQuery}&startDate=${startDate}&endDate=${endDate}&manualSearch=${manualSearch}&lat=${args.searchLat}&lng=${args.searchLng}&searchDistance=${args.searchDistance}&jobTypeArr=${args.jobTypeArr}&freshReload=${freshReload}` :
-    `/api/applicant/vacancies-auto?offsetQuery=${args.offsetQuery}&startDate=${startDate}&endDate=${endDate}&manualSearch=${manualSearch}&freshReload=${freshReload}`;
+    `/api/applicant/vacancies-auto?offsetQuery=${offsetQuery}&startDate=${startDate}&endDate=${endDate}&manualSearch=${manualSearch}&freshReload=${freshReload}`;
 
   return fetch(url, {
     method: 'GET',

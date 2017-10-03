@@ -52,7 +52,7 @@ export default class ControlBar extends Component {
     let modalValues;
     if (args.editedPostingId === '_new') {
       modalValues = {
-        // dates: [{ start: null, end: null }, { start: null, end: null }],
+        dates: [{ start: null, end: null }, { start: null, end: null }],
         startDate: null,
         endDate: null,
         title: null,
@@ -63,7 +63,7 @@ export default class ControlBar extends Component {
       };
     } else {
       modalValues = {
-        // dates: [{ start: null, end: null }],
+        dates: [{ start: null, end: null }],
         startDate: null,
         endDate: null,
         title: 'balls',

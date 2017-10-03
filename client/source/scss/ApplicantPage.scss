@@ -30,6 +30,9 @@
           hr { margin: $default_margin/2 0; }
           a { color: $dark_blue; &:hover { color: $pumpkin; } }
         }
+        .blurred {
+          -webkit-filter: blur(4px);
+        }
       }
     }
     .end-msg {

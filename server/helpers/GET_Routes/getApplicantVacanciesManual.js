@@ -22,6 +22,7 @@ const getApplicantVacanciesManual = (req, res, knex, user_id) => {
     .whereNull('vacancies.deleted_at')
     .whereNull('offices.deleted_at')
     .orderByRaw(`ST_Distance (offices.geog_gis_loc, ST_GeographyFromText('SRID=4326; POINT(${lng} ${lat})'))`)
+    .orderBy('vacancies.id')
     .limit(3)
     .offset(offsetQuery);
 

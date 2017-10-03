@@ -112,7 +112,7 @@ app.get('/api/employer/offices', (req, res) => {
   getEmployerOffices(req, res, knex, 'aWg8Sya0i3V');
 });
 
-app.get('/api/employer/postings', (req, res) => {
+app.get('/api/employer/vacancies', (req, res) => {
   getEmployerPostings(req, res, knex, 'aWg8Sya0i3V');
 });
 
@@ -123,7 +123,7 @@ app.post('/api/applicant/applications', (req, res) => {
   postNewApplication(req, res, knex, 'bKm2Tzg1z1H', randIdString);
 });
 
-app.post('/api/employer/postings', (req, res) => {
+app.post('/api/employer/vacancies', (req, res) => {
   postNewVacancy(req, res, knex, 'aWg8Sya0i3V', randIdString, twilioClient);
 });
 
