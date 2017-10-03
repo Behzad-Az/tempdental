@@ -40,6 +40,7 @@ exports.up = function(knex, Promise) {
       // t.date('start_date').notNullable();
       // t.date('end_date').notNullable();
       t.string('type', 4).notNullable();
+      t.boolean('anonymous').notNullable();
       t.string('office_id', 11).notNullable().references('offices.id');
       t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       t.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
