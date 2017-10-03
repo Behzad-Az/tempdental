@@ -14,7 +14,6 @@ const initialState = Map({
   pageError: false,
   offices: [],
   selectedOffices: [],
-  editedOfficeId: null,
   asyncLoading: false,
   asyncError: null,
   modals: {
@@ -34,11 +33,10 @@ const actionsMap = {
   },
 
   [EMP_TOGGLE_MODAL]: (state, action) => {
-    const { modalName, editedOfficeId } = action.args;
-    const modalValues = action.args.modalValues || {};
+    const modalValues = action.modalValues || {};
     let modals = { ...state.get('modals') };
-    modals[modalName] = !state.get('modals')[modalName];
-    return state.merge(Map({ modals, editedOfficeId, modalValues }));
+    modals[modalValues.modalName] = !state.get('modals')[modalValues.modalName];
+    return state.merge(Map({ modals, modalValues }));
   },
 
   [EMP_MODAL_HANDLE_CHNG]: (state, action) => {

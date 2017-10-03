@@ -14,10 +14,10 @@ export function addRemoveSelectedOffice(officeId) {
   };
 }
 
-export function empToggleModal(args) {
+export function empToggleModal(modalValues) {
   return {
     type: EMP_TOGGLE_MODAL,
-    args
+    modalValues
   };
 }
 

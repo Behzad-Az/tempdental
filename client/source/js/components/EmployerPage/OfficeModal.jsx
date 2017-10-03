@@ -5,15 +5,13 @@ import GoogleAddressBar from 'components/ApplicantPage/GoogleAddressBar.jsx';
 
 @connect(state => ({
   modals: state.empControlBar.get('modals'),
-  editedOfficeId: state.empControlBar.get('editedOfficeId'),
-  offices: state.empControlBar.get('offices')
+  modalValues: state.empControlBar.get('modalValues')
 }))
 
 export default class OfficeModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
-    editedOfficeId: PropTypes.string,
-    offices: PropTypes.array,
+    modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
     dispatch: PropTypes.func
   }
@@ -24,21 +22,10 @@ export default class OfficeModal extends Component {
   }
 
   _renderModalBody() {
-    let office;
-    if (this.props.editedOfficeId === '_new') {
-      office = {
-        address: '',
-        name: '',
-        more_info: ''
-      };
-    } else {
-      office = this.props.offices.find(office => office.id === this.props.editedOfficeId);
-    }
-
-    if (this.props.editedOfficeId) {
+    const { action, name, address, more_info } = this.props.modalValues;
+    if (action) {
       return (
         <section className='modal-card-body'>
-
           <div className='field'>
             <label className='label'>
               Office Name:
@@ -48,11 +35,10 @@ export default class OfficeModal extends Component {
                 className='input'
                 type='text'
                 name='name'
-                defaultValue={office.name}
+                defaultValue={name}
                 placeholder='Example: Bright Smiles Clinic - Vancouver' />
             </p>
           </div>
-
           <div className='field'>
             <label className='label'>
               Office Description:
@@ -61,20 +47,17 @@ export default class OfficeModal extends Component {
               <textarea
                 className='textarea'
                 name='description'
-                defaultValue={office.more_info}
+                defaultValue={more_info}
                 placeholder='Example: blah blah blah blah blah' />
             </p>
           </div>
-
           <div className='google-address-bar control'>
             <GoogleAddressBar
-              searchAddress={office.address}
+              searchAddress={address}
               saveNewSearchAddress={null}
             />
           </div>
-
         </section>
-
       );
     } else {
       return (
@@ -89,19 +72,21 @@ export default class OfficeModal extends Component {
   }
 
   render() {
-    const header = this.props.editedOfficeId === '_new' ? 'New Office' : 'Edit Office';
+    const { modals, toggleModal, modalValues } = this.props;
     return (
-      <div className={this.props.modals.officeModal ? 'modal is-active' : 'modal'}>
-        <div className='modal-background' onClick={this.props.toggleModal}></div>
+      <div className={modals.officeModal ? 'modal is-active' : 'modal'}>
+        <div className='modal-background' onClick={toggleModal}></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <p className='modal-card-title'>{header}</p>
-            <button className='delete' onClick={this.props.toggleModal}></button>
+            <p className='modal-card-title'>
+              { modalValues.action === '_new' ? 'New Office' : 'Edit Office' }
+            </p>
+            <button className='delete' onClick={toggleModal}></button>
           </header>
           { this._renderModalBody() }
           <footer className='modal-card-foot'>
-            <button className='button is-primary' onClick={this.props.toggleModal}>Submit</button>
-            <button className='button' onClick={this.props.toggleModal}>Cancel</button>
+            <button className='button is-primary' onClick={toggleModal}>Submit</button>
+            <button className='button' onClick={toggleModal}>Cancel</button>
           </footer>
         </div>
       </div>

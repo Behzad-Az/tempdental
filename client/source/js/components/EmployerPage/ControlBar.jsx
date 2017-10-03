@@ -32,6 +32,7 @@ export default class ControlBar extends Component {
     this._handleFilterOffice = this._handleFilterOffice.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpPostingModal = this._setUpPostingModal.bind(this);
+    this._setUpOfficeModal = this._setUpOfficeModal.bind(this);
     this._renderFilterOfficeRows = this._renderFilterOfficeRows.bind(this);
     this._renderEditOfficeRows = this._renderEditOfficeRows.bind(this);
   }
@@ -48,7 +49,7 @@ export default class ControlBar extends Component {
     this.props.dispatch(empToggleModal(args));
   }
 
-  _setUpPostingModal(args) {
+  _setUpPostingModal() {
     const modalValues = {
       action: '_new',
       startDate: null,
@@ -57,9 +58,35 @@ export default class ControlBar extends Component {
       description: null,
       type: null,
       anonymous: false,
-      officeId: null
+      officeId: null,
+      modalName: 'postingModal'
     };
-    this.props.dispatch(empToggleModal({ ...args, modalValues }));
+    this._toggleModal(modalValues);
+  }
+
+  _setUpOfficeModal(officeId) {
+    console.log("i'm here 66: ", { officeId });
+    let modalValues;
+    if (officeId === '_new') {
+      modalValues = {
+        action: '_new',
+        address: '',
+        name: null,
+        moreInfo: null,
+        modalName: 'officeModal'
+      };
+    } else {
+      const office = this.props.offices.find(office => office.id === officeId);
+      modalValues = {
+        action: '_edit',
+        address: office.address,
+        name: office.name,
+        more_info: office.more_info,
+        officeId,
+        modalName: 'officeModal'
+      };
+    }
+    this._toggleModal(modalValues);
   }
 
   _renderFilterOfficeRows() {
@@ -80,7 +107,7 @@ export default class ControlBar extends Component {
   _renderEditOfficeRows() {
     return this.props.offices.map(office => {
       return (
-        <a key={office.id} className='panel-block' onClick={() => this._toggleModal({ modalName: 'officeModal', editedOfficeId: office.id })}>
+        <a key={office.id} className='panel-block' onClick={() => this._setUpOfficeModal(office.id)}>
           <span className='panel-icon'>
             <i className='fa fa-pencil' />
           </span>
@@ -114,7 +141,7 @@ export default class ControlBar extends Component {
             <div className='field'>
               <div className='control'>
                 <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
-                <button className='button search-btn' onClick={() => this._setUpPostingModal({ modalName: 'postingModal' })}>
+                <button className='button search-btn' onClick={this._setUpPostingModal}>
                   <i className='fa fa-plus' /> New Posting
                 </button>
               </div>
@@ -137,7 +164,7 @@ export default class ControlBar extends Component {
               </p>
               <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'officeModal' })} />
               { this._renderEditOfficeRows() }
-              <a className='panel-block' onClick={() => this._toggleModal({ modalName: 'officeModal', editedOfficeId: '_new' })}>
+              <a className='panel-block' onClick={() => this._setUpOfficeModal('_new')}>
                 <span className='panel-icon'>
                   <i className='fa fa-plus' />
                 </span>

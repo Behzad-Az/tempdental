@@ -56,21 +56,20 @@ export default class PostingRow extends Component {
     const { posting, dates, dispatch } = this.props;
 
     const modalValues = {
-      action: posting.id,
+      action: '_edit',
       startDate: moment(dates[0].start_date.slice(0, 10), 'YYYY-MM-DD'),
       endDate: moment(dates[0].end_date.slice(0, 10), 'YYYY-MM-DD'),
       title: posting.title,
       description: posting.description,
       type: posting.type,
       anonymous: posting.anonymous,
-      officeId: posting.office_id
+      officeId: posting.office_id,
+      postingId: posting.id,
+      modalName: 'postingModal'
     };
 
     dispatch(
-      empToggleModal({
-        modalName: 'postingModal',
-        modalValues
-      })
+      empToggleModal(modalValues)
     );
   }
 
