@@ -8,7 +8,6 @@ import { empModalHandleChng } from 'actions/EmployerPage/ControlBar';
 
 @connect(state => ({
   modals: state.empControlBar.get('modals'),
-  editedPostingId: state.empControlBar.get('editedPostingId'),
   offices: state.empControlBar.get('offices'),
   modalValues: state.empControlBar.get('modalValues')
 }))
@@ -16,7 +15,6 @@ import { empModalHandleChng } from 'actions/EmployerPage/ControlBar';
 export default class PostingModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
-    editedPostingId: PropTypes.string,
     offices: PropTypes.array,
     modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
@@ -107,9 +105,9 @@ export default class PostingModal extends Component {
   }
 
   _renderModalBody() {
-    const { editedPostingId, offices, modalValues } = this.props;
+    const { offices, modalValues } = this.props;
 
-    if (editedPostingId) {
+    if (modalValues.action) {
       return (
         <section className='modal-card-body'>
 
@@ -150,7 +148,6 @@ export default class PostingModal extends Component {
                 className='input'
                 type='text'
                 name='title'
-
                 defaultValue={modalValues.title}
                 placeholder='Example: Temporary Dental Assistant'
                 onChange={this._handleChange} />
@@ -227,7 +224,9 @@ export default class PostingModal extends Component {
         <div className='modal-background' onClick={toggleModal}></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <p className='modal-card-title'>New Posting</p>
+            <p className='modal-card-title'>
+              { modalValues.action === '_new' ? 'New Posting' : 'Edit Posting' }
+            </p>
             <button className='delete' onClick={toggleModal}></button>
           </header>
           { this._renderModalBody() }

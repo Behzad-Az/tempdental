@@ -56,6 +56,7 @@ export default class PostingRow extends Component {
     const { posting, dates, dispatch } = this.props;
 
     const modalValues = {
+      action: posting.id,
       startDate: moment(dates[0].start_date.slice(0, 10), 'YYYY-MM-DD'),
       endDate: moment(dates[0].end_date.slice(0, 10), 'YYYY-MM-DD'),
       title: posting.title,
@@ -68,7 +69,6 @@ export default class PostingRow extends Component {
     dispatch(
       empToggleModal({
         modalName: 'postingModal',
-        editedPostingId: posting.id,
         modalValues
       })
     );
