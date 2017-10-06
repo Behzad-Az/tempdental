@@ -38,12 +38,22 @@ export default class PostingsContainer extends Component {
     const filteredPostings = selectedOffices.length ?
                      postings.filter(posting => selectedOffices.includes(posting.office_id)) :
                      postings;
-    return filteredPostings.map(posting =>
-      <PostingRow
-        key={posting.id}
-        posting={posting}
-        dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
-    );
+    // return filteredPostings.map(posting =>
+    //   <PostingRow
+    //     key={posting.id}
+    //     posting={posting}
+    //     dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
+    // );
+    if (filteredPostings.length) {
+      return filteredPostings.map(posting =>
+        <PostingRow
+          key={posting.id}
+          posting={posting}
+          dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
+      );
+    } else {
+      return <p className='has-text-centered'>No posting found.</p>;
+    }
   }
 
   _renderCompAfterData() {
