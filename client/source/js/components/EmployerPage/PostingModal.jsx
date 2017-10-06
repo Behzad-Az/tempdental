@@ -53,6 +53,7 @@ export default class PostingModal extends Component {
             <DatePicker
               selected={startDate}
               selectsStart
+              inline
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
@@ -74,6 +75,7 @@ export default class PostingModal extends Component {
             <DatePicker
               selected={startDate}
               selectsStart
+              inline
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
@@ -90,6 +92,7 @@ export default class PostingModal extends Component {
             <DatePicker
               selected={endDate}
               selectsStart
+              inline
               placeholderText='Pick start date'
               minDate={moment()}
               maxDate={moment().add(6, 'months')}
@@ -196,10 +199,9 @@ export default class PostingModal extends Component {
     const endDate = modalValues.type === 'Temp'  ?
                     modalValues.endDate.format('YYYY-MM-DD') :
                     '2099-12-30';
-    const dates = [{ startDate, endDate }];
     const data = {
       ...modalValues,
-      dates
+      dates: [{ startDate, endDate }]
     };
 
     fetch('/api/employer/vacancies', {

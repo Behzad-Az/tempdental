@@ -4,6 +4,7 @@ import {
   EMP_GET_POSTINGS_START,
   EMP_GET_POSTINGS_ERROR,
   EMP_GET_POSTINGS_SUCCESS,
+  EMP_DELETE_POSTING
 } from 'actions/EmployerPage/Postings';
 
 const initialState = Map({
@@ -16,6 +17,12 @@ const initialState = Map({
 });
 
 const actionsMap = {
+  [EMP_DELETE_POSTING]: (state, action) => {
+    const { vacancyId } = action;
+    const postings = vacancyId === '_all' ? [] : state.get('postings').filter(posting => posting.id !== vacancyId);
+    return state.merge(Map({ postings }));
+  },
+
   [EMP_GET_POSTINGS_START]: (state, action) => {
     return state.merge(Map({
       asyncLoading: true,

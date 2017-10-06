@@ -22,6 +22,7 @@ export default class PostingRow extends Component {
     this._renderVacancyDates = this._renderVacancyDates.bind(this);
     this._findTimePassed = this._findTimePassed.bind(this);
     this._showEditModal = this._showEditModal.bind(this);
+    this._showDeleteModal = this._showDeleteModal.bind(this);
   }
 
   _findDateInfo(date) {
@@ -68,9 +69,16 @@ export default class PostingRow extends Component {
       modalName: 'postingModal'
     };
 
-    dispatch(
-      empToggleModal(modalValues)
-    );
+    dispatch(empToggleModal(modalValues));
+  }
+
+  _showDeleteModal() {
+    const { posting, dispatch } = this.props;
+    const modalValues = {
+      vacancyId: posting.id,
+      modalName: 'deletePostingModal'
+    };
+    dispatch(empToggleModal(modalValues));
   }
 
   render() {
@@ -120,10 +128,17 @@ export default class PostingRow extends Component {
             </div>
             <div className='btn-container'>
               <button
-                className='button edit-btn'
+                className='button edit'
                 onClick={this._showEditModal}>
-                Edit Posting
+                <i className='fa fa-pencil' />
               </button>
+              <button
+                className='button remove'
+                onClick={this._showDeleteModal}>
+                <i className='fa fa-trash' />
+              </button>
+
+
             </div>
           </div>
         </article>

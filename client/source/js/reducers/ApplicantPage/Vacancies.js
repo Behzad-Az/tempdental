@@ -29,7 +29,7 @@ const actionsMap = {
   },
 
   [APPL_WITHDRAW]: (state, action) => {
-    if (action.vacancyId === 'all') {
+    if (action.vacancyId === '_all') {
       return state.merge(Map({
         userApplications: []
       }));

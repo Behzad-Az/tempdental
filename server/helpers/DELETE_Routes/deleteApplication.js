@@ -15,7 +15,7 @@ const deleteApplication = (req, res, knex, user_id) => {
     .whereNull('deleted_at')
     .update({ candidate_applied: false });
 
-  const determineFcn = () => vacancyId === 'all' ? withdrawAllApplications() : withdrawApplication();
+  const determineFcn = () => vacancyId === '_all' ? withdrawAllApplications() : withdrawApplication();
 
   determineFcn()
   .then(() => res.send(true))

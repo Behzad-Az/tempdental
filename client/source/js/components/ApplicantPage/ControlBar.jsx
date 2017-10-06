@@ -77,38 +77,43 @@ export default class ControlBar extends Component {
   }
 
   _handleManualSearch() {
+    const { searchFT, searchPT, searchTemp, startDate, endDate, searchLat, searchLng, searchDistance, dispatch } = this.props;
     let jobTypeArr = [];
-    this.props.searchFT ? jobTypeArr.push('FT') : null;
-    this.props.searchPT ? jobTypeArr.push('PT') : null;
-    this.props.searchTemp ? jobTypeArr.push('Temp') : null;
-    const { dispatch } = this.props;
+    searchFT ? jobTypeArr.push('FT') : null;
+    searchPT ? jobTypeArr.push('PT') : null;
+    searchTemp ? jobTypeArr.push('Temp') : null;
     dispatch(applLoadVacancies({
       freshReload: true,
       offsetQuery: 0,
       manualSearch: true,
-      startDate: this.props.startDate,
-      endDate: this.props.endDate,
-      searchLat: this.props.searchLat,
-      searchLng: this.props.searchLng,
-      searchDistance: this.props.searchDistance,
+      startDate,
+      endDate,
+      searchLat,
+      searchLng,
+      searchDistance,
       jobTypeArr
     }));
   }
 
   _renderCompAfterData() {
-    if (this.props.dataLoaded && this.props.pageError) {
+    const {
+      dataLoaded, pageError, userInfo, searchAddress,
+      searchDistance, searchFT, searchPT, searchTemp,
+      dispatch
+    } = this.props;
+    if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
           <i className='fa fa-exclamation-triangle' aria-hidden='true' />
           Error in loading up the page
         </p>
       );
-    } else if (this.props.dataLoaded) {
+    } else if (dataLoaded) {
       return (
         <div className='card-content'>
           <div className='media'>
             <div className='media-content'>
-              <p className='title is-5'>{this.props.userInfo.full_name}</p>
+              <p className='title is-5'>{userInfo.full_name}</p>
             </div>
           </div>
           <div className='content'>
@@ -119,8 +124,8 @@ export default class ControlBar extends Component {
               </label>
               <div className='google-address-bar control'>
                 <GoogleAddressBar
-                  searchAddress={this.props.searchAddress}
-                  saveNewSearchAddress={addressObj => this.props.dispatch(applHandleControlAddress(addressObj))}
+                  searchAddress={searchAddress}
+                  saveNewSearchAddress={addressObj => dispatch(applHandleControlAddress(addressObj))}
                 />
               </div>
             </div>
@@ -131,7 +136,7 @@ export default class ControlBar extends Component {
                   <select
                     name='searchDistance'
                     onChange={this._handleInputChange}
-                    defaultValue={this.props.searchDistance}
+                    defaultValue={searchDistance}
                   >
                     <option value=''>Range</option>
                     <option value={10000}>10km</option>
@@ -152,7 +157,7 @@ export default class ControlBar extends Component {
                   <input
                     type='checkbox'
                     name='searchFT'
-                    checked={this.props.searchFT}
+                    checked={searchFT}
                     onChange={this._handleCheckBoxChange} /> Full Time (Permanent)
                 </label>
               </div>
@@ -161,7 +166,7 @@ export default class ControlBar extends Component {
                   <input
                     type='checkbox'
                     name='searchPT'
-                    checked={this.props.searchPT}
+                    checked={searchPT}
                     onChange={this._handleCheckBoxChange} /> Part Time (Permanent)
                 </label>
               </div>
@@ -170,7 +175,7 @@ export default class ControlBar extends Component {
                   <input
                     type='checkbox'
                     name='searchTemp'
-                    checked={this.props.searchTemp}
+                    checked={searchTemp}
                     onChange={this._handleCheckBoxChange} /> Temporary
                 </label>
               </div>

@@ -38,15 +38,24 @@ export default class VacancyRow extends Component {
   }
 
   _renderVacancyDates() {
-    if (this.props.vacancy.type === 'Temp') {
-      return this.props.dates.map(dateRow => <p key={dateRow.id}><i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}</p>);
+    const { vacancy, dates } = this.props;
+    if (vacancy.type === 'Temp') {
+      return dates.map(dateRow => {
+        return <p key={dateRow.id}>
+          <i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}
+        </p>
+      });
     } else {
-      return <p><i className='fa fa-calendar' /> {this._findDateInfo(this.props.dates[0].start_date)} (expected start date)</p>;
+      return (
+        <p>
+          <i className='fa fa-calendar' /> {this._findDateInfo(dates[0].start_date)} (expected start date)
+        </p>
+      );
     }
   }
 
   _handleApply() {
-    const { dispatch } = this.props;
+    const { dispatch, vacancy } = this.props;
     fetch('/api/applicant/applications', {
       method: 'POST',
       credentials: 'same-origin',
@@ -54,17 +63,18 @@ export default class VacancyRow extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ vacancyId: this.props.vacancy.id })
+      body: JSON.stringify({ vacancyId: vacancy.id })
     })
     .then(response => response.ok ?
-      this.props.dispatch(applApplyOrWithdraw({ action: 'apply', vacancyId: this.props.vacancy.id })) :
+      dispatch(applApplyOrWithdraw({ action: 'apply', vacancyId: vacancy.id })) :
       null
     )
     .catch(console.error);
   }
 
   _handleWithdrawApplication() {
-    fetch(`/api/applicant/applications?vacancyId=${this.props.vacancy.id}`, {
+    const { dispatch, vacancy } = this.props;
+    fetch(`/api/applicant/applications?vacancyId=${vacancy.id}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {
@@ -73,7 +83,7 @@ export default class VacancyRow extends Component {
       }
     })
     .then(response => response.ok ?
-      this.props.dispatch(applApplyOrWithdraw({ action: 'withdraw', vacancyId: this.props.vacancy.id })) :
+      dispatch(applApplyOrWithdraw({ action: 'withdraw', vacancyId: vacancy.id })) :
       null
     )
     .catch(console.error);
@@ -81,7 +91,8 @@ export default class VacancyRow extends Component {
 
   render() {
 
-    const { type, title, officeName, description, address, created_at, anonymous } = this.props.vacancy;
+    const { alreadyApplied } = this.props;
+    const { type, title, officeName, description, address, created_at, anonymous, lat, lng } = this.props.vacancy;
     const blurred = anonymous ? 'blurred' : '';
 
     return (
@@ -132,14 +143,14 @@ export default class VacancyRow extends Component {
 
           <div className='media-right'>
             <div className={`map-container ${blurred}`}>
-              <GoogleMapWindow lat={this.props.vacancy.lat} lng={this.props.vacancy.lng} />
+              <GoogleMapWindow lat={lat} lng={lng} />
             </div>
             <div className='btn-container'>
               <button
-                className={this.props.alreadyApplied ? 'button apply-btn is-warning' : 'button apply-btn'}
-                onClick={this.props.alreadyApplied ? this._handleWithdrawApplication : this._handleApply}
+                className={alreadyApplied ? 'button apply-btn is-warning' : 'button apply-btn'}
+                onClick={alreadyApplied ? this._handleWithdrawApplication : this._handleApply}
               >
-                {this.props.alreadyApplied ? 'Withdraw Application' : 'Apply Now!'}
+                {alreadyApplied ? 'Withdraw Application' : 'Apply Now!'}
               </button>
             </div>
           </div>

@@ -18,7 +18,8 @@ const initialState = Map({
   asyncError: null,
   modals: {
     officeModal: false,
-    postingModal: false
+    postingModal: false,
+    deletePostingModal: false
   },
   modalValues: {}
 });
@@ -33,7 +34,7 @@ const actionsMap = {
   },
 
   [EMP_TOGGLE_MODAL]: (state, action) => {
-    const modalValues = action.modalValues || {};
+    const modalValues = action.modalValues;
     let modals = { ...state.get('modals') };
     modals[modalValues.modalName] = !state.get('modals')[modalValues.modalName];
     return state.merge(Map({ modals, modalValues }));

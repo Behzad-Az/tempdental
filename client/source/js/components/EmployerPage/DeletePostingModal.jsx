@@ -1,27 +1,29 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { applApplyOrWithdraw } from 'actions/ApplicantPage/Vacancies';
+import { empDeletePosting } from 'actions/EmployerPage/Postings';
 
 @connect(state => ({
-  modals: state.applControlBar.get('modals')
+  modals: state.empControlBar.get('modals'),
+  modalValues: state.empControlBar.get('modalValues')
 }))
 
-export default class WithdrawAllAplModal extends Component {
+export default class DeletePostingModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
+    modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
     dispatch: PropTypes.func
   }
 
   constructor() {
     super();
-    this._withdrawAllApplications = this._withdrawAllApplications.bind(this);
+    this._handleDeletePosting = this._handleDeletePosting.bind(this);
   }
 
-  _withdrawAllApplications() {
-    const { dispatch, toggleModal } = this.props;
-    fetch('/api/applicant/applications?vacancyId=_all', {
+  _handleDeletePosting() {
+    const { dispatch, toggleModal, modalValues } = this.props;
+    fetch(`/api/employer/vacancies?vacancyId=${modalValues.vacancyId}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {
@@ -30,7 +32,7 @@ export default class WithdrawAllAplModal extends Component {
       }
     })
     .then(response => response.ok ?
-      dispatch(applApplyOrWithdraw({ action: 'withdraw', vacancyId: '_all' })) :
+      dispatch(empDeletePosting(modalValues.vacancyId)) :
       null
     )
     .catch(console.error)
@@ -40,7 +42,7 @@ export default class WithdrawAllAplModal extends Component {
   render() {
     const { modals, toggleModal } = this.props;
     return (
-      <div className={modals.withdrawAllModal ? 'modal is-active' : 'modal'}>
+      <div className={modals.deletePostingModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
         <div className='modal-card'>
           <header className='modal-card-head'>
@@ -48,10 +50,10 @@ export default class WithdrawAllAplModal extends Component {
             <button className='delete' aria-label='close' onClick={toggleModal} />
           </header>
           <section className='modal-card-body'>
-            This action will withdraw all of your outstanding applications and cannot be undone.
+            This action will close all of your outstanding postings and cannot be undone.
           </section>
           <footer className='modal-card-foot'>
-            <button className='button is-success' onClick={this._withdrawAllApplications}>I am sure</button>
+            <button className='button is-success' onClick={this._handleDeletePosting}>I am sure</button>
             <button className='button' onClick={toggleModal}>Never mind</button>
           </footer>
         </div>

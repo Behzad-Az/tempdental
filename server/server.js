@@ -90,6 +90,7 @@ const postNewApplication = require('./helpers/POST_Routes/postNewApplication.js'
 const updateUserSearchCriteria = require('./helpers/UPDATE_Routes/updateUserSearchCriteria.js');
 
 const deleteApplication = require('./helpers/DELETE_Routes/deleteApplication.js');
+const deleteVacancy = require('./helpers/DELETE_Routes/deleteVacancy.js');
 
 
 // ***************************************************
@@ -149,4 +150,8 @@ app.put('/api/users/currentuser', (req, res) => {
 // // ***************************************************
 app.delete('/api/applicant/applications', (req, res) => {
   deleteApplication(req, res, knex, 'bKm2Tzg1z1H');
+});
+
+app.delete('/api/employer/vacancies', (req, res) => {
+  deleteVacancy(req, res, knex, 'aWg8Sya0i3V');
 });

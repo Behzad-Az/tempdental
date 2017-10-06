@@ -8,6 +8,7 @@ import {
 } from 'actions/EmployerPage/ControlBar';
 import OfficeModal from './OfficeModal.jsx';
 import PostingModal from './PostingModal.jsx';
+import DeletePostingModal from './DeletePostingModal.jsx';
 
 @connect(state => ({
   dataLoaded: state.empControlBar.get('dataLoaded'),
@@ -33,6 +34,7 @@ export default class ControlBar extends Component {
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._setUpOfficeModal = this._setUpOfficeModal.bind(this);
+    this._setUpDeletePostingModal = this._setUpDeletePostingModal.bind(this);
     this._renderFilterOfficeRows = this._renderFilterOfficeRows.bind(this);
     this._renderEditOfficeRows = this._renderEditOfficeRows.bind(this);
   }
@@ -45,8 +47,8 @@ export default class ControlBar extends Component {
     this.props.dispatch(addRemoveSelectedOffice(officeId));
   }
 
-  _toggleModal(args) {
-    this.props.dispatch(empToggleModal(args));
+  _toggleModal(modalValues) {
+    this.props.dispatch(empToggleModal(modalValues));
   }
 
   _setUpPostingModal() {
@@ -65,7 +67,6 @@ export default class ControlBar extends Component {
   }
 
   _setUpOfficeModal(officeId) {
-    console.log("i'm here 66: ", { officeId });
     let modalValues;
     if (officeId === '_new') {
       modalValues = {
@@ -86,6 +87,14 @@ export default class ControlBar extends Component {
         modalName: 'officeModal'
       };
     }
+    this._toggleModal(modalValues);
+  }
+
+  _setUpDeletePostingModal() {
+    const modalValues = {
+      vacancyId: '_all',
+      modalName: 'deletePostingModal'
+    };
     this._toggleModal(modalValues);
   }
 
@@ -172,6 +181,8 @@ export default class ControlBar extends Component {
               </a>
             </nav>
 
+            <DeletePostingModal toggleModal={() => this._toggleModal({ modalName: 'deletePostingModal' })} />
+            <button onClick={this._setUpDeletePostingModal}>DELETE</button>
           </div>
         </div>
       );

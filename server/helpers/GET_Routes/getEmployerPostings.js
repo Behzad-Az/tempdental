@@ -3,13 +3,13 @@ const getEmployerPostings = (req, res, knex, user_id) => {
   let { statusCodes, types } = req.query;
   let postings;
 
-  if (statusCodes === 'all' || !statusCodes) {
+  if (statusCodes === '_all' || !statusCodes) {
     statusCodes = ['filled', 'withdrawn', 'expired'];
   } else {
     statusCodes = statusCodes.split(',');
   }
 
-  if (types === 'all' || !types) {
+  if (types === '_all' || !types) {
     types = ['FT', 'PT', 'Temp'];
   } else {
     types = types.split(',');

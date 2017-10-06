@@ -62,42 +62,43 @@ export default class VacanciesContainer extends Component {
   }
 
   _loadFreshPageDataAuto() {
-    const { dispatch } = this.props;
+    const { dispatch, startDate, endDate } = this.props;
     dispatch(applLoadVacancies({
       freshReload: true,
       offsetQuery: 0,
       manualSearch: false,
-      startDate: this.props.startDate,
-      endDate: this.props.endDate
+      startDate,
+      endDate
     }));
   }
 
   _concatPageData() {
-    const { dispatch } = this.props;
+    const { dispatch, searchFT, searchPT, searchTemp, vacancies, manualSearch, startDate, endDate, searchLat, searchLng, searchDistance } = this.props;
     let jobTypeArr = [];
-    this.props.searchFT ? jobTypeArr.push('FT') : null;
-    this.props.searchPT ? jobTypeArr.push('PT') : null;
-    this.props.searchTemp ? jobTypeArr.push('Temp') : null;
+    searchFT ? jobTypeArr.push('FT') : null;
+    searchPT ? jobTypeArr.push('PT') : null;
+    searchTemp ? jobTypeArr.push('Temp') : null;
 
     dispatch(applLoadVacancies({
       freshReload: false,
-      offsetQuery: this.props.vacancies.length,
-      manualSearch: this.props.manualSearch,
-      startDate: this.props.startDate,
-      endDate: this.props.endDate,
-      searchLat: this.props.searchLat,
-      searchLng: this.props.searchLng,
-      searchDistance: this.props.searchDistance,
+      offsetQuery: vacancies.length,
+      manualSearch: manualSearch,
+      startDate: startDate,
+      endDate: endDate,
+      searchLat: searchLat,
+      searchLng: searchLng,
+      searchDistance: searchDistance,
       jobTypeArr
     }));
   }
 
   _renderLoadMoreBtn() {
-    if (this.props.vacancies.length) {
-      const btnContent = this.props.noMoreVacancies && this.props.vacancies.length ? 'No more vacancy available' : 'Load more';
+    const { vacancies, noMoreVacancies } = this.props;
+    if (vacancies.length) {
+      const btnContent = noMoreVacancies && vacancies.length ? 'No more vacancy available' : 'Load more';
       return (
         <p className='end-msg'>
-          <button className='button' disabled={this.props.noMoreVacancies} onClick={this._concatPageData}>{btnContent}</button>
+          <button className='button' disabled={noMoreVacancies} onClick={this._concatPageData}>{btnContent}</button>
         </p>
       );
     } else {
@@ -111,7 +112,8 @@ export default class VacanciesContainer extends Component {
   }
 
   _renderCompAfterData() {
-    if (this.props.dataLoaded && this.props.pageError) {
+    const { dataLoaded, pageError, vacancies, vacancyDates, userApplications } = this.props;
+    if (dataLoaded && pageError) {
       return (
         <div className='main-container'>
           <p className='page-msg'>
@@ -120,7 +122,7 @@ export default class VacanciesContainer extends Component {
           </p>
         </div>
       );
-    } else if (this.props.dataLoaded) {
+    } else if (dataLoaded) {
       return (
         <div className='main-container'>
           <div className='vacancies-container'>
@@ -129,12 +131,12 @@ export default class VacanciesContainer extends Component {
               <i className='fa fa-angle-down' aria-hidden='true' />
             </h1>
             {
-              this.props.vacancies.map(vacancy =>
+              vacancies.map(vacancy =>
                 <VacancyRow
                   key={vacancy.id}
                   vacancy={vacancy}
-                  dates={this.props.vacancyDates.filter(date => date.vacancy_id === vacancy.id)}
-                  alreadyApplied={this.props.userApplications.includes(vacancy.id)} />
+                  dates={vacancyDates.filter(date => date.vacancy_id === vacancy.id)}
+                  alreadyApplied={userApplications.includes(vacancy.id)} />
               )
             }
             { this._renderLoadMoreBtn() }
