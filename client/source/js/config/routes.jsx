@@ -8,14 +8,14 @@ import EmployerPage from 'views/EmployerPage';
 const publicPath = '/';
 
 export const routeCodes = {
-  APPLICANTPAGE: `${ publicPath }applicant`,
-  EMPLOYERPAGE: `${ publicPath }employer`
+  APPLICANT: `${ publicPath }applicant`,
+  EMPLOYER: `${ publicPath }employer`
 };
 
 export default () => (
   <Switch>
-    <Route path={ routeCodes.APPLICANTPAGE } component={ ApplicantPage } />
-    <Route path={ routeCodes.EMPLOYERPAGE } component={ EmployerPage } />
+    <Route path={ routeCodes.APPLICANT } component={ ApplicantPage } />
+    <Route path={ routeCodes.EMPLOYER } component={ EmployerPage } />
     <Route path='*' component={ NotFound } />
   </Switch>
 );

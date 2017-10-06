@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Routes from 'config/routes';
 
-import Menu from 'components/Global/Menu';
+import Navbar from 'components/Global/Navbar';
 
 export default class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Menu />
+        <Navbar />
         <div className='Page'>
           <Routes />
         </div>

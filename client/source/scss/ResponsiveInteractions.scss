@@ -8,19 +8,19 @@ $side_hamburger_width: 40px;
     width: calc(100% - 20px);
   }
   .index-page, .inst-page, .course-page, .doc-page, .course-review-page, .profile-page, .company-page, .applicant-page, .employer-page {
-    padding: 0 $default_margin/2;
-    .main-container { display: block; width: 100%; padding: $top_margin 1px $default_margin 1px; }
+    // padding: 0 $default_margin/2;
+    // .main-container { display: block; width: 100%; padding: $default_margin 1px $default_margin 1px; }
   }
 
   .career-page, .conversation-page, .applicant-page, .employer-page {
     padding: 0 $default_margin/2;
     .main-container {
-      display: inline-block; width: 100%; padding: $top_margin 0px $default_margin $side_hamburger_width+10px;
+      display: inline-block; width: 100%; padding: $default_margin 0px $default_margin $side_hamburger_width+10px;
       .search-bar-container { min-width: 240px; }
     }
     .hamburger {
       display: inline-block; width: $side_hamburger_width;
-      background-color: $dark_blue; height: calc(100vh - 50px - 30px); margin-top: $top_margin;
+      background-color: $dark_blue; height: calc(100vh - 50px - 30px); margin-top: $default_margin;
       float: left; position: fixed; cursor: pointer; :hover { transform: scale(1.1); }
       .fa { margin: auto; display: block; margin: 5px; font-size: 30px; color: white; }
     }

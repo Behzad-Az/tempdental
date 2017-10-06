@@ -9,7 +9,7 @@ export function empDeletePosting(vacancyId) {
   return {
     type: EMP_DELETE_POSTING,
     vacancyId
-  }
+  };
 }
 
 function empGetPostingsStart() {
