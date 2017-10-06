@@ -7,7 +7,7 @@ export default class App extends Component {
   render() {
     return (
       <div className='App'>
-
+        <Menu />
         <div className='Page'>
           <Routes />
         </div>

@@ -29,21 +29,14 @@ export default class PostingsContainer extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Employer Page';
     this.props.dispatch(empGetPostings());
   }
 
   _renderPostingRows() {
     const { selectedOffices, postings, vacancyDates } = this.props;
     const filteredPostings = selectedOffices.length ?
-                     postings.filter(posting => selectedOffices.includes(posting.office_id)) :
-                     postings;
-    // return filteredPostings.map(posting =>
-    //   <PostingRow
-    //     key={posting.id}
-    //     posting={posting}
-    //     dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
-    // );
+                             postings.filter(posting => selectedOffices.includes(posting.office_id)) :
+                             postings;
     if (filteredPostings.length) {
       return filteredPostings.map(posting =>
         <PostingRow

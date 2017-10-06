@@ -3,8 +3,6 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
   const manualSearch = req.query.manualSearch === 'true';
   const { startDate, endDate, offsetQuery } = req.query;
 
-  console.log({ startDate, endDate, offsetQuery });
-
   let vacancies, userApplications;
 
   const getUserInfo = () => knex('users')

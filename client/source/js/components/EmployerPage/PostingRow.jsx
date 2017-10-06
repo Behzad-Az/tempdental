@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { empToggleModal } from 'actions/EmployerPage/ControlBar';
-import GoogleMapWindow from '../ApplicantPage/GoogleMapWindow.jsx';
+import GoogleMapWindow from 'components/ApplicantPage/GoogleMapWindow.jsx';
 import moment from 'moment';
 
 @connect()
