@@ -66,6 +66,11 @@
       text-align: center; margin: $default_margin/2 0;
       .button { background-color: $dark_blue; color: white; &:hover { background-color: darken($dark_blue, 10%); } }
     }
+
+  }
+
+  .modals {
+    .columns { margin-bottom: 0; .field, .column { margin-bottom: 0; padding-bottom: 0; } }
   }
 
   .hamburger { display: none; }

@@ -45,7 +45,7 @@ export default class PostingModal extends Component {
     const { dates, type, startDate, endDate } = this.props.modalValues;
     if (type === 'FT' || type === 'PT') {
       return (
-        <div className='field is-grouped'>
+        <div className='field'>
           <div className='control'>
             <label className='label'>
               Start Date:
@@ -67,40 +67,44 @@ export default class PostingModal extends Component {
       );
     } else {
       return (
-        <div className='field is-grouped'>
-          <div className='control'>
-            <label className='label'>
-              Start Date:
-            </label>
-            <DatePicker
-              selected={startDate}
-              selectsStart
-              inline
-              placeholderText='Pick start date'
-              minDate={moment()}
-              maxDate={moment().add(6, 'months')}
-              startDate={startDate}
-              endDate={endDate}
-              disabledKeyboardNavigation
-              onChange={value => this._handleDateChange('startDate', value)}
-            />
+        <div className='columns'>
+          <div className='field column is-6'>
+            <div className='control'>
+              <label className='label'>
+                Start Date:
+              </label>
+              <DatePicker
+                selected={startDate}
+                selectsStart
+                inline
+                placeholderText='Pick start date'
+                minDate={moment()}
+                maxDate={moment().add(6, 'months')}
+                startDate={startDate}
+                endDate={endDate}
+                disabledKeyboardNavigation
+                onChange={value => this._handleDateChange('startDate', value)}
+              />
+            </div>
           </div>
-          <div className='control'>
-            <label className='label'>
-              End Date:
-            </label>
-            <DatePicker
-              selected={endDate}
-              selectsStart
-              inline
-              placeholderText='Pick start date'
-              minDate={moment()}
-              maxDate={moment().add(6, 'months')}
-              startDate={startDate}
-              endDate={endDate}
-              disabledKeyboardNavigation
-              onChange={value => this._handleDateChange('endDate', value)}
-            />
+          <div className='field column is-6'>
+            <div className='control'>
+              <label className='label'>
+                End Date:
+              </label>
+              <DatePicker
+                selected={endDate}
+                selectsStart
+                inline
+                placeholderText='Pick start date'
+                minDate={moment()}
+                maxDate={moment().add(6, 'months')}
+                startDate={startDate}
+                endDate={endDate}
+                disabledKeyboardNavigation
+                onChange={value => this._handleDateChange('endDate', value)}
+              />
+            </div>
           </div>
         </div>
       );
@@ -114,31 +118,35 @@ export default class PostingModal extends Component {
       return (
         <section className='modal-card-body'>
 
-          <div className='field is-grouped'>
-            <div className='control'>
-              <label className='label'>
-                Select Office Location:
-              </label>
-              <span className='select'>
-                <select name='officeId' defaultValue={modalValues.officeId} onChange={this._handleChange}>
-                  <option value=''>-</option>
-                  { offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
-                </select>
-              </span>
+          <div className='columns'>
+            <div className='field column is-6'>
+              <div className='control'>
+                <label className='label'>
+                  Select Office Location:
+                </label>
+                <span className='select'>
+                  <select name='officeId' defaultValue={modalValues.officeId} onChange={this._handleChange}>
+                    <option value=''>-</option>
+                    { offices.map(office => <option key={office.id} value={office.id}>{office.name}</option> ) }
+                  </select>
+                </span>
+              </div>
             </div>
 
-            <div className='control'>
-              <label className='label'>
-                Posting Type:
-              </label>
-              <span className='select'>
-                <select name='type' defaultValue={modalValues.type} onChange={this._handleChange}>
-                  <option value=''>-</option>
-                  <option value='Temp'>Temporary / Relief</option>
-                  <option value='PT'>Permanent Part-Time</option>
-                  <option value='FT'>Permanent Full-Time</option>
-                </select>
-              </span>
+            <div className='field column is-6'>
+              <div className='control'>
+                <label className='label'>
+                  Posting Type:
+                </label>
+                <span className='select'>
+                  <select name='type' defaultValue={modalValues.type} onChange={this._handleChange}>
+                    <option value=''>-</option>
+                    <option value='Temp'>Temporary / Relief</option>
+                    <option value='PT'>Permanent Part-Time</option>
+                    <option value='FT'>Permanent Full-Time</option>
+                  </select>
+                </span>
+              </div>
             </div>
           </div>
 
