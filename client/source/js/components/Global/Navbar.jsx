@@ -25,15 +25,15 @@ export default class Navbar extends Component {
 
   render() {
     const { showBurgerMenu } = this.props;
+    console.log("i' here 0: ", this.props.histroy);
     return (
-      <nav className='navbar is-dark'>
+      <nav className='navbar'>
         <div className='navbar-brand'>
           <a className='navbar-item' href='http://bulma.io'>
             <img src='http://bulma.io/images/bulma-logo.png' alt='Bulma: a modern CSS framework based on Flexbox' width='112' height='28' />
           </a>
           <div
             className={showBurgerMenu ? 'navbar-burger burger is-active' : 'navbar-burger burger'}
-            data-target='navMenuTransparentExample'
             onClick={() => this._toggleMenu(false)}>
             <span></span>
             <span></span>
@@ -42,12 +42,12 @@ export default class Navbar extends Component {
         </div>
         <div className={showBurgerMenu ? 'navbar-menu is-active' : 'navbar-menu'}>
           <div className='navbar-end'>
-            <div className='navbar-item'>
-              <NavLink to={routeCodes.EMPLOYER} onClick={() => this._toggleMenu(true)}>Employer</NavLink>
-            </div>
-            <div className='navbar-item'>
-              <NavLink to={routeCodes.APPLICANT} onClick={() => this._toggleMenu(true)}>Applicant</NavLink>
-            </div>
+            <NavLink className='navbar-item' to={routeCodes.EMPLOYER} onClick={() => this._toggleMenu(true)}>
+              Employer
+            </NavLink>
+            <NavLink className='navbar-item' to={routeCodes.APPLICANT} onClick={() => this._toggleMenu(true)}>
+              Applicant
+            </NavLink>
           </div>
         </div>
       </nav>

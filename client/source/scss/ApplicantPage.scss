@@ -7,7 +7,7 @@
   }
 
   .main-container {
-    padding: $default_margin $default_margin $default_margin 270px; width: $main_container_width; min-width: $default_min_container_width; display: inline-block;
+    padding: $top_margin $default_margin $default_margin 270px; width: $main_container_width; min-width: $default_min_container_width; display: inline-block;
 
     .header {
       background-color: $dark_blue; color: white; padding: 5px 10px; font-weight: bold; margin-bottom: $default_margin/2; overflow: auto;
@@ -43,7 +43,7 @@
 
   .hamburger { display: none; }
   .control-bar {
-    display: inline-block; margin-top: $default_margin; width: 250px; float: left; position: fixed; height: calc(100vh - 50px - 30px); overflow: scroll; z-index: 1;
+    display: inline-block; margin-top: $top_margin; width: 250px; float: left; position: fixed; height: calc(100vh - 50px - 30px); overflow: scroll; z-index: 1;
     .card-content .content {
       .search-btn { width: 100%; background-color: $dark_blue; color: white; }
       .select { width: 100%; select { width: 100% } }

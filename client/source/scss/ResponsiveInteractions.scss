@@ -1,40 +1,30 @@
-$side_hamburger_width: 40px;
-
 @media screen and (max-width: 950px) {
-  .side-bar.left { padding: none !important; display: none; }
-  .side-bar.right { padding: none !important; display: none; }
+  // .side-bar.left { padding: none !important; display: none; }
+  // .side-bar.right { padding: none !important; display: none; }
 
-  .nav.logged-in {
-    width: calc(100% - 20px);
-  }
-  .index-page, .inst-page, .course-page, .doc-page, .course-review-page, .profile-page, .company-page, .applicant-page, .employer-page {
-    // padding: 0 $default_margin/2;
-    // .main-container { display: block; width: 100%; padding: $default_margin 1px $default_margin 1px; }
-  }
-
-  .career-page, .conversation-page, .applicant-page, .employer-page {
+  .applicant-page, .employer-page {
     padding: 0 $default_margin/2;
     .main-container {
-      display: inline-block; width: 100%; padding: $default_margin 0px $default_margin $side_hamburger_width+10px;
+      display: inline-block; width: 100%; padding: $top_margin 0px $default_margin $side_hamburger_width+10px;
       .search-bar-container { min-width: 240px; }
     }
     .hamburger {
       display: inline-block; width: $side_hamburger_width;
-      background-color: $dark_blue; height: calc(100vh - 50px - 30px); margin-top: $default_margin;
+      background-color: $dark_blue; height: calc(100vh - 50px - 30px); margin-top: $top_margin;
       float: left; position: fixed; cursor: pointer; :hover { transform: scale(1.1); }
-      .fa { margin: auto; display: block; margin: 5px; font-size: 30px; color: white; }
+      .fa { margin: auto; display: block; margin: 5px; font-size: 20px; color: white; }
     }
     .control-bar {
       width: 0;
-      // display: one;
+      // display: none;
     }
     .control-bar.is-open {
       display: inline-block; position: fixed; margin-left: $side_hamburger_width; width: 250px;
-      // -webkit-transition: width 0.05s ease;
-      //   -moz-transition: width 0.05s ease;
-      //    -ms-transition: width 0.05s ease;
-      //     -o-transition: width 0.05s ease;
-      //        transition: width 0.05s ease;
+      -webkit-transition: width 0.1s ease;
+        -moz-transition: width 0.1s ease;
+         -ms-transition: width 0.1s ease;
+          -o-transition: width 0.1s ease;
+             transition: width 0.1s ease;
     }
   }
 

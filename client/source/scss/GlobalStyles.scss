@@ -6,8 +6,10 @@ $pumpkin: #FF6B35;
 $bad_red: #9D0600;
 $default_bg_color: #f5f5f5;
 $warning_yellow: #ffdd57;
+$hover_color: #eee;
 
 $default_margin: 20px;
+$side_hamburger_width: 28px;
 $sidebar_width_right: 270px;
 $sidebar_width_left: 180px;
 $top_margin: 60px;
@@ -20,8 +22,6 @@ body,html {
   font-family: 'Nunito', sans-serif;
   .label, .input, .button, .select, .textarea, .panel-block { font-size: 14px; &:focus { border-color: $dark_blue; }; }
   .content p:not(:last-child), .content dl:not(:last-child), .content ol:not(:last-child), .content ul:not(:last-child), .content blockquote:not(:last-child), .content pre:not(:last-child), .content table:not(:last-child) { margin-bottom: 0; }
-  .fa-check { font-size: 18px; }
-  .char-limit { color: $bad_red; font-size: 12px; padding-left: $default_margin/4; }
   .control {
     .input, .select, .textarea {
       &:active, &:focus { border-color: $dark_blue; }

@@ -1,0 +1,13 @@
+.navbar {
+  position: fixed; width: 100%; z-index: 2; background-color: darken($dark_blue, 10%);
+  .navbar-burger.burger { color: white; }
+  .navbar-menu .navbar-end .navbar-item {
+    color: white;
+    &:hover { background-color: darken($dark_blue, 10%); }
+  }
+  .navbar-menu.is-active .navbar-end .navbar-item {
+    color: darken($dark_blue, 10%);
+    border-top: 0.5px darken($hover_color, 10%) solid;
+    &:hover { background-color: $hover_color; cursor: pointer; }
+  }
+}

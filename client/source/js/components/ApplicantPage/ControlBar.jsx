@@ -193,21 +193,21 @@ export default class ControlBar extends Component {
               <p className='panel-heading'>
                 <i className='fa fa-gear' /> Quick Settings
               </p>
-              <NotifModal toggleModal={() => this._toggleModal('notifModal')} />
+
               <a className='panel-block' onClick={() => this._toggleModal('notifModal')}>
                 <span className='panel-icon'>
                   <i className='fa fa-bell' />
                 </span>
                 Notifications
               </a>
-              <ResumeModal toggleModal={() => this._toggleModal('resumeModal')} />
+
               <a className='panel-block' onClick={() => this._toggleModal('resumeModal')}>
                 <span className='panel-icon'>
                   <i className='fa fa-file' />
                 </span>
                 Resume / Cover Letter
               </a>
-              <WithdrawAllAplModal toggleModal={() => this._toggleModal('withdrawAllModal')}/>
+
               <a className='panel-block' onClick={() => this._toggleModal('withdrawAllModal')}>
                 <span className='panel-icon'>
                   <i className='fa fa-remove' />
@@ -232,8 +232,15 @@ export default class ControlBar extends Component {
 
   render() {
     return (
-      <div id='control-bar' className='card control-bar'>
-        { this._renderCompAfterData() }
+      <div>
+        <div id='control-bar' className='card control-bar'>
+          { this._renderCompAfterData() }
+        </div>
+        <div className='modals'>
+          <NotifModal toggleModal={() => this._toggleModal('notifModal')} />
+          <ResumeModal toggleModal={() => this._toggleModal('resumeModal')} />
+          <WithdrawAllAplModal toggleModal={() => this._toggleModal('withdrawAllModal')} />
+        </div>
       </div>
     );
   }

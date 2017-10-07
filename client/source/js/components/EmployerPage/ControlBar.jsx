@@ -149,7 +149,6 @@ export default class ControlBar extends Component {
 
             <div className='field'>
               <div className='control'>
-                <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
                 <button className='button search-btn' onClick={this._setUpPostingModal}>
                   <i className='fa fa-plus' /> New Posting
                 </button>
@@ -171,7 +170,6 @@ export default class ControlBar extends Component {
               <p className='panel-heading'>
                 <i className='fa fa-gear' /> My Offices
               </p>
-              <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'officeModal' })} />
               { this._renderEditOfficeRows() }
               <a className='panel-block' onClick={() => this._setUpOfficeModal('_new')}>
                 <span className='panel-icon'>
@@ -181,7 +179,6 @@ export default class ControlBar extends Component {
               </a>
             </nav>
 
-            <DeletePostingModal toggleModal={() => this._toggleModal({ modalName: 'deletePostingModal' })} />
             <button onClick={this._setUpDeletePostingModal}>DELETE</button>
           </div>
         </div>
@@ -198,8 +195,15 @@ export default class ControlBar extends Component {
 
   render() {
     return (
-      <div id='control-bar' className='card control-bar'>
-        { this._renderCompAfterData() }
+      <div>
+        <div id='control-bar' className='card control-bar'>
+          { this._renderCompAfterData() }
+        </div>
+        <div className='modals'>
+          <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
+          <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'officeModal' })} />
+          <DeletePostingModal toggleModal={() => this._toggleModal({ modalName: 'deletePostingModal' })} />
+        </div>
       </div>
     );
   }
