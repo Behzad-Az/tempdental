@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { routeCodes } from 'config/routes';
-import { navToggleBurger } from 'actions/Global/Navbar';
+import { navChangeView } from 'actions/Global/Navbar';
 
 @connect(state => ({
-  showBurgerMenu: state.navbar.get('showBurgerMenu')
+  showBurgerMenu: state.navbar.get('showBurgerMenu'),
+  currentView: state.navbar.get('currentView')
 }))
 
 export default class Navbar extends Component {
   static propTypes = {
-    showBurgerMenu: PropTypes.bool
+    showBurgerMenu: PropTypes.bool,
+    currentView: PropTypes.string
   }
 
   constructor() {
@@ -19,13 +21,16 @@ export default class Navbar extends Component {
     this._toggleMenu = this._toggleMenu.bind(this);
   }
 
-  _toggleMenu(forceOff) {
-    this.props.dispatch(navToggleBurger(forceOff));
+  componentDidMount() {
+    window.addEventListener('resize', () => this._toggleMenu({ forceOff: true }));
+  }
+
+  _toggleMenu(args) {
+    this.props.dispatch(navChangeView(args));
   }
 
   render() {
-    const { showBurgerMenu } = this.props;
-    console.log("i' here 0: ", this.props.histroy);
+    const { showBurgerMenu, currentView } = this.props;
     return (
       <nav className='navbar'>
         <div className='navbar-brand'>
@@ -34,7 +39,7 @@ export default class Navbar extends Component {
           </a>
           <div
             className={showBurgerMenu ? 'navbar-burger burger is-active' : 'navbar-burger burger'}
-            onClick={() => this._toggleMenu(false)}>
+            onClick={() => this._toggleMenu({ forceOff: false })}>
             <span></span>
             <span></span>
             <span></span>
@@ -42,11 +47,17 @@ export default class Navbar extends Component {
         </div>
         <div className={showBurgerMenu ? 'navbar-menu is-active' : 'navbar-menu'}>
           <div className='navbar-end'>
-            <NavLink className='navbar-item' to={routeCodes.EMPLOYER} onClick={() => this._toggleMenu(true)}>
-              Employer
+            <NavLink
+              className={currentView === routeCodes.EMPLOYER ? 'navbar-item underlined' : 'navbar-item'}
+              to={routeCodes.EMPLOYER}
+              onClick={() => this._toggleMenu({ forceOff: true, currentView: routeCodes.EMPLOYER })}>
+              <i className='fa fa-institution'/> Employer
             </NavLink>
-            <NavLink className='navbar-item' to={routeCodes.APPLICANT} onClick={() => this._toggleMenu(true)}>
-              Applicant
+            <NavLink
+              className={currentView === routeCodes.APPLICANT ? 'navbar-item underlined' : 'navbar-item'}
+              to={routeCodes.APPLICANT}
+              onClick={() => this._toggleMenu({ forceOff: true, currentView: routeCodes.APPLICANT })}>
+              <i className='fa fa-user'/> Applicant
             </NavLink>
           </div>
         </div>

@@ -1,8 +1,8 @@
-export const NAV_TOGGLE_BURGER = 'NAV_TOGGLE_BURGER';
+export const NAV_CHANGE_VIEW = 'NAV_CHANGE_VIEW';
 
-export function navToggleBurger(forceOff) {
+export function navChangeView(args) {
   return {
-    type: NAV_TOGGLE_BURGER,
-    forceOff
+    type: NAV_CHANGE_VIEW,
+    args
   };
 }

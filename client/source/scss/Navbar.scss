@@ -3,11 +3,14 @@
   .navbar-burger.burger { color: white; }
   .navbar-menu .navbar-end .navbar-item {
     color: white;
+    .fa { padding-right: $default_margin/4; }
+    &.underlined { border-bottom: 3px white solid; }
     &:hover { background-color: darken($dark_blue, 10%); }
   }
   .navbar-menu.is-active .navbar-end .navbar-item {
     color: darken($dark_blue, 10%);
     border-top: 0.5px darken($hover_color, 10%) solid;
+    .fa { padding-right: $default_margin/4; }
     &:hover { background-color: $hover_color; cursor: pointer; }
   }
 }
