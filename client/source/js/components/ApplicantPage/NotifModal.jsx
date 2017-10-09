@@ -31,7 +31,7 @@ export default class NotifModal extends Component {
               <Toggle
                 defaultChecked={true}
                 onChange={this.handleBaconChange} />
-              <span className='react-toggle-label'>Wrapper label tag</span>
+              <span className='react-toggle-label'>Receive Notifications?</span>
             </label>
             Manage Notifications
           </section>
