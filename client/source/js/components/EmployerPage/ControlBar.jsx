@@ -155,6 +155,14 @@ export default class ControlBar extends Component {
               </div>
             </div>
 
+            <div className='field'>
+              <div className='control'>
+                <button className='button delete-all-btn' onClick={this._setUpDeletePostingModal}>
+                  <i className='fa fa-trash' /> Remove All Postings
+                </button>
+              </div>
+            </div>
+
             <hr />
 
             <nav className='panel'>
@@ -179,7 +187,7 @@ export default class ControlBar extends Component {
               </a>
             </nav>
 
-            <button onClick={this._setUpDeletePostingModal}>DELETE</button>
+
           </div>
         </div>
       );

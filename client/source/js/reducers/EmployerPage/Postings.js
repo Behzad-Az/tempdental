@@ -12,6 +12,7 @@ const initialState = Map({
   pageError: false,
   postings: [],
   vacancyDates: [],
+  applicantCounts: [],
   asyncLoading: false,
   asyncError: null
 });
@@ -38,13 +39,15 @@ const actionsMap = {
     }));
   },
   [EMP_GET_POSTINGS_SUCCESS]: (state, action) => {
+    const { postings, vacancyDates, applicantCounts } = action.data;
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
       pageError: false,
       dataLoaded: true,
-      postings: action.data.postings,
-      vacancyDates: action.data.vacancyDates
+      postings,
+      vacancyDates,
+      applicantCounts
     }));
   },
 };

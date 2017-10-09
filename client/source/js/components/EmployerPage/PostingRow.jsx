@@ -13,6 +13,7 @@ export default class PostingRow extends Component {
   static propTypes = {
     posting: PropTypes.object,
     dates: PropTypes.array,
+    applicantCount: PropTypes.number,
     dispatch: PropTypes.func
   }
 
@@ -23,6 +24,7 @@ export default class PostingRow extends Component {
     this._findTimePassed = this._findTimePassed.bind(this);
     this._showEditModal = this._showEditModal.bind(this);
     this._showDeleteModal = this._showDeleteModal.bind(this);
+    this._getApplicants = this._getApplicants.bind(this);
   }
 
   _findDateInfo(date) {
@@ -81,7 +83,17 @@ export default class PostingRow extends Component {
     dispatch(empToggleModal(modalValues));
   }
 
+  _getApplicants() {
+    fetch(`/api/employer/vacancies/${this.props.posting.id}/applicants`, {
+      method: 'GET',
+      credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .catch(console.error);
+  }
+
   render() {
+    const { applicantCount } = this.props;
     const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = this.props.posting;
     return (
       <div className='box posting-row'>
@@ -136,6 +148,12 @@ export default class PostingRow extends Component {
                 className='button remove'
                 onClick={this._showDeleteModal}>
                 <i className='fa fa-trash' />
+              </button>
+              <button
+                className='button edit'
+                onClick={this._getApplicants}
+                disabled={!applicantCount}>
+                <i className='fa fa-user' /> {applicantCount} Applicants
               </button>
 
 

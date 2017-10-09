@@ -26,7 +26,7 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
     .whereNull('vacancies.deleted_at')
     .whereNull('offices.deleted_at')
     .orderByRaw(`ST_Distance (offices.geog_gis_loc, '${userInfo.geog_gis_loc}')`)
-    .orderBy('vacancies.id')
+    .orderBy('vacancies.created_at')
     .limit(3)
     .offset(offsetQuery);
 

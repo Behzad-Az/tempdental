@@ -9,6 +9,7 @@ import PostingRow from './PostingRow.jsx';
   pageError: state.empPostings.get('pageError'),
   postings: state.empPostings.get('postings'),
   vacancyDates: state.empPostings.get('vacancyDates'),
+  applicantCounts: state.empPostings.get('applicantCounts'),
   selectedOffices: state.empControlBar.get('selectedOffices')
 }))
 
@@ -18,18 +19,26 @@ export default class PostingsContainer extends Component {
     pageError: PropTypes.bool,
     postings: PropTypes.array,
     vacancyDates: PropTypes.array,
+    applicantCounts: PropTypes.array,
     selectedOffices: PropTypes.array,
     dispatch: PropTypes.func
   }
 
   constructor() {
     super();
+    this._findApplicantCount = this._findApplicantCount.bind(this);
     this._renderPostingRows = this._renderPostingRows.bind(this);
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(empGetPostings());
+  }
+
+  _findApplicantCount(posting) {
+    const { applicantCounts } = this.props;
+    const applicantCount = applicantCounts.find(count => count.vacancy_id === posting.id);
+    return applicantCount ? parseInt(applicantCount.count) : 0;
   }
 
   _renderPostingRows() {
@@ -42,7 +51,8 @@ export default class PostingsContainer extends Component {
         <PostingRow
           key={posting.id}
           posting={posting}
-          dates={vacancyDates.filter(date => date.vacancy_id === posting.id)} />
+          dates={vacancyDates.filter(date => date.vacancy_id === posting.id)}
+          applicantCount={this._findApplicantCount(posting)} />
       );
     } else {
       return <p className='has-text-centered'>No posting found.</p>;
