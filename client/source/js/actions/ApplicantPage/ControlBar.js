@@ -7,6 +7,7 @@ export const APPL_HANDLE_CONTROL_INPUT_CHNG = 'APPL_HANDLE_CONTROL_INPUT_CHNG';
 export const APPL_HANDLE_CONTROL_CHECKBOX = 'APPL_HANDLE_CONTROL_CHECKBOX';
 export const APPL_HANDLE_ADDRESS_SEARCH = 'APPL_HANDLE_ADDRESS_SEARCH';
 export const APPL_TOGGLE_MODAL = 'APPL_TOGGLE_MODAL';
+export const APPL_MODAL_HANDLE_CHNG = 'APPL_MODAL_HANDLE_CHNG';
 
 export function applHandleControlInput(event) {
   return {
@@ -33,6 +34,13 @@ export function applToggelModal(modalValues) {
   return {
     type: APPL_TOGGLE_MODAL,
     modalValues
+  };
+}
+
+export function applModalHandleChng(event) {
+  return {
+    type: APPL_MODAL_HANDLE_CHNG,
+    event
   };
 }
 

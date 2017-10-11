@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Toggle from 'react-toggle';
+import Switch from 'react-toggle-switch';
+import 'react-toggle-switch/dist/css/switch.min.css';
+import { applModalHandleChng } from 'actions/ApplicantPage/ControlBar';
 
 @connect(state => ({
   dataLoaded: state.applControlBar.get('dataLoaded'),
@@ -20,6 +22,26 @@ export default class NotifModal extends Component {
     dispatch: PropTypes.func
   }
 
+  constructor() {
+    super();
+    this._handleChange = this._handleChange.bind(this);
+    this._handleSwitch = this._handleSwitch.bind(this);
+  }
+
+  _handleChange(event) {
+    this.props.dispatch(applModalHandleChng(event));
+  }
+
+  _handleSwitch() {
+    const event = {
+      target: {
+        name: 'getNotified',
+        value: !this.props.modalValues.getNotified
+      }
+    };
+    this._handleChange(event);
+  }
+
   render() {
     const { modals, toggleModal, modalValues, dataLoaded, pageError } = this.props;
     if (dataLoaded && !pageError) {
@@ -32,20 +54,8 @@ export default class NotifModal extends Component {
               <button className='delete' aria-label='close' onClick={toggleModal} />
             </header>
             <section className='modal-card-body'>
-              <label className='checkbox'>
-                <input
-                  type='checkbox'
-                  name='chert'
-                  defaultChecked={modalValues.getNotified}
-                  onChange={null} /> CHERT
-              </label>
 
-              <label className='react-toggle-wrapper-label'>
-                <Toggle
-                  defaultChecked={modalValues.getNotified}
-                  onChange={this.handleBaconChange} />
-                <span className='react-toggle-label'>Receive Notifications?</span>
-              </label>
+              <Switch onClick={this._handleSwitch} on={modalValues.getNotified || false} />
               Manage Notifications
             </section>
             <footer className='modal-card-foot'>

@@ -8,7 +8,8 @@ import {
   APPL_HANDLE_CONTROL_INPUT_CHNG,
   APPL_HANDLE_CONTROL_CHECKBOX,
   APPL_HANDLE_ADDRESS_SEARCH,
-  APPL_TOGGLE_MODAL
+  APPL_TOGGLE_MODAL,
+  APPL_MODAL_HANDLE_CHNG
 } from 'actions/ApplicantPage/ControlBar';
 
 const initialState = Map({
@@ -39,6 +40,13 @@ const actionsMap = {
     let modals = { ...state.get('modals') };
     modals[modalValues.modalName] = !state.get('modals')[modalValues.modalName];
     return state.merge(Map({ modals, modalValues }));
+  },
+
+  [APPL_MODAL_HANDLE_CHNG]: (state, action) => {
+    const { name, value } = action.event.target;
+    let modalValues = { ...state.get('modalValues') };
+    modalValues[name] = value;
+    return state.merge(Map({ modalValues }));
   },
 
   [APPL_HANDLE_CONTROL_INPUT_CHNG]: (state, action) => {
