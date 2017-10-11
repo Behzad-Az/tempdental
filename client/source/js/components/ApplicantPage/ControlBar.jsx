@@ -48,7 +48,7 @@ export default class ControlBar extends Component {
 
   constructor() {
     super();
-    this._handleInputChange = this._handleInputChange.bind(this);
+    this._handleChange = this._handleChange.bind(this);
     this._validateForm = this._validateForm.bind(this);
     this._handleCheckBoxChange = this._handleCheckBoxChange.bind(this);
     this._handleManualSearch = this._handleManualSearch.bind(this);
@@ -61,7 +61,7 @@ export default class ControlBar extends Component {
     this.props.dispatch(applGetControlData());
   }
 
-  _handleInputChange(event) {
+  _handleChange(event) {
     this.props.dispatch(applHandleControlInput(event));
   }
 
@@ -74,13 +74,18 @@ export default class ControlBar extends Component {
   }
 
   _setUpNotifModal() {
-    const modalValues = {
+    const { userInfo } = this.props;
+    // console.log("i'm here 77: ", userInfo.address);
+    this._toggleModal({
       action: '_edit',
-      getNotified: this.props.userInfo.get_notified,
+      getNotified: userInfo.get_notified,
+      searchFt: userInfo.search_ft,
+      searchPt: userInfo.search_pt,
+      searchTemp: userInfo.search_temp,
+      searchDistance: userInfo.search_distance,
+      address: userInfo.address,
       modalName: 'notifModal'
-    };
-    console.log("i'm her 66: ", {modalValues});
-    this._toggleModal(modalValues);
+    });
   }
 
   _validateForm() {
@@ -146,7 +151,7 @@ export default class ControlBar extends Component {
                 <span className='select'>
                   <select
                     name='searchDistance'
-                    onChange={this._handleInputChange}
+                    onChange={this._handleChange}
                     defaultValue={searchDistance}
                   >
                     <option value=''>Range</option>
@@ -162,7 +167,7 @@ export default class ControlBar extends Component {
               </div>
             </div>
 
-            <div className='field vacancy-types'>
+            <div className='field'>
               <div className='control'>
                 <label className='checkbox'>
                   <input

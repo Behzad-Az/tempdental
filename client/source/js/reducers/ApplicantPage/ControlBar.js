@@ -43,10 +43,27 @@ const actionsMap = {
   },
 
   [APPL_MODAL_HANDLE_CHNG]: (state, action) => {
-    const { name, value } = action.event.target;
+    const { name, value, checked } = action.event.target;
     let modalValues = { ...state.get('modalValues') };
-    modalValues[name] = value;
+    switch (name) {
+      case 'searchFt':
+        modalValues[name] = checked;
+        break;
+      case 'searchPt':
+        modalValues[name] = checked;
+        break;
+      case 'searchTemp':
+        modalValues[name] = checked;
+        break;
+      default:
+        modalValues[name] = value;
+        break;
+    }
     return state.merge(Map({ modalValues }));
+    // const { name, value } = action.event.target;
+    // let modalValues = { ...state.get('modalValues') };
+    // modalValues[name] = value;
+    // return state.merge(Map({ modalValues }));
   },
 
   [APPL_HANDLE_CONTROL_INPUT_CHNG]: (state, action) => {

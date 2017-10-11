@@ -52,7 +52,7 @@ export default class PostingRow extends Component {
   }
 
   _findTimePassed(date) {
-    return moment(date.slice(0,10), 'YYYY-MM-DD').fromNow();
+    return moment(date.slice(0, 10), 'YYYY-MM-DD').fromNow();
   }
 
   _showEditModal() {
