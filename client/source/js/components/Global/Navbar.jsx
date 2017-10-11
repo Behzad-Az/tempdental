@@ -22,7 +22,7 @@ export default class Navbar extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => this._toggleMenu({ forceOff: true }));
+    window.addEventListener('resize', () => this.props.showBurgerMenu ? this._toggleMenu({ forceOff: true }) : null);
   }
 
   _toggleMenu(args) {

@@ -7,7 +7,7 @@ import { applApplyOrWithdraw } from 'actions/ApplicantPage/Vacancies';
   modals: state.applControlBar.get('modals')
 }))
 
-export default class WithdrawAllAplModal extends Component {
+export default class WithdrawAllModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
     toggleModal: PropTypes.func,

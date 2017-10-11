@@ -21,8 +21,8 @@ import ControlBar from 'components/ApplicantPage/ControlBar.jsx';
   searchLng: state.applControlBar.get('searchLng'),
   searchAddress: state.applControlBar.get('searchAddress'),
   searchDistance: state.applControlBar.get('searchDistance'),
-  searchFT: state.applControlBar.get('searchFT'),
-  searchPT: state.applControlBar.get('searchPT'),
+  searchFt: state.applControlBar.get('searchFt'),
+  searchPt: state.applControlBar.get('searchPt'),
   searchTemp: state.applControlBar.get('searchTemp')
 }))
 
@@ -41,8 +41,8 @@ export default class VacanciesContainer extends Component {
     searchLng: PropTypes.number,
     searchAddress: PropTypes.string,
     searchDistance: PropTypes.number,
-    searchFT: PropTypes.bool,
-    searchPT: PropTypes.bool,
+    searchFt: PropTypes.bool,
+    searchPt: PropTypes.bool,
     searchTemp: PropTypes.bool,
     dispatch: PropTypes.func
   }
@@ -71,10 +71,10 @@ export default class VacanciesContainer extends Component {
   }
 
   _concatPageData() {
-    const { dispatch, searchFT, searchPT, searchTemp, vacancies, manualSearch, startDate, endDate, searchLat, searchLng, searchDistance } = this.props;
+    const { dispatch, searchFt, searchPt, searchTemp, vacancies, manualSearch, startDate, endDate, searchLat, searchLng, searchDistance } = this.props;
     let jobTypeArr = [];
-    searchFT ? jobTypeArr.push('FT') : null;
-    searchPT ? jobTypeArr.push('PT') : null;
+    searchFt ? jobTypeArr.push('FT') : null;
+    searchPt ? jobTypeArr.push('PT') : null;
     searchTemp ? jobTypeArr.push('Temp') : null;
 
     dispatch(applLoadVacancies({
@@ -105,7 +105,7 @@ export default class VacanciesContainer extends Component {
   }
 
   _renderCompAfterData() {
-    const { dataLoaded, pageError, vacancies, vacancyDates, userApplications } = this.props;
+    const { dataLoaded, pageError, vacancies, vacancyDates, userApplications, asyncLoading } = this.props;
     if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>

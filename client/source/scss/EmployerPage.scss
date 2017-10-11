@@ -77,7 +77,7 @@
   .control-bar {
     display: inline-block; margin-top: $top_margin; width: 250px; float: left; position: fixed; height: calc(100vh - 50px - 30px); overflow: scroll; z-index: 1;
     .card-content .content {
-      .search-btn { width: 100%; background-color: $dark_blue; color: white; }
+      .new-btn { width: 100%; background-color: $dark_blue; color: white; }
       .delete-all-btn { width: 100%; background-color: $bad_red; color: white; }
       .select { width: 100%; select { width: 100% } }
       .vacancy-types .checkbox { font-size: 14px; }

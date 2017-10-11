@@ -29,10 +29,10 @@ export function applHandleControlAddress(addressObj) {
   };
 }
 
-export function applToggelModal(modalName) {
+export function applToggelModal(modalValues) {
   return {
     type: APPL_TOGGLE_MODAL,
-    modalName
+    modalValues
   };
 }
 

@@ -19,24 +19,26 @@ const initialState = Map({
   searchLng: null,
   searchAddress: '',
   searchDistance: null,
-  searchFT: true,
-  searchPT: true,
-  searchTemp: true,
+  searchFt: null,
+  searchPt: null,
+  searchTemp: null,
+  getNotified: null,
   startDate: moment().format('YYYY-MM-DD'),
   endDate: moment().add(6, 'months').format('YYYY-MM-DD'),
   modals: {
     notifModal: false,
     resumeModal: false,
     withdrawAllModal: false
-  }
+  },
+  modalValues: {}
 });
 
 const actionsMap = {
   [APPL_TOGGLE_MODAL]: (state, action) => {
-    const { modalName } = action;
+    const { modalValues } = action;
     let modals = { ...state.get('modals') };
-    modals[modalName] = !state.get('modals')[modalName];
-    return state.merge(Map({ modals }));
+    modals[modalValues.modalName] = !state.get('modals')[modalValues.modalName];
+    return state.merge(Map({ modals, modalValues }));
   },
 
   [APPL_HANDLE_CONTROL_INPUT_CHNG]: (state, action) => {
@@ -84,6 +86,10 @@ const actionsMap = {
       searchLng: action.data.userInfo.lng,
       searchAddress: action.data.userInfo.address,
       searchDistance: action.data.userInfo.search_distance,
+      searchPt: action.data.userInfo.search_pt,
+      searchFt: action.data.userInfo.search_ft,
+      searchTemp: action.data.userInfo.search_temp,
+      getNotified: action.data.userInfo.get_notified,
       userInfo: action.data.userInfo
     }));
   }

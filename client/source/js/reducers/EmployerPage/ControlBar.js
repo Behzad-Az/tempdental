@@ -34,7 +34,7 @@ const actionsMap = {
   },
 
   [EMP_TOGGLE_MODAL]: (state, action) => {
-    const modalValues = action.modalValues;
+    const { modalValues } = action;
     let modals = { ...state.get('modals') };
     modals[modalValues.modalName] = !state.get('modals')[modalValues.modalName];
     return state.merge(Map({ modals, modalValues }));

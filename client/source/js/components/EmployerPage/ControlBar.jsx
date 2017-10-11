@@ -149,7 +149,7 @@ export default class ControlBar extends Component {
 
             <div className='field'>
               <div className='control'>
-                <button className='button search-btn' onClick={this._setUpPostingModal}>
+                <button className='button new-btn' onClick={this._setUpPostingModal}>
                   <i className='fa fa-plus' /> New Posting
                 </button>
               </div>

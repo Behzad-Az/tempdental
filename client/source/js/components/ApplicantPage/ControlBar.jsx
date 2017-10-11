@@ -12,7 +12,7 @@ import { applLoadVacancies } from 'actions/ApplicantPage/Vacancies';
 import GoogleAddressBar from './GoogleAddressBar.jsx';
 import NotifModal from './NotifModal.jsx';
 import ResumeModal from './ResumeModal.jsx';
-import WithdrawAllAplModal from './WithdrawAllAplModal.jsx';
+import WithdrawAllModal from './WithdrawAllModal.jsx';
 
 @connect(state => ({
   dataLoaded: state.applControlBar.get('dataLoaded'),
@@ -22,8 +22,8 @@ import WithdrawAllAplModal from './WithdrawAllAplModal.jsx';
   searchLng: state.applControlBar.get('searchLng'),
   searchAddress: state.applControlBar.get('searchAddress'),
   searchDistance: state.applControlBar.get('searchDistance'),
-  searchFT: state.applControlBar.get('searchFT'),
-  searchPT: state.applControlBar.get('searchPT'),
+  searchFt: state.applControlBar.get('searchFt'),
+  searchPt: state.applControlBar.get('searchPt'),
   searchTemp: state.applControlBar.get('searchTemp'),
   startDate: state.applControlBar.get('startDate'),
   endDate: state.applControlBar.get('endDate')
@@ -38,8 +38,8 @@ export default class ControlBar extends Component {
     searchLng: PropTypes.number,
     searchAddress: PropTypes.string,
     searchDistance: PropTypes.number,
-    searchFT: PropTypes.bool,
-    searchPT: PropTypes.bool,
+    searchFt: PropTypes.bool,
+    searchPt: PropTypes.bool,
     searchTemp: PropTypes.bool,
     startDate: PropTypes.string,
     endDate: PropTypes.string,
@@ -53,6 +53,7 @@ export default class ControlBar extends Component {
     this._handleCheckBoxChange = this._handleCheckBoxChange.bind(this);
     this._handleManualSearch = this._handleManualSearch.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
+    this._setUpNotifModal = this._setUpNotifModal.bind(this);
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
   }
 
@@ -72,15 +73,25 @@ export default class ControlBar extends Component {
     this.props.dispatch(applToggelModal(modalName));
   }
 
+  _setUpNotifModal() {
+    const modalValues = {
+      action: '_edit',
+      getNotified: this.props.userInfo.get_notified,
+      modalName: 'notifModal'
+    };
+    console.log("i'm her 66: ", {modalValues});
+    this._toggleModal(modalValues);
+  }
+
   _validateForm() {
 
   }
 
   _handleManualSearch() {
-    const { searchFT, searchPT, searchTemp, startDate, endDate, searchLat, searchLng, searchDistance, dispatch } = this.props;
+    const { searchFt, searchPt, searchTemp, startDate, endDate, searchLat, searchLng, searchDistance, dispatch } = this.props;
     let jobTypeArr = [];
-    searchFT ? jobTypeArr.push('FT') : null;
-    searchPT ? jobTypeArr.push('PT') : null;
+    searchFt ? jobTypeArr.push('FT') : null;
+    searchPt ? jobTypeArr.push('PT') : null;
     searchTemp ? jobTypeArr.push('Temp') : null;
     dispatch(applLoadVacancies({
       freshReload: true,
@@ -98,7 +109,7 @@ export default class ControlBar extends Component {
   _renderCompAfterData() {
     const {
       dataLoaded, pageError, userInfo, searchAddress,
-      searchDistance, searchFT, searchPT, searchTemp,
+      searchDistance, searchFt, searchPt, searchTemp,
       dispatch
     } = this.props;
     if (dataLoaded && pageError) {
@@ -156,8 +167,8 @@ export default class ControlBar extends Component {
                 <label className='checkbox'>
                   <input
                     type='checkbox'
-                    name='searchFT'
-                    checked={searchFT}
+                    name='searchFt'
+                    checked={searchFt}
                     onChange={this._handleCheckBoxChange} /> Full Time (Permanent)
                 </label>
               </div>
@@ -165,8 +176,8 @@ export default class ControlBar extends Component {
                 <label className='checkbox'>
                   <input
                     type='checkbox'
-                    name='searchPT'
-                    checked={searchPT}
+                    name='searchPt'
+                    checked={searchPt}
                     onChange={this._handleCheckBoxChange} /> Part Time (Permanent)
                 </label>
               </div>
@@ -194,21 +205,21 @@ export default class ControlBar extends Component {
                 <i className='fa fa-gear' /> Quick Settings
               </p>
 
-              <a className='panel-block' onClick={() => this._toggleModal('notifModal')}>
+              <a className='panel-block' onClick={this._setUpNotifModal}>
                 <span className='panel-icon'>
                   <i className='fa fa-bell' />
                 </span>
                 Notifications
               </a>
 
-              <a className='panel-block' onClick={() => this._toggleModal('resumeModal')}>
+              <a className='panel-block' onClick={() => this._toggleModal({ modalName: 'resumeModal' })}>
                 <span className='panel-icon'>
                   <i className='fa fa-file' />
                 </span>
                 Resume / Cover Letter
               </a>
 
-              <a className='panel-block' onClick={() => this._toggleModal('withdrawAllModal')}>
+              <a className='panel-block' onClick={() => this._toggleModal({ modalName: 'withdrawAllModal' })}>
                 <span className='panel-icon'>
                   <i className='fa fa-remove' />
                 </span>
@@ -237,9 +248,9 @@ export default class ControlBar extends Component {
           { this._renderCompAfterData() }
         </div>
         <div className='modals'>
-          <NotifModal toggleModal={() => this._toggleModal('notifModal')} />
-          <ResumeModal toggleModal={() => this._toggleModal('resumeModal')} />
-          <WithdrawAllAplModal toggleModal={() => this._toggleModal('withdrawAllModal')} />
+          <NotifModal toggleModal={() => this._toggleModal({ modalName: 'notifModal' })} />
+          <ResumeModal toggleModal={() => this._toggleModal({ modalName: 'resumeModal' })} />
+          <WithdrawAllModal toggleModal={() => this._toggleModal({ modalName: 'withdrawAllModal' })} />
         </div>
       </div>
     );

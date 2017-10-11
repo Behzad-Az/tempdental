@@ -28,7 +28,7 @@ export default class EmployerPage extends Component {
     return (
       <div className='employer-page'>
         <div className='hamburger'>
-          <i className='fa fa-navicon' onClick={this._toggleControlBar} />
+          <i className='fa fa-wrench' onClick={this._toggleControlBar} />
         </div>
         <ControlBar />
         <div onClick={this._handleOutsideClick}>

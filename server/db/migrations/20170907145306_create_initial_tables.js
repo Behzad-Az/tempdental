@@ -13,6 +13,10 @@ exports.up = function(knex, Promise) {
       t.float('lat', 8, 5).notNullable().defaultTo(49.2820);
       t.float('lng', 8, 5).notNullable().defaultTo(-123.1171);
       t.integer('search_distance').notNullable().defaultTo(50000);
+      t.boolean('search_ft').notNullable().defaultTo(true);
+      t.boolean('search_pt').notNullable().defaultTo(true);
+      t.boolean('search_temp').notNullable().defaultTo(true);
+      t.boolean('get_notified').notNullable().defaultTo(true);
       t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       t.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
       t.timestamp('deleted_at');
