@@ -16,6 +16,7 @@ export default class NotifModal extends Component {
     modals: PropTypes.object,
     modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
+    reload: PropTypes.func,
     dispatch: PropTypes.func
   }
 
@@ -41,6 +42,7 @@ export default class NotifModal extends Component {
   }
 
   _handleNotifUpdate() {
+    const { toggleModal, reload, modalValues } = this.props;
     fetch('/api/currentuser/notifsettings', {
       method: 'PUT',
       credentials: 'same-origin',
@@ -54,7 +56,9 @@ export default class NotifModal extends Component {
       console.log("i'm here notif settings update") :
       null
     )
-    .catch(console.error);
+    .catch(console.error)
+    .then(toggleModal)
+    .then(reload);
   }
 
   render() {

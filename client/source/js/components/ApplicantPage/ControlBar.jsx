@@ -49,7 +49,8 @@ export default class ControlBar extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._validateForm = this._validateForm.bind(this);
-    this._handleManualSearch = this._handleManualSearch.bind(this);
+    this._handleManualReload = this._handleManualReload.bind(this);
+    this._handleAutoReload = this._handleAutoReload.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpNotifModal = this._setUpNotifModal.bind(this);
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
@@ -87,7 +88,7 @@ export default class ControlBar extends Component {
 
   }
 
-  _handleManualSearch() {
+  _handleManualReload() {
     const { searchFt, searchPt, searchTemp, startDate, endDate, searchLat, searchLng, searchDistance, dispatch } = this.props;
     let jobTypeArr = [];
     searchFt ? jobTypeArr.push('FT') : null;
@@ -104,6 +105,18 @@ export default class ControlBar extends Component {
       searchDistance,
       jobTypeArr
     }));
+  }
+
+  _handleAutoReload() {
+    const { startDate, endDate, dispatch } = this.props;
+    dispatch(applLoadVacancies({
+      freshReload: true,
+      offsetQuery: 0,
+      manualSearch: false,
+      startDate,
+      endDate
+    }));
+    dispatch(applGetControlData());
   }
 
   _renderCompAfterData() {
@@ -194,7 +207,7 @@ export default class ControlBar extends Component {
 
             <div className='field'>
               <div className='control'>
-                <button className='button search-btn' onClick={this._handleManualSearch}><i className='fa fa-search' /> Quick Search</button>
+                <button className='button search-btn' onClick={this._handleManualReload}><i className='fa fa-search' /> Quick Search</button>
               </div>
             </div>
 
@@ -248,7 +261,10 @@ export default class ControlBar extends Component {
           { this._renderCompAfterData() }
         </div>
         <div className='modals'>
-          <NotifModal toggleModal={() => this._toggleModal({ modalName: 'notifModal' })} />
+          <NotifModal
+            toggleModal={() => this._toggleModal({ modalName: 'notifModal' })}
+            reload={this._handleAutoReload}
+          />
           <ResumeModal toggleModal={() => this._toggleModal({ modalName: 'resumeModal' })} />
           <WithdrawAllModal toggleModal={() => this._toggleModal({ modalName: 'withdrawAllModal' })} />
         </div>
