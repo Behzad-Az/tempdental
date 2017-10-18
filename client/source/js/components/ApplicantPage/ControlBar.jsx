@@ -69,7 +69,6 @@ export default class ControlBar extends Component {
 
   _setUpNotifModal() {
     const { userInfo } = this.props;
-    console.log("i'm here 99: ", userInfo);
     this._toggleModal({
       action: '_edit',
       getNotified: userInfo.get_notified || true,

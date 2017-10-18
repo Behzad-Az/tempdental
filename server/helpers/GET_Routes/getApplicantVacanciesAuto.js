@@ -6,7 +6,7 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
   let vacancies, userApplications;
 
   const getUserInfo = () => knex('users')
-    .select('geog_gis_loc', 'search_distance')
+    .select('geog_gis_loc', 'search_distance', 'search_pt', 'search_ft', 'search_temp')
     .where('id', user_id)
     .whereNull('deleted_at')
     .limit(1);
@@ -23,6 +23,7 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
       'offices.lat', 'offices.lng', 'offices.address', 'offices.name as officeName', 'offices.more_info as officeInfo'
     )
     .whereRaw(`ST_DWithin (offices.geog_gis_loc, '${userInfo.geog_gis_loc}', ${userInfo.search_distance})`)
+    .whereIn('vacancies.type', userInfo.vacancyTypes)
     .whereNull('vacancies.deleted_at')
     .whereNull('offices.deleted_at')
     .orderByRaw(`ST_Distance (offices.geog_gis_loc, '${userInfo.geog_gis_loc}')`)
@@ -37,7 +38,15 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
     .whereNull('deleted_at');
 
   getUserInfo()
-  .then(userInfo => Promise.all([getVacancies(userInfo[0]), getUserApplications()]))
+  .then(foundUser => {
+    let userInfo = foundUser[0];
+    userInfo.vacancyTypes = [
+      userInfo.search_ft ? 'FT' : null,
+      userInfo.search_pt ? 'PT' : null,
+      userInfo.search_temp ? 'Temp' : null
+    ];
+    return Promise.all([ getVacancies(userInfo), getUserApplications() ])
+  })
   .then(results => {
     vacancies = results[0];
     userApplications = results[1];

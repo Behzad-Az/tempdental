@@ -23,6 +23,7 @@ export default class NotifModal extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._handleSwitch = this._handleSwitch.bind(this);
+    this._handleNotifUpdate = this._handleNotifUpdate.bind(this);
   }
 
   _handleChange(event) {
@@ -37,6 +38,23 @@ export default class NotifModal extends Component {
       }
     };
     this._handleChange(event);
+  }
+
+  _handleNotifUpdate() {
+    fetch('/api/currentuser/notifsettings', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.props.modalValues)
+    })
+    .then(response => response.ok ?
+      console.log("i'm here notif settings update") :
+      null
+    )
+    .catch(console.error);
   }
 
   render() {
@@ -127,7 +145,7 @@ export default class NotifModal extends Component {
             </div>
           </section>
           <footer className='modal-card-foot'>
-            <button className='button is-success'>Save changes</button>
+            <button className='button is-success' onClick={this._handleNotifUpdate}>Save changes</button>
             <button className='button' onClick={toggleModal}>Cancel</button>
           </footer>
         </div>

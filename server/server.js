@@ -88,7 +88,7 @@ const postNewVacancy = require('./helpers/POST_Routes/postNewVacancy.js');
 const postNewTextReply = require('./helpers/POST_Routes/postNewTextReply.js');
 const postNewApplication = require('./helpers/POST_Routes/postNewApplication.js');
 
-const updateUserSearchCriteria = require('./helpers/UPDATE_Routes/updateUserSearchCriteria.js');
+const updateUserNotifSettings = require('./helpers/PUT_Routes/updateUserNotifSettings.js');
 
 const deleteApplication = require('./helpers/DELETE_Routes/deleteApplication.js');
 const deleteVacancy = require('./helpers/DELETE_Routes/deleteVacancy.js');
@@ -144,9 +144,8 @@ app.post('/text_replies', (req, res) => {
 // app.put('/api/users/:user_id', userPhotoUpload.single('file'), (req, res) => {
 //   updateUserProfile(req, res, knex, req.session.user_id, googleMapsClient);
 // });
-
-app.put('/api/users/currentuser', (req, res) => {
-  updateUserSearchCriteria(req, res, knex, 'bKm2Tzg1z1H');
+app.put('/api/currentuser/notifsettings', (req, res) => {
+  updateUserNotifSettings(req, res, knex, 'bKm2Tzg1z1H');
 });
 
 
