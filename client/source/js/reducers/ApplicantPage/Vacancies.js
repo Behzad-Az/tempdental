@@ -58,17 +58,18 @@ const actionsMap = {
     }));
   },
   [APPL_LOAD_VACANCIES_SUCCESS]: (state, action) => {
-    if (action.data.freshReload) {
+    const { freshReload, userApplications, vacancies, vacancyDates, manualSearch } = action.data;
+    if (freshReload) {
       return state.merge(Map({
         asyncLoading: false,
         asyncError: null,
         pageError: false,
         dataLoaded: true,
-        userApplications: action.data.userApplications.map(application => application.vacancy_id),
-        vacancies: action.data.vacancies,
-        vacancyDates: action.data.vacancyDates,
-        noMoreVacancies: !action.data.vacancies.length,
-        manualSearch: action.data.manualSearch
+        userApplications: userApplications.map(application => application.vacancy_id),
+        vacancies,
+        vacancyDates,
+        noMoreVacancies: !vacancies.length,
+        manualSearch
       }));
     } else {
       return state.merge(Map({
@@ -76,11 +77,11 @@ const actionsMap = {
         asyncError: null,
         pageError: false,
         dataLoaded: true,
-        userApplications: action.data.userApplications.map(application => application.vacancy_id),
-        vacancies: state.get('vacancies').concat(action.data.vacancies),
-        vacancyDates: state.get('vacancyDates').concat(action.data.vacancyDates),
-        noMoreVacancies: !action.data.vacancies.length,
-        manualSearch: action.data.manualSearch
+        userApplications: userApplications.map(application => application.vacancy_id),
+        vacancies: state.get('vacancies').concat(vacancies),
+        vacancyDates: state.get('vacancyDates').concat(vacancyDates),
+        noMoreVacancies: !vacancies.length,
+        manualSearch
       }));
     }
   },

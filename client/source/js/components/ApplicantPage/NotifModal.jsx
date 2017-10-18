@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Switch from 'react-toggle-switch';
 import 'react-toggle-switch/dist/css/switch.min.css';
-import { applModalHandleChng } from 'actions/ApplicantPage/ControlBar';
+import { applModalHandleChng, applModalAddressChng } from 'actions/ApplicantPage/ControlBar';
 import GoogleAddressBar from './GoogleAddressBar.jsx';
 
 @connect(state => ({
@@ -23,6 +23,7 @@ export default class NotifModal extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._handleSwitch = this._handleSwitch.bind(this);
+    this._handleSearchAddressChange = this._handleSearchAddressChange.bind(this);
   }
 
   _handleChange(event) {
@@ -39,9 +40,12 @@ export default class NotifModal extends Component {
     this._handleChange(event);
   }
 
+  _handleSearchAddressChange(args) {
+    this.props.dispatch(applModalAddressChng(args));
+  }
+
   render() {
     const { modals, toggleModal, modalValues } = this.props;
-    console.log("i'm here 66: ", modalValues);
     return (
       <div className={modals.notifModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
@@ -54,73 +58,78 @@ export default class NotifModal extends Component {
 
             <div className='field'>
               <div className='control'>
+                <label className='label'>
+                  Notifications: {modalValues.getNotified ? '(On)' : '(Off)'}
+                </label>
                 <Switch onClick={this._handleSwitch} on={modalValues.getNotified || false} />
               </div>
             </div>
 
-            <div className='field'>
-              <label className='label'>
-                Search Area:
-              </label>
-              <div className='google-address-bar control'>
-                <GoogleAddressBar
-                  searchAddress={modalValues.address}
-                  saveNewSearchAddress={null}
-                />
-              </div>
-            </div>
-
-            <div className='field'>
-              <div className='control'>
-                <span className='select'>
-                  <select
-                    name='searchDistance'
-                    onChange={this._handleChange}
-                    value={modalValues.searchDistance}
-                  >
-                    <option value=''>Range</option>
-                    <option value={10000}>10km</option>
-                    <option value={20000}>20km</option>
-                    <option value={30000}>30km</option>
-                    <option value={50000}>50km</option>
-                    <option value={100000}>100km</option>
-                    <option value={500000}>500km</option>
-                    <option value={99999000}>All</option>
-                  </select>
-                </span>
-              </div>
-            </div>
-
-            <div className='field'>
-              <div className='control'>
-                <label className='checkbox'>
-                  <input
-                    type='checkbox'
-                    name='searchFt'
-                    checked={modalValues.searchFt}
-                    onChange={this._handleChange} /> Full Time (Permanent)
+            <div className={modalValues.getNotified ? 'params' : 'params is-hidden'}>
+              <div className='field'>
+                <label className='label'>
+                  Search Area:
                 </label>
+                <div className='google-address-bar control'>
+                  <GoogleAddressBar
+                    searchAddress={modalValues.address}
+                    saveNewSearchAddress={this._handleSearchAddressChange}
+                  />
+                </div>
               </div>
-              <div className='control'>
-                <label className='checkbox'>
-                  <input
-                    type='checkbox'
-                    name='searchPt'
-                    checked={modalValues.searchPt}
-                    onChange={this._handleChange} /> Part Time (Permanent)
-                </label>
-              </div>
-              <div className='control'>
-                <label className='checkbox'>
-                  <input
-                    type='checkbox'
-                    name='searchTemp'
-                    checked={modalValues.searchTemp}
-                    onChange={this._handleChange} /> Temporary
-                </label>
-              </div>
-            </div>
 
+              <div className='field'>
+                <div className='control'>
+                  <span className='select'>
+                    <select
+                      name='searchDistance'
+                      onChange={this._handleChange}
+                      value={modalValues.searchDistance}
+                    >
+                      <option value=''>Range</option>
+                      <option value={10000}>10km</option>
+                      <option value={20000}>20km</option>
+                      <option value={30000}>30km</option>
+                      <option value={50000}>50km</option>
+                      <option value={100000}>100km</option>
+                      <option value={500000}>500km</option>
+                      <option value={99999000}>All</option>
+                    </select>
+                  </span>
+                </div>
+              </div>
+
+              <div className='field'>
+                <div className='control'>
+                  <label className='checkbox'>
+                    <input
+                      type='checkbox'
+                      name='searchFt'
+                      checked={modalValues.searchFt}
+                      onChange={this._handleChange} /> Full Time (Permanent)
+                  </label>
+                </div>
+                <div className='control'>
+                  <label className='checkbox'>
+                    <input
+                      type='checkbox'
+                      name='searchPt'
+                      checked={modalValues.searchPt}
+                      onChange={this._handleChange} /> Part Time (Permanent)
+                  </label>
+                </div>
+                <div className='control'>
+                  <label className='checkbox'>
+                    <input
+                      type='checkbox'
+                      name='searchTemp'
+                      checked={modalValues.searchTemp}
+                      onChange={this._handleChange} /> Temporary
+                  </label>
+                </div>
+              </div>
+
+            </div>
           </section>
           <footer className='modal-card-foot'>
             <button className='button is-success'>Save changes</button>

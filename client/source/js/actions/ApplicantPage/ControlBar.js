@@ -3,22 +3,15 @@ import api from 'api/ApplicantPage';
 export const APPL_GET_CONTROL_DATA_START = 'APPL_GET_CONTROL_DATA_START';
 export const APPL_GET_CONTROL_DATA_ERROR = 'APPL_GET_CONTROL_DATA_ERROR';
 export const APPL_GET_CONTROL_DATA_SUCCESS = 'APPL_GET_CONTROL_DATA_SUCCESS';
-export const APPL_HANDLE_CONTROL_INPUT_CHNG = 'APPL_HANDLE_CONTROL_INPUT_CHNG';
-export const APPL_HANDLE_CONTROL_CHECKBOX = 'APPL_HANDLE_CONTROL_CHECKBOX';
+export const APPL_HANDLE_CONTROL_CHNG = 'APPL_HANDLE_CONTROL_CHNG';
 export const APPL_HANDLE_ADDRESS_SEARCH = 'APPL_HANDLE_ADDRESS_SEARCH';
 export const APPL_TOGGLE_MODAL = 'APPL_TOGGLE_MODAL';
 export const APPL_MODAL_HANDLE_CHNG = 'APPL_MODAL_HANDLE_CHNG';
+export const APPL_MODAL_ADDRESS_CHNG = 'APPL_MODAL_ADDRESS_CHNG';
 
-export function applHandleControlInput(event) {
+export function applHandleControlChng(event) {
   return {
-    type: APPL_HANDLE_CONTROL_INPUT_CHNG,
-    event
-  };
-}
-
-export function applHandleControlCheckbox(event) {
-  return {
-    type: APPL_HANDLE_CONTROL_CHECKBOX,
+    type: APPL_HANDLE_CONTROL_CHNG,
     event
   };
 }
@@ -41,6 +34,13 @@ export function applModalHandleChng(event) {
   return {
     type: APPL_MODAL_HANDLE_CHNG,
     event
+  };
+}
+
+export function applModalAddressChng(args) {
+  return {
+    type: APPL_MODAL_ADDRESS_CHNG,
+    args
   };
 }
 

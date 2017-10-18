@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   applGetControlData,
-  applHandleControlInput,
-  applHandleControlCheckbox,
+  applHandleControlChng,
   applHandleControlAddress,
   applToggelModal
 } from 'actions/ApplicantPage/ControlBar';
@@ -50,7 +49,6 @@ export default class ControlBar extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._validateForm = this._validateForm.bind(this);
-    this._handleCheckBoxChange = this._handleCheckBoxChange.bind(this);
     this._handleManualSearch = this._handleManualSearch.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpNotifModal = this._setUpNotifModal.bind(this);
@@ -62,11 +60,7 @@ export default class ControlBar extends Component {
   }
 
   _handleChange(event) {
-    this.props.dispatch(applHandleControlInput(event));
-  }
-
-  _handleCheckBoxChange(event) {
-    this.props.dispatch(applHandleControlCheckbox(event));
+    this.props.dispatch(applHandleControlChng(event));
   }
 
   _toggleModal(modalName) {
@@ -75,15 +69,17 @@ export default class ControlBar extends Component {
 
   _setUpNotifModal() {
     const { userInfo } = this.props;
-    // console.log("i'm here 77: ", userInfo.address);
+    console.log("i'm here 99: ", userInfo);
     this._toggleModal({
       action: '_edit',
-      getNotified: userInfo.get_notified,
+      getNotified: userInfo.get_notified || true,
       searchFt: userInfo.search_ft,
-      searchPt: userInfo.search_pt,
+      searchPt: userInfo.search_pt && false,
       searchTemp: userInfo.search_temp,
       searchDistance: userInfo.search_distance,
       address: userInfo.address,
+      lat: userInfo.lat,
+      lng: userInfo.lng,
       modalName: 'notifModal'
     });
   }
@@ -174,7 +170,7 @@ export default class ControlBar extends Component {
                     type='checkbox'
                     name='searchFt'
                     checked={searchFt}
-                    onChange={this._handleCheckBoxChange} /> Full Time (Permanent)
+                    onChange={this._handleChange} /> Full Time (Permanent)
                 </label>
               </div>
               <div className='control'>
@@ -183,7 +179,7 @@ export default class ControlBar extends Component {
                     type='checkbox'
                     name='searchPt'
                     checked={searchPt}
-                    onChange={this._handleCheckBoxChange} /> Part Time (Permanent)
+                    onChange={this._handleChange} /> Part Time (Permanent)
                 </label>
               </div>
               <div className='control'>
@@ -192,7 +188,7 @@ export default class ControlBar extends Component {
                     type='checkbox'
                     name='searchTemp'
                     checked={searchTemp}
-                    onChange={this._handleCheckBoxChange} /> Temporary
+                    onChange={this._handleChange} /> Temporary
                 </label>
               </div>
             </div>

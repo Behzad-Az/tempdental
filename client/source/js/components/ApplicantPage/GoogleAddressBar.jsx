@@ -12,6 +12,12 @@ export default class GoogleAddressBar extends Component {
     this._handleSelect = this._handleSelect.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.searchAddress !== nextProps.searchAddress) {
+      this.setState({ searchAddress: nextProps.searchAddress });
+    }
+  }
+
   _handleSelect(searchAddress) {
     this.setState({ searchAddress, loading: true });
 

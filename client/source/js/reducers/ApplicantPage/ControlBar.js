@@ -5,11 +5,11 @@ import {
   APPL_GET_CONTROL_DATA_START,
   APPL_GET_CONTROL_DATA_ERROR,
   APPL_GET_CONTROL_DATA_SUCCESS,
-  APPL_HANDLE_CONTROL_INPUT_CHNG,
-  APPL_HANDLE_CONTROL_CHECKBOX,
+  APPL_HANDLE_CONTROL_CHNG,
   APPL_HANDLE_ADDRESS_SEARCH,
   APPL_TOGGLE_MODAL,
-  APPL_MODAL_HANDLE_CHNG
+  APPL_MODAL_HANDLE_CHNG,
+  APPL_MODAL_ADDRESS_CHNG
 } from 'actions/ApplicantPage/ControlBar';
 
 const initialState = Map({
@@ -55,29 +55,49 @@ const actionsMap = {
       case 'searchTemp':
         modalValues[name] = checked;
         break;
+      case 'searchDistance':
+        modalValues[name] = parseInt(value);
+        break;
       default:
         modalValues[name] = value;
         break;
     }
     return state.merge(Map({ modalValues }));
-    // const { name, value } = action.event.target;
-    // let modalValues = { ...state.get('modalValues') };
-    // modalValues[name] = value;
-    // return state.merge(Map({ modalValues }));
   },
 
-  [APPL_HANDLE_CONTROL_INPUT_CHNG]: (state, action) => {
-    let { name, value } = action.event.target;
-    if (name === 'searchDistance') { value = parseInt(value); }
-    let stateObj = {};
-    stateObj[name] = value;
-    return state.merge(Map(stateObj));
+  [APPL_MODAL_ADDRESS_CHNG]: (state, action) => {
+    const modalValues = Object.assign(
+      {},
+      { ...state.get('modalValues') },
+      {
+        address: action.args.searchAddress,
+        lat: action.args.searchLat,
+        lng: action.args.searchLng
+      }
+    );
+    return state.merge(Map({ modalValues }));
   },
 
-  [APPL_HANDLE_CONTROL_CHECKBOX]: (state, action) => {
-    let { name, checked } = action.event.target;
+  [APPL_HANDLE_CONTROL_CHNG]: (state, action) => {
+    const { name, value, checked } = action.event.target;
     let stateObj = {};
-    stateObj[name] = checked;
+    switch (name) {
+      case 'searchFt':
+        stateObj[name] = checked;
+        break;
+      case 'searchPt':
+        stateObj[name] = checked;
+        break;
+      case 'searchTemp':
+        stateObj[name] = checked;
+        break;
+      case 'searchDistance':
+        stateObj[name] = parseInt(value);
+        break;
+      default:
+        stateObj[name] = value;
+        break;
+    }
     return state.merge(Map(stateObj));
   },
 
@@ -102,20 +122,21 @@ const actionsMap = {
   },
 
   [APPL_GET_CONTROL_DATA_SUCCESS]: (state, action) => {
+    const { userInfo } = action.data;
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
       pageError: false,
       dataLoaded: true,
-      searchLat: action.data.userInfo.lat,
-      searchLng: action.data.userInfo.lng,
-      searchAddress: action.data.userInfo.address,
-      searchDistance: action.data.userInfo.search_distance,
-      searchPt: action.data.userInfo.search_pt,
-      searchFt: action.data.userInfo.search_ft,
-      searchTemp: action.data.userInfo.search_temp,
-      getNotified: action.data.userInfo.get_notified,
-      userInfo: action.data.userInfo
+      searchLat: userInfo.lat,
+      searchLng: userInfo.lng,
+      searchAddress: userInfo.address,
+      searchDistance: userInfo.search_distance,
+      searchPt: userInfo.search_pt,
+      searchFt: userInfo.search_ft,
+      searchTemp: userInfo.search_temp,
+      getNotified: userInfo.get_notified,
+      userInfo: userInfo
     }));
   }
 };
