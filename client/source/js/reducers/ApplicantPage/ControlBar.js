@@ -66,13 +66,14 @@ const actionsMap = {
   },
 
   [APPL_MODAL_ADDRESS_CHNG]: (state, action) => {
+    const { addressObj } = action;
     const modalValues = Object.assign(
       {},
       { ...state.get('modalValues') },
       {
-        address: action.args.searchAddress,
-        lat: action.args.searchLat,
-        lng: action.args.searchLng
+        address: addressObj.searchAddress,
+        lat: addressObj.searchLat,
+        lng: addressObj.searchLng
       }
     );
     return state.merge(Map({ modalValues }));

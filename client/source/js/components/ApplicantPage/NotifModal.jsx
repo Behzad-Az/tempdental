@@ -23,7 +23,6 @@ export default class NotifModal extends Component {
     super();
     this._handleChange = this._handleChange.bind(this);
     this._handleSwitch = this._handleSwitch.bind(this);
-    this._handleSearchAddressChange = this._handleSearchAddressChange.bind(this);
   }
 
   _handleChange(event) {
@@ -40,12 +39,8 @@ export default class NotifModal extends Component {
     this._handleChange(event);
   }
 
-  _handleSearchAddressChange(args) {
-    this.props.dispatch(applModalAddressChng(args));
-  }
-
   render() {
-    const { modals, toggleModal, modalValues } = this.props;
+    const { modals, toggleModal, modalValues, dispatch } = this.props;
     return (
       <div className={modals.notifModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
@@ -73,7 +68,7 @@ export default class NotifModal extends Component {
                 <div className='google-address-bar control'>
                   <GoogleAddressBar
                     searchAddress={modalValues.address}
-                    saveNewSearchAddress={this._handleSearchAddressChange}
+                    saveNewSearchAddress={searchObj => dispatch(applModalAddressChng(searchObj))}
                   />
                 </div>
               </div>

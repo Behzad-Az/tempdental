@@ -37,10 +37,10 @@ export function applModalHandleChng(event) {
   };
 }
 
-export function applModalAddressChng(args) {
+export function applModalAddressChng(addressObj) {
   return {
     type: APPL_MODAL_ADDRESS_CHNG,
-    args
+    addressObj
   };
 }
 
