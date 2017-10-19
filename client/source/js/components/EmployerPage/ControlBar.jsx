@@ -54,6 +54,7 @@ export default class ControlBar extends Component {
   _setUpPostingModal() {
     const modalValues = {
       action: '_new',
+      postingId: null,
       startDate: null,
       endDate: null,
       title: null,

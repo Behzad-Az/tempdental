@@ -27,7 +27,7 @@ export default class PostingModal extends Component {
     this._handleDateChange = this._handleDateChange.bind(this);
     this._renderDateSelectors = this._renderDateSelectors.bind(this);
     this._renderModalBody = this._renderModalBody.bind(this);
-    this._handleNewPosting = this._handleNewPosting.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   _handleChange(event) {
@@ -201,30 +201,51 @@ export default class PostingModal extends Component {
     return true;
   }
 
-  _handleNewPosting() {
+  _handleSubmit() {
     const { modalValues, toggleModal } = this.props;
-    const startDate = modalValues.startDate.format('YYYY-MM-DD');
-    const endDate = modalValues.type === 'Temp'  ?
-                    modalValues.endDate.format('YYYY-MM-DD') :
-                    '2099-12-30';
+    // const startDate = modalValues.startDate.format('YYYY-MM-DD');
+    // const endDate = modalValues.type === 'Temp'  ?
+    //                 modalValues.endDate.format('YYYY-MM-DD') :
+    //                 '2099-12-30';
     const data = {
       ...modalValues,
-      dates: [{ startDate, endDate }]
+      // dates: [{ startDate, endDate }]
     };
 
-    fetch('/api/employer/vacancies', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(resJSON => console.log("i'm here 0: ", resJSON))
-    .catch(console.error)
-    .then(toggleModal);
+    console.log("i'm here data: ", data);
+
+    if (modalValues.action === '_new') {
+      // fetch('/api/employer/vacancies', {
+      //   method: 'POST',
+      //   credentials: 'same-origin',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(data)
+      // })
+      // .then(response => response.json())
+      // .then(resJSON => console.log("i'm here 0: ", resJSON))
+      // .catch(console.error)
+      // .then(toggleModal);
+    } else if (modalValues.action === '_edit') {
+      fetch(`/api/employer/vacancies/${modalValues.postingId}`, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.ok ?
+        console.log("i'm here 0: updated vacancy") :
+        null
+      )
+      .catch(console.error)
+      .then(toggleModal);
+    }
+
   }
 
   render() {
@@ -250,7 +271,7 @@ export default class PostingModal extends Component {
                   onChange={this._handleChange} /> Anonymous Posting
               </label>
             </button>
-            <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleNewPosting}>Submit</button>
+            <button className='button is-primary' disabled={!this._validateForm()} onClick={this._handleSubmit}>Submit</button>
             <button className='button' onClick={toggleModal}>Cancel</button>
           </footer>
         </div>

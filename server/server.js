@@ -89,6 +89,7 @@ const postNewTextReply = require('./helpers/POST_Routes/postNewTextReply.js');
 const postNewApplication = require('./helpers/POST_Routes/postNewApplication.js');
 
 const updateUserNotifSettings = require('./helpers/PUT_Routes/updateUserNotifSettings.js');
+const updateVacancy = require('./helpers/PUT_Routes/updateVacancy.js');
 
 const deleteApplication = require('./helpers/DELETE_Routes/deleteApplication.js');
 const deleteVacancy = require('./helpers/DELETE_Routes/deleteVacancy.js');
@@ -146,6 +147,10 @@ app.post('/text_replies', (req, res) => {
 // });
 app.put('/api/currentuser/notifsettings', (req, res) => {
   updateUserNotifSettings(req, res, knex, 'bKm2Tzg1z1H');
+});
+
+app.put('/api/employer/vacancies/:vacancy_id', (req, res) => {
+  updateVacancy(req, res, knex, 'aWg8Sya0i3V');
 });
 
 
