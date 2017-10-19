@@ -12,7 +12,6 @@ import ControlBar from 'components/ApplicantPage/ControlBar.jsx';
   endDate: state.applControlBar.get('endDate'),
   userApplications: state.applVacancies.get('userApplications'),
   vacancies: state.applVacancies.get('vacancies'),
-  vacancyDates: state.applVacancies.get('vacancyDates'),
   noMoreVacancies: state.applVacancies.get('noMoreVacancies'),
   manualSearch: state.applVacancies.get('manualSearch'),
   asyncLoading: state.applVacancies.get('asyncLoading'),
@@ -34,7 +33,6 @@ export default class VacanciesContainer extends Component {
     endDate: PropTypes.string,
     userApplications: PropTypes.array,
     vacancies: PropTypes.array,
-    vacancyDates: PropTypes.array,
     noMoreVacancies: PropTypes.bool,
     manualSearch: PropTypes.bool,
     searchLat: PropTypes.number,
@@ -105,7 +103,7 @@ export default class VacanciesContainer extends Component {
   }
 
   _renderCompAfterData() {
-    const { dataLoaded, pageError, vacancies, vacancyDates, userApplications, asyncLoading } = this.props;
+    const { dataLoaded, pageError, vacancies, userApplications, asyncLoading } = this.props;
     if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
@@ -125,7 +123,6 @@ export default class VacanciesContainer extends Component {
               <VacancyRow
                 key={vacancy.id}
                 vacancy={vacancy}
-                dates={vacancyDates.filter(date => date.vacancy_id === vacancy.id)}
                 alreadyApplied={userApplications.includes(vacancy.id)} />
             )
           }

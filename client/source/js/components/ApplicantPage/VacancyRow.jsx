@@ -12,7 +12,6 @@ export default class VacancyRow extends Component {
 
   static propTypes = {
     vacancy: PropTypes.object,
-    dates: PropTypes.array,
     alreadyApplied: PropTypes.bool,
     dispatch: PropTypes.func
   }
@@ -38,20 +37,10 @@ export default class VacancyRow extends Component {
   }
 
   _renderVacancyDates() {
-    const { vacancy, dates } = this.props;
-    if (vacancy.type === 'Temp') {
-      return dates.map(dateRow => {
-        return <p key={dateRow.id}>
-          <i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}
-        </p>
-      });
-    } else {
-      return (
-        <p>
-          <i className='fa fa-calendar' /> {this._findDateInfo(dates[0].start_date)} (expected start date)
-        </p>
-      );
-    }
+    const { vacancy } = this.props;
+    return vacancy.type === 'Temp' ?
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(vacancy.start_date)} to {this._findDateInfo(vacancy.end_date)}</p> :
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(vacancy.start_date)} (expected start date)</p>;
   }
 
   _handleApply() {
@@ -123,7 +112,7 @@ export default class VacancyRow extends Component {
                 <hr />
 
                 <strong>
-                  Vacancy Dates:
+                  When?
                 </strong>
                 <br />
                 { this._renderVacancyDates() }

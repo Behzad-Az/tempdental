@@ -13,7 +13,6 @@ const initialState = Map({
   pageError: false,
   userApplications: [],
   vacancies: [],
-  vacancyDates: [],
   noMoreVacancies: false,
   manualSearch: false,
   asyncLoading: false,
@@ -58,7 +57,7 @@ const actionsMap = {
     }));
   },
   [APPL_LOAD_VACANCIES_SUCCESS]: (state, action) => {
-    const { freshReload, userApplications, vacancies, vacancyDates, manualSearch } = action.data;
+    const { freshReload, userApplications, vacancies, manualSearch } = action.data;
     if (freshReload) {
       return state.merge(Map({
         asyncLoading: false,
@@ -67,7 +66,6 @@ const actionsMap = {
         dataLoaded: true,
         userApplications: userApplications.map(application => application.vacancy_id),
         vacancies,
-        vacancyDates,
         noMoreVacancies: !vacancies.length,
         manualSearch
       }));
@@ -79,7 +77,6 @@ const actionsMap = {
         dataLoaded: true,
         userApplications: userApplications.map(application => application.vacancy_id),
         vacancies: state.get('vacancies').concat(vacancies),
-        vacancyDates: state.get('vacancyDates').concat(vacancyDates),
         noMoreVacancies: !vacancies.length,
         manualSearch
       }));

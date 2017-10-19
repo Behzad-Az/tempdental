@@ -19,7 +19,8 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
   const getVacancies = userInfo => knex('vacancies')
     .leftJoin('offices', 'vacancies.office_id', 'offices.id')
     .select(
-      'vacancies.id', 'vacancies.title', 'vacancies.description', 'vacancies.type', 'vacancies.created_at', 'vacancies.anonymous',
+      'vacancies.id', 'vacancies.title', 'vacancies.description', 'vacancies.type',
+      'vacancies.created_at', 'vacancies.anonymous', 'vacancies.start_date', 'vacancies.end_date',
       'offices.lat', 'offices.lng', 'offices.address', 'offices.name as officeName', 'offices.more_info as officeInfo'
     )
     .whereRaw(`ST_DWithin (offices.geog_gis_loc, '${userInfo.geog_gis_loc}', ${userInfo.search_distance})`)
