@@ -43,6 +43,10 @@ export default class PostingModal extends Component {
 
   _renderDateSelectors() {
     const { dates, type, startDate, endDate } = this.props.modalValues;
+
+    // endDate = endDate || startDate
+    // console.log("i'm here 66: ", startDate, endDate);
+
     if (type === 'FT' || type === 'PT') {
       return (
         <div className='field'>
@@ -81,7 +85,7 @@ export default class PostingModal extends Component {
                 minDate={moment()}
                 maxDate={moment().add(6, 'months')}
                 startDate={startDate}
-                endDate={endDate}
+                endDate={endDate || startDate}
                 disabledKeyboardNavigation
                 onChange={value => this._handleDateChange('startDate', value)}
               />
@@ -100,7 +104,7 @@ export default class PostingModal extends Component {
                 minDate={moment()}
                 maxDate={moment().add(6, 'months')}
                 startDate={startDate}
-                endDate={endDate}
+                endDate={endDate || startDate}
                 disabledKeyboardNavigation
                 onChange={value => this._handleDateChange('endDate', value)}
               />
@@ -154,7 +158,7 @@ export default class PostingModal extends Component {
             <label className='label'>
               Position Title:
             </label>
-            <p className='control'>
+            <div className='control'>
               <input
                 className='input'
                 type='text'
@@ -162,7 +166,7 @@ export default class PostingModal extends Component {
                 defaultValue={modalValues.title}
                 placeholder='Example: Temporary Dental Assistant'
                 onChange={this._handleChange} />
-            </p>
+            </div>
           </div>
 
           { this._renderDateSelectors() }
@@ -203,41 +207,40 @@ export default class PostingModal extends Component {
 
   _handleSubmit() {
     const { modalValues, toggleModal } = this.props;
-    modalValues.startDate = modalValues.startDate.format('YYYY-MM-DD');
-    modalValues.endDate = modalValues.endDate.format('YYYY-MM-DD');
 
-    console.log("i'm here data: ", modalValues);
+    modalValues.startDate = modalValues.startDate.format('YYYY-MM-DD');
+    modalValues.endDate = modalValues.type === 'Temp' ? modalValues.endDate.format('YYYY-MM-DD') : null;
 
     if (modalValues.action === '_new') {
-      // fetch('/api/employer/vacancies', {
-      //   method: 'POST',
-      //   credentials: 'same-origin',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // })
-      // .then(response => response.json())
-      // .then(resJSON => console.log("i'm here 0: ", resJSON))
-      // .catch(console.error)
-      // .then(toggleModal);
+      fetch('/api/employer/vacancies', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(modalValues)
+      })
+      .then(response => response.json())
+      .then(resJSON => console.log("i'm here 0: ", resJSON))
+      .catch(console.error)
+      .then(toggleModal);
     } else if (modalValues.action === '_edit') {
-      // fetch(`/api/employer/vacancies/${modalValues.postingId}`, {
-      //   method: 'PUT',
-      //   credentials: 'same-origin',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // })
-      // .then(response => response.ok ?
-      //   console.log("i'm here 0: updated vacancy") :
-      //   null
-      // )
-      // .catch(console.error)
-      // .then(toggleModal);
+      fetch(`/api/employer/vacancies/${modalValues.postingId}`, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(modalValues)
+      })
+      .then(response => response.ok ?
+        console.log("i'm here 0: updated vacancy") :
+        null
+      )
+      .catch(console.error)
+      .then(toggleModal);
     }
 
   }
@@ -261,7 +264,7 @@ export default class PostingModal extends Component {
                 <input
                   type='checkbox'
                   name='anonymous'
-                  defaultChecked={modalValues.anonymous}
+                  checked={modalValues.anonymous}
                   onChange={this._handleChange} /> Anonymous Posting
               </label>
             </button>

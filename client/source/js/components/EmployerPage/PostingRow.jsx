@@ -49,7 +49,7 @@ export default class PostingRow extends Component {
     const modalValues = {
       action: '_edit',
       startDate: moment(start_date.slice(0, 10), 'YYYY-MM-DD'),
-      endDate: moment(end_date.slice(0, 10), 'YYYY-MM-DD'),
+      endDate: type === 'Temp' ? moment(end_date.slice(0, 10), 'YYYY-MM-DD') : null,
       title,
       description,
       type,

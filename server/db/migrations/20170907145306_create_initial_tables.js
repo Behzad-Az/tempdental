@@ -42,7 +42,7 @@ exports.up = function(knex, Promise) {
       t.string('title', 30).notNullable();
       t.string('description', 500).notNullable();
       t.date('start_date').notNullable();
-      t.date('end_date').notNullable();
+      t.date('end_date');
       t.string('type', 4).notNullable();
       t.boolean('anonymous').notNullable();
       t.string('office_id', 11).notNullable().references('offices.id');
