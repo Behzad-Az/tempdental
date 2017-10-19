@@ -19,7 +19,7 @@ export default class PostingRow extends Component {
   constructor() {
     super();
     this._findDateInfo = this._findDateInfo.bind(this);
-    this._renderVacancyDates = this._renderVacancyDates.bind(this);
+    this._renderDates = this._renderDates.bind(this);
     this._findTimePassed = this._findTimePassed.bind(this);
     this._setUpEditModal = this._setUpEditModal.bind(this);
     this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
@@ -33,7 +33,7 @@ export default class PostingRow extends Component {
     return `${days[momentObj.weekday()]}, ${months[momentObj.month()]} ${momentObj.date()} ${momentObj.year()}`;
   }
 
-  _renderVacancyDates() {
+  _renderDates() {
     const { type, start_date, end_date } = this.props.posting;
     return type === 'Temp' ?
       <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
@@ -105,10 +105,10 @@ export default class PostingRow extends Component {
                 {description}
                 <hr />
                 <strong>
-                  Vacancy Dates:
+                  When?
                 </strong>
                 <br />
-                { this._renderVacancyDates() }
+                { this._renderDates() }
                 <hr />
                 <i className='fa fa-clock-o' /> 9AM to 5PM
                 <br />

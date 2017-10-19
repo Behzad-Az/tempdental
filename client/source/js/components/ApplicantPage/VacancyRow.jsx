@@ -19,7 +19,7 @@ export default class VacancyRow extends Component {
   constructor() {
     super();
     this._findDateInfo = this._findDateInfo.bind(this);
-    this._renderVacancyDates = this._renderVacancyDates.bind(this);
+    this._renderDates = this._renderDates.bind(this);
     this._findTimePassed = this._findTimePassed.bind(this);
     this._handleApply = this._handleApply.bind(this);
     this._handleWithdrawApplication = this._handleWithdrawApplication.bind(this);
@@ -36,7 +36,7 @@ export default class VacancyRow extends Component {
     return moment(date.slice(0,10), 'YYYY-MM-DD').fromNow();
   }
 
-  _renderVacancyDates() {
+  _renderDates() {
     const { type, start_date, end_date } = this.props.vacancy;
     return type === 'Temp' ?
       <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
@@ -115,7 +115,7 @@ export default class VacancyRow extends Component {
                   When?
                 </strong>
                 <br />
-                { this._renderVacancyDates() }
+                { this._renderDates() }
                 <hr />
                 <i className='fa fa-clock-o' /> 9AM to 5PM
                 <br />

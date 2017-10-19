@@ -11,7 +11,6 @@ const initialState = Map({
   dataLoaded: false,
   pageError: false,
   postings: [],
-  vacancyDates: [],
   applicantCounts: [],
   asyncLoading: false,
   asyncError: null
@@ -39,14 +38,13 @@ const actionsMap = {
     }));
   },
   [EMP_GET_POSTINGS_SUCCESS]: (state, action) => {
-    const { postings, vacancyDates, applicantCounts } = action.data;
+    const { postings, applicantCounts } = action.data;
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
       pageError: false,
       dataLoaded: true,
       postings,
-      vacancyDates,
       applicantCounts
     }));
   },
