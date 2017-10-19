@@ -40,7 +40,7 @@ export default class DeletePostingModal extends Component {
   }
 
   render() {
-    const { modals, toggleModal } = this.props;
+    const { modals, toggleModal, modalValues } = this.props;
     return (
       <div className={modals.deletePostingModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
@@ -50,7 +50,11 @@ export default class DeletePostingModal extends Component {
             <button className='delete' aria-label='close' onClick={toggleModal} />
           </header>
           <section className='modal-card-body'>
-            This action will close all of your outstanding postings and cannot be undone.
+            {
+              modalValues.vacancyId === '_all' ?
+              'This will close all of your outstanding postings and all assosciated applications. This cannot be undone.' :
+              'This will close this posting and all assosciated applications. This cannot be undone'
+            }
           </section>
           <footer className='modal-card-foot'>
             <button className='button is-success' onClick={this._handleDeletePosting}>I am sure</button>

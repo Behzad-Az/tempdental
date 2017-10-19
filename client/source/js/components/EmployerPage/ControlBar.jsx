@@ -30,7 +30,6 @@ export default class ControlBar extends Component {
 
   constructor() {
     super();
-    this._handleFilterOffice = this._handleFilterOffice.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._setUpOfficeModal = this._setUpOfficeModal.bind(this);
@@ -41,10 +40,6 @@ export default class ControlBar extends Component {
 
   componentDidMount() {
     this.props.dispatch(empGetControlData());
-  }
-
-  _handleFilterOffice(officeId) {
-    this.props.dispatch(addRemoveSelectedOffice(officeId));
   }
 
   _toggleModal(modalValues) {
@@ -100,11 +95,11 @@ export default class ControlBar extends Component {
   }
 
   _renderFilterOfficeRows() {
-    const { offices, selectedOffices } = this.props;
+    const { offices, selectedOffices, dispatch } = this.props;
     return offices.map(office => {
       const className = selectedOffices.includes(office.id) ? 'panel-block selected' : 'panel-block';
       return (
-        <a key={office.id} className={className} onClick={() => this._handleFilterOffice(office.id)}>
+        <a key={office.id} className={className} onClick={() => dispatch(addRemoveSelectedOffice(office.id))}>
           <span className='panel-icon'>
             <i className='fa fa-map-marker' />
           </span>
