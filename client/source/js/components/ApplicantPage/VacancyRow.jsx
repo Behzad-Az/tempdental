@@ -37,10 +37,10 @@ export default class VacancyRow extends Component {
   }
 
   _renderVacancyDates() {
-    const { vacancy } = this.props;
-    return vacancy.type === 'Temp' ?
-      <p><i className='fa fa-calendar' /> {this._findDateInfo(vacancy.start_date)} to {this._findDateInfo(vacancy.end_date)}</p> :
-      <p><i className='fa fa-calendar' /> {this._findDateInfo(vacancy.start_date)} (expected start date)</p>;
+    const { type, start_date, end_date } = this.props.vacancy;
+    return type === 'Temp' ?
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (expected start date)</p>;
   }
 
   _handleApply() {

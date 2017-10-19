@@ -203,16 +203,10 @@ export default class PostingModal extends Component {
 
   _handleSubmit() {
     const { modalValues, toggleModal } = this.props;
-    // const startDate = modalValues.startDate.format('YYYY-MM-DD');
-    // const endDate = modalValues.type === 'Temp'  ?
-    //                 modalValues.endDate.format('YYYY-MM-DD') :
-    //                 '2099-12-30';
-    const data = {
-      ...modalValues,
-      // dates: [{ startDate, endDate }]
-    };
+    modalValues.startDate = modalValues.startDate.format('YYYY-MM-DD');
+    modalValues.endDate = modalValues.endDate.format('YYYY-MM-DD');
 
-    console.log("i'm here data: ", data);
+    console.log("i'm here data: ", modalValues);
 
     if (modalValues.action === '_new') {
       // fetch('/api/employer/vacancies', {
@@ -229,21 +223,21 @@ export default class PostingModal extends Component {
       // .catch(console.error)
       // .then(toggleModal);
     } else if (modalValues.action === '_edit') {
-      fetch(`/api/employer/vacancies/${modalValues.postingId}`, {
-        method: 'PUT',
-        credentials: 'same-origin',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.ok ?
-        console.log("i'm here 0: updated vacancy") :
-        null
-      )
-      .catch(console.error)
-      .then(toggleModal);
+      // fetch(`/api/employer/vacancies/${modalValues.postingId}`, {
+      //   method: 'PUT',
+      //   credentials: 'same-origin',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(data)
+      // })
+      // .then(response => response.ok ?
+      //   console.log("i'm here 0: updated vacancy") :
+      //   null
+      // )
+      // .catch(console.error)
+      // .then(toggleModal);
     }
 
   }

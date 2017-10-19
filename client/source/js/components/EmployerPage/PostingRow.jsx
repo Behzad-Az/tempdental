@@ -12,7 +12,6 @@ export default class PostingRow extends Component {
 
   static propTypes = {
     posting: PropTypes.object,
-    dates: PropTypes.array,
     applicantCount: PropTypes.number,
     dispatch: PropTypes.func
   }
@@ -22,8 +21,8 @@ export default class PostingRow extends Component {
     this._findDateInfo = this._findDateInfo.bind(this);
     this._renderVacancyDates = this._renderVacancyDates.bind(this);
     this._findTimePassed = this._findTimePassed.bind(this);
-    this._showEditModal = this._showEditModal.bind(this);
-    this._showDeleteModal = this._showDeleteModal.bind(this);
+    this._setUpEditModal = this._setUpEditModal.bind(this);
+    this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
     this._getApplicants = this._getApplicants.bind(this);
   }
 
@@ -35,46 +34,34 @@ export default class PostingRow extends Component {
   }
 
   _renderVacancyDates() {
-    const { posting, dates } = this.props;
-    if (posting.type === 'Temp') {
-      return dates.map(dateRow =>
-        <p key={dateRow.id}>
-          <i className='fa fa-calendar' /> {this._findDateInfo(dateRow.start_date)} to {this._findDateInfo(dateRow.end_date)}
-        </p>
-      );
-    } else {
-      return (
-        <p>
-          <i className='fa fa-calendar' /> {this._findDateInfo(dates[0].start_date)} (expected start date)
-        </p>
-      );
-    }
+    const { type, start_date, end_date } = this.props.posting;
+    return type === 'Temp' ?
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (expected start date)</p>;
   }
 
   _findTimePassed(date) {
     return moment(date.slice(0, 10), 'YYYY-MM-DD').fromNow();
   }
 
-  _showEditModal() {
-    const { posting, dates, dispatch } = this.props;
-
+  _setUpEditModal() {
+    const { start_date, end_date, title, description, type, anonymous, office_id, id } = this.props.posting;
     const modalValues = {
       action: '_edit',
-      startDate: moment(dates[0].start_date.slice(0, 10), 'YYYY-MM-DD'),
-      endDate: moment(dates[0].end_date.slice(0, 10), 'YYYY-MM-DD'),
-      title: posting.title,
-      description: posting.description,
-      type: posting.type,
-      anonymous: posting.anonymous,
-      officeId: posting.office_id,
-      postingId: posting.id,
+      startDate: moment(start_date.slice(0, 10), 'YYYY-MM-DD'),
+      endDate: moment(end_date.slice(0, 10), 'YYYY-MM-DD'),
+      title,
+      description,
+      type,
+      anonymous,
+      officeId: office_id,
+      postingId: id,
       modalName: 'postingModal'
     };
-
-    dispatch(empToggleModal(modalValues));
+    this.props.dispatch(empToggleModal(modalValues));
   }
 
-  _showDeleteModal() {
+  _setUpDeleteModal() {
     const { posting, dispatch } = this.props;
     const modalValues = {
       vacancyId: posting.id,
@@ -141,12 +128,12 @@ export default class PostingRow extends Component {
             <div className='btn-container'>
               <button
                 className='button edit'
-                onClick={this._showEditModal}>
+                onClick={this._setUpEditModal}>
                 <i className='fa fa-pencil' />
               </button>
               <button
                 className='button remove'
-                onClick={this._showDeleteModal}>
+                onClick={this._setUpDeleteModal}>
                 <i className='fa fa-trash' />
               </button>
               <button

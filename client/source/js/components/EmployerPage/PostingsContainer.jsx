@@ -8,7 +8,6 @@ import PostingRow from './PostingRow.jsx';
   dataLoaded: state.empPostings.get('dataLoaded'),
   pageError: state.empPostings.get('pageError'),
   postings: state.empPostings.get('postings'),
-  vacancyDates: state.empPostings.get('vacancyDates'),
   applicantCounts: state.empPostings.get('applicantCounts'),
   selectedOffices: state.empControlBar.get('selectedOffices')
 }))
@@ -18,7 +17,6 @@ export default class PostingsContainer extends Component {
     dataLoaded: PropTypes.bool,
     pageError: PropTypes.bool,
     postings: PropTypes.array,
-    vacancyDates: PropTypes.array,
     applicantCounts: PropTypes.array,
     selectedOffices: PropTypes.array,
     dispatch: PropTypes.func
@@ -42,7 +40,7 @@ export default class PostingsContainer extends Component {
   }
 
   _renderPostingRows() {
-    const { selectedOffices, postings, vacancyDates } = this.props;
+    const { selectedOffices, postings } = this.props;
     const filteredPostings = selectedOffices.length ?
                              postings.filter(posting => selectedOffices.includes(posting.office_id)) :
                              postings;
@@ -51,7 +49,6 @@ export default class PostingsContainer extends Component {
         <PostingRow
           key={posting.id}
           posting={posting}
-          dates={vacancyDates.filter(date => date.vacancy_id === posting.id)}
           applicantCount={this._findApplicantCount(posting)} />
       );
     } else {
