@@ -68,8 +68,20 @@
 
   }
 
-  .modals {
+  .modals .modal.is-active {
     .columns { margin-bottom: 0; .field, .column { margin-bottom: 0; padding-bottom: 0; &:last-child { margin-bottom: $default_margin/2; } } }
+    .applicants-container {
+      .applicant-row .media {
+        .media-left { border-radius: 50%; overflow: hidden; }
+        .media-content{
+          .button.delete { float: right; }
+          .btns-row {
+            display: flex; flex-wrap: wrap; flex-direction: row;
+            .button { margin-right: $default_margin/4; margin-bottom: $default_margin/4; &:last-child { margin-bottom: 0; } }
+          }
+        }
+      }
+    }
   }
 
   .hamburger { display: none; }

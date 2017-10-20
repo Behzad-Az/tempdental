@@ -43,10 +43,6 @@ export default class PostingModal extends Component {
 
   _renderDateSelectors() {
     const { dates, type, startDate, endDate } = this.props.modalValues;
-
-    // endDate = endDate || startDate
-    // console.log("i'm here 66: ", startDate, endDate);
-
     if (type === 'FT' || type === 'PT') {
       return (
         <div className='field'>

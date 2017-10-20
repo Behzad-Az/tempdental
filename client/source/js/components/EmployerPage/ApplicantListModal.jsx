@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { empGetApplList } from 'actions/EmployerPage/Applicants';
+import ApplicantRow from 'components/EmployerPage/ApplicantRow.jsx';
 
 @connect(state => ({
   modals: state.empControlBar.get('modals'),
@@ -45,12 +46,8 @@ export default class ApplicantListModal extends Component {
       );
     } else if (dataLoaded) {
       return (
-        <div className='postings-container'>
-          <h1 className='header'>
-            List of Applicants:
-            <i className='fa fa-angle-down' aria-hidden='true' />
-          </h1>
-          { applicants.map((appl, index) => <p key={index}>Applicant</p> ) }
+        <div className='applicants-container'>
+          { applicants.map(applicant => <ApplicantRow key={applicant.id} applicant={applicant} /> ) }
         </div>
       );
     } else {
@@ -64,13 +61,17 @@ export default class ApplicantListModal extends Component {
   }
 
   render() {
-    const { vacancyId, toggleModal, modals, applicants } = this.props;
+    const { toggleModal, modals, applicants, modalValues } = this.props;
     return (
       <div className={modals.applicantListModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <p className='modal-card-title'>Are you sure?</p>
+            <p className='modal-card-title'>
+              Applicants for {modalValues.title}
+              <br />
+              @ {modalValues.officeName}
+            </p>
             <button className='delete' aria-label='close' onClick={toggleModal} />
           </header>
           <section className='modal-card-body'>
