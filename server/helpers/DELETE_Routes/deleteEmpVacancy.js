@@ -1,6 +1,6 @@
-const deleteVacancy = (req, res, knex, user_id) => {
+const deleteEmpVacancy = (req, res, knex, user_id) => {
 
-  const { vacancyId } = req.query;
+  const { vacancy_id } = req.params;
 
   const getOwnerOfficeIds = () => knex('offices')
     .select('id')
@@ -8,7 +8,7 @@ const deleteVacancy = (req, res, knex, user_id) => {
     .whereNull('deleted_at');
 
   const markVacancyDeleted = verifiedOfficeIds => knex('vacancies')
-    .where('id', vacancyId)
+    .where('id', vacancy_id)
     .whereIn('office_id', verifiedOfficeIds)
     .whereNull('deleted_at')
     .update({ deleted_at: knex.fn.now() });
@@ -19,16 +19,16 @@ const deleteVacancy = (req, res, knex, user_id) => {
     .update({ deleted_at: knex.fn.now() });
 
   getOwnerOfficeIds()
-  .then(officeIds => vacancyId === '_all' ?
+  .then(officeIds => vacancy_id === '_all' ?
                      markAllVacanciesDeleted(officeIds.map(office => office.id)) :
                      markVacancyDeleted(officeIds.map(office => office.id))
   )
   .then(() => res.send(true))
   .catch(err => {
-    console.error('Error inside deleteVacancy.js: ', err);
+    console.error('Error inside deleteEmpVacancy.js: ', err);
     res.status(400).end();
   });
 
 };
 
-module.exports = deleteVacancy;
+module.exports = deleteEmpVacancy;

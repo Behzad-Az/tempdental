@@ -48,7 +48,7 @@ export default class ApplicantListModal extends Component {
       return (
         <div className='applicants-container'>
           <p className='title position-info'>{modalValues.title} @ {modalValues.officeName}</p>
-          { applicants.map(applicant => <ApplicantRow key={applicant.id} applicant={applicant} /> ) }
+          { applicants.map(applicant => <ApplicantRow key={applicant.id} applicant={applicant} vacancyId={modalValues.vacancyId} /> ) }
         </div>
       );
     } else {

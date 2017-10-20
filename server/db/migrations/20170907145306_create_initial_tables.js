@@ -72,6 +72,7 @@ exports.up = function(knex, Promise) {
       t.string('id', 11).notNullable().unique();
       t.string('rand_msg_num', 5).notNullable();
       t.boolean('candidate_applied').notNullable().defaultTo(false);
+      t.boolean('employer_deleted').notNullable().defaultTo(false);
       t.string('candidate_id', 11).notNullable().references('users.id');
       t.string('vacancy_id', 11).notNullable().references('vacancies.id');
       t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());

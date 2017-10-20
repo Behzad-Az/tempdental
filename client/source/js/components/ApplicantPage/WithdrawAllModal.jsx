@@ -21,7 +21,7 @@ export default class WithdrawAllModal extends Component {
 
   _withdrawAllApplications() {
     const { dispatch, toggleModal } = this.props;
-    fetch('/api/applicant/applications?vacancyId=_all', {
+    fetch('/api/applicant/applications/_all', {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {

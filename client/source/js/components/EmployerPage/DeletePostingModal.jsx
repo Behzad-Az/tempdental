@@ -23,7 +23,7 @@ export default class DeletePostingModal extends Component {
 
   _handleDeletePosting() {
     const { dispatch, toggleModal, modalValues } = this.props;
-    fetch(`/api/employer/vacancies?vacancyId=${modalValues.vacancyId}`, {
+    fetch(`/api/employer/vacancies/${modalValues.vacancyId}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {

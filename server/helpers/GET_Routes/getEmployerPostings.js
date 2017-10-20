@@ -31,6 +31,7 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     .select('vacancy_id')
     .count('id')
     .where('candidate_applied', true)
+    .andWhere('employer_deleted', false)
     .whereNull('deleted_at')
     .groupBy('vacancy_id');
 

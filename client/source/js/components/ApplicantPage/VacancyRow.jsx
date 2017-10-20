@@ -63,7 +63,7 @@ export default class VacancyRow extends Component {
 
   _handleWithdrawApplication() {
     const { dispatch, vacancy } = this.props;
-    fetch(`/api/applicant/applications?vacancyId=${vacancy.id}`, {
+    fetch(`/api/applicant/applications/${vacancy.id}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {

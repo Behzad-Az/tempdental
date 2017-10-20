@@ -7,11 +7,31 @@ import PropTypes from 'prop-types';
 export default class PostingModal extends Component {
   static propTypes = {
     applicant: PropTypes.object,
+    vacancyId: PropTypes.string,
     dispatch: PropTypes.func
   }
 
   constructor() {
     super();
+    this._handleDeleteAppl = this._handleDeleteAppl.bind(this);
+  }
+
+  _handleDeleteAppl() {
+    const { dispatch, vacancyId, applicant } = this.props;
+    fetch(`/api/employer/applications/${applicant.id}?vacancy_id=${vacancyId}&candidate_id=${applicant.candidate_id}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/string',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.ok ?
+      console.log("i'm here deleted application") :
+      null
+    )
+    .catch(console.error);
+    // .then(toggleModal);
   }
 
   render() {
@@ -26,7 +46,7 @@ export default class PostingModal extends Component {
           </div>
           <div className='media-content'>
 
-            <button className='button delete is-dark' />
+            <button className='button delete is-dark' onClick={this._handleDeleteAppl} />
 
             <div className='content'>
               <p>

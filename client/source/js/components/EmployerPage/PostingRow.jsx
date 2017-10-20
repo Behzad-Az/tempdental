@@ -25,7 +25,6 @@ export default class PostingRow extends Component {
     this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
     this._setUpApplicantListModal = this._setUpApplicantListModal.bind(this);
-    this._getApplicants = this._getApplicants.bind(this);
   }
 
   _findDateInfo(date) {
@@ -81,16 +80,6 @@ export default class PostingRow extends Component {
       modalName: 'applicantListModal'
     };
     this.props.dispatch(empToggleModal(modalValues));
-  }
-
-  _getApplicants() {
-    fetch(`/api/employer/vacancies/${this.props.posting.id}/applicants`, {
-      method: 'GET',
-      credentials: 'same-origin'
-    })
-    .then(response => response.json())
-    .then(console.log)
-    .catch(console.error);
   }
 
   render() {

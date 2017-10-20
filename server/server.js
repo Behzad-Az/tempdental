@@ -92,8 +92,9 @@ const postNewApplication = require('./helpers/POST_Routes/postNewApplication.js'
 const updateUserNotifSettings = require('./helpers/PUT_Routes/updateUserNotifSettings.js');
 const updateVacancy = require('./helpers/PUT_Routes/updateVacancy.js');
 
-const deleteApplication = require('./helpers/DELETE_Routes/deleteApplication.js');
-const deleteVacancy = require('./helpers/DELETE_Routes/deleteVacancy.js');
+const deleteApplApplication = require('./helpers/DELETE_Routes/deleteApplApplication.js');
+const deleteEmpApplication = require('./helpers/DELETE_Routes/deleteEmpApplication.js');
+const deleteEmpVacancy = require('./helpers/DELETE_Routes/deleteEmpVacancy.js');
 
 
 // ***************************************************
@@ -158,10 +159,14 @@ app.put('/api/employer/vacancies/:vacancy_id', (req, res) => {
 // // ***************************************************
 // // ROUTES - DELETE
 // // ***************************************************
-app.delete('/api/applicant/applications', (req, res) => {
-  deleteApplication(req, res, knex, 'bKm2Tzg1z1H');
+app.delete('/api/applicant/applications/:vacancy_id', (req, res) => {
+  deleteApplApplication(req, res, knex, 'bKm2Tzg1z1H');
 });
 
-app.delete('/api/employer/vacancies', (req, res) => {
-  deleteVacancy(req, res, knex, 'aWg8Sya0i3V');
+app.delete('/api/employer/vacancies/:vacancy_id', (req, res) => {
+  deleteEmpVacancy(req, res, knex, 'aWg8Sya0i3V');
+});
+
+app.delete('/api/employer/applications/:id', (req, res) => {
+  deleteEmpApplication(req, res, knex, 'aWg8Sya0i3V');
 });
