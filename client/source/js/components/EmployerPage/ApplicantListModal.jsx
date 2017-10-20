@@ -36,7 +36,7 @@ export default class ApplicantListModal extends Component {
   }
 
   _renderCompAfterData() {
-    const { dataLoaded, pageError, applicants } = this.props;
+    const { dataLoaded, pageError, applicants, modalValues } = this.props;
     if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
@@ -47,6 +47,7 @@ export default class ApplicantListModal extends Component {
     } else if (dataLoaded) {
       return (
         <div className='applicants-container'>
+          <p className='title position-info'>{modalValues.title} @ {modalValues.officeName}</p>
           { applicants.map(applicant => <ApplicantRow key={applicant.id} applicant={applicant} /> ) }
         </div>
       );
@@ -67,11 +68,7 @@ export default class ApplicantListModal extends Component {
         <div className='modal-background' onClick={toggleModal} />
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <p className='modal-card-title'>
-              Applicants for {modalValues.title}
-              <br />
-              @ {modalValues.officeName}
-            </p>
+            <p className='modal-card-title'>Applications</p>
             <button className='delete' aria-label='close' onClick={toggleModal} />
           </header>
           <section className='modal-card-body'>

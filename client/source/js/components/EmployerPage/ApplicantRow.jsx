@@ -26,7 +26,7 @@ export default class PostingModal extends Component {
           </div>
           <div className='media-content'>
 
-            <button className='button delete is-danger' />
+            <button className='button delete is-dark' />
 
             <div className='content'>
               <p>

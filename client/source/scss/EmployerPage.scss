@@ -71,6 +71,7 @@
   .modals .modal.is-active {
     .columns { margin-bottom: 0; .field, .column { margin-bottom: 0; padding-bottom: 0; &:last-child { margin-bottom: $default_margin/2; } } }
     .applicants-container {
+      .position-info { font-style: italic; font-size: 12px; }
       .applicant-row .media {
         .media-left { border-radius: 50%; overflow: hidden; }
         .media-content{
