@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { empDeleteAppl } from 'actions/EmployerPage/Applicants';
+import { empDecrementApplCount } from 'actions/EmployerPage/Postings';
 
 @connect()
 
 export default class PostingModal extends Component {
   static propTypes = {
-    applicant: PropTypes.object,
-    vacancyId: PropTypes.string,
+    appl: PropTypes.object,
     dispatch: PropTypes.func
   }
 
@@ -17,8 +18,8 @@ export default class PostingModal extends Component {
   }
 
   _handleDeleteAppl() {
-    const { dispatch, vacancyId, applicant } = this.props;
-    fetch(`/api/employer/applications/${applicant.id}?vacancy_id=${vacancyId}&candidate_id=${applicant.candidate_id}`, {
+    const { dispatch, appl } = this.props;
+    fetch(`/api/employer/applications/${appl.id}?vacancy_id=${appl.vacancy_id}&candidate_id=${appl.candidate_id}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {
@@ -26,18 +27,21 @@ export default class PostingModal extends Component {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.ok ?
-      console.log("i'm here deleted application") :
-      null
-    )
+    .then(response => {
+      // console.log("i'm here asdaskjdhakjsdhaksjhdkajshdkjashdkjh: ", appl);
+      if (response.ok) {
+        dispatch(empDeleteAppl(appl.id))
+        dispatch(empDecrementApplCount(appl.vacancy_id));
+      }
+    })
     .catch(console.error);
     // .then(toggleModal);
   }
 
   render() {
-    const { name, prefix, email, phone, intro } = this.props.applicant;
+    const { name, prefix, email, phone, intro } = this.props.appl;
     return (
-      <div className='box applicant-row'>
+      <div className='box applicantion-row'>
         <article className='media'>
           <div className='media-left'>
             <figure className='image is-64x64'>

@@ -4,7 +4,8 @@ import {
   EMP_GET_POSTINGS_START,
   EMP_GET_POSTINGS_ERROR,
   EMP_GET_POSTINGS_SUCCESS,
-  EMP_DELETE_POSTING
+  EMP_DELETE_POSTING,
+  EMP_DECREMENT_POSTING_APPL_COUNT
 } from 'actions/EmployerPage/Postings';
 
 const initialState = Map({
@@ -21,6 +22,16 @@ const actionsMap = {
     const { vacancyId } = action;
     const postings = vacancyId === '_all' ? [] : state.get('postings').filter(posting => posting.id !== vacancyId);
     return state.merge(Map({ postings }));
+  },
+
+  [EMP_DECREMENT_POSTING_APPL_COUNT]: (state, action) => {
+    let applicantCounts = [ ...state.get('applicantCounts') ];
+    console.log("i'm here action:", action.vacancyId);
+    console.log("i'm here count.vacancy_id:", applicantCounts[0].vacancy_id);
+    // const index = applicantCounts.indexOf(count => count.vacancy_id == action.vacancyId);
+    console.log("i'm here index: ", applicantCounts[0].vacancy_id === action.vacancyId);
+    // applicantCounts[index].count = parseInt(applicantCounts[inde]);
+    return state.merge(Map({ applicantCounts }));
   },
 
   [EMP_GET_POSTINGS_START]: (state, action) => {

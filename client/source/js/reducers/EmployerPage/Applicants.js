@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 
 import {
+  EMP_DELETE_APPL,
   EMP_GET_APPL_LIST_START,
   EMP_GET_APPL_LIST_ERROR,
   EMP_GET_APPL_LIST_SUCCESS
@@ -15,6 +16,13 @@ const initialState = Map({
 });
 
 const actionsMap = {
+  [EMP_DELETE_APPL]: (state, action) => {
+    let applicants = [ ...state.get('applicants') ];
+    const index = applicants.indexOf(appl => appl.id === action.applicationId);
+    // applicants.splice(index, 1);
+    return state.merge(Map({ applicants }));
+  },
+
   [EMP_GET_APPL_LIST_START]: (state, action) => {
     return state.merge(Map({
       asyncLoading: true,

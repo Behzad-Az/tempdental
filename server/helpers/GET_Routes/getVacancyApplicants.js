@@ -4,7 +4,10 @@ const getVacancyApplicants = (req, res, knex, user_id) => {
     .leftJoin('applications', 'users.id', 'applications.candidate_id')
     .leftJoin('vacancies', 'applications.vacancy_id', 'vacancies.id')
     .leftJoin('offices', 'vacancies.office_id', 'offices.id')
-    .select('applications.id', 'applications.candidate_id', 'users.full_name as name', 'users.email', 'users.phone_number as phone', 'users.intro', 'users.prefix')
+    .select(
+      'applications.id', 'applications.candidate_id', 'applications.vacancy_id',
+      'users.full_name as name', 'users.email', 'users.phone_number as phone', 'users.intro', 'users.prefix'
+    )
     .where('vacancies.id', req.params.vacancy_id)
     .andWhere('offices.owner_id', user_id)
     .andWhere('applications.candidate_applied', true)
