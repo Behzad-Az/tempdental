@@ -9,6 +9,7 @@ import {
 import OfficeModal from './OfficeModal.jsx';
 import PostingModal from './PostingModal.jsx';
 import DeletePostingModal from './DeletePostingModal.jsx';
+import ApplicantListModal from './ApplicantListModal.jsx';
 
 @connect(state => ({
   dataLoaded: state.empControlBar.get('dataLoaded'),
@@ -207,6 +208,7 @@ export default class ControlBar extends Component {
           <PostingModal toggleModal={() => this._toggleModal({ modalName: 'postingModal' })} />
           <OfficeModal toggleModal={() => this._toggleModal({ modalName: 'officeModal' })} />
           <DeletePostingModal toggleModal={() => this._toggleModal({ modalName: 'deletePostingModal' })} />
+          <ApplicantListModal toggleModal={() => this._toggleModal({ modalName: 'applicantListModal' })} />
         </div>
       </div>
     );

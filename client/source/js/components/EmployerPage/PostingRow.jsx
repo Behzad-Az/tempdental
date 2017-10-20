@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { empToggleModal } from 'actions/EmployerPage/ControlBar';
+import { empGetApplList } from 'actions/EmployerPage/Applicants';
 import GoogleMapWindow from 'components/ApplicantPage/GoogleMapWindow.jsx';
 import moment from 'moment';
 
@@ -21,8 +22,9 @@ export default class PostingRow extends Component {
     this._findDateInfo = this._findDateInfo.bind(this);
     this._renderDates = this._renderDates.bind(this);
     this._findTimePassed = this._findTimePassed.bind(this);
-    this._setUpEditModal = this._setUpEditModal.bind(this);
+    this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
+    this._setUpApplicantListModal = this._setUpApplicantListModal.bind(this);
     this._getApplicants = this._getApplicants.bind(this);
   }
 
@@ -44,7 +46,7 @@ export default class PostingRow extends Component {
     return moment(date.slice(0, 10), 'YYYY-MM-DD').fromNow();
   }
 
-  _setUpEditModal() {
+  _setUpPostingModal() {
     const { start_date, end_date, title, description, type, anonymous, office_id, id } = this.props.posting;
     const modalValues = {
       action: '_edit',
@@ -70,12 +72,24 @@ export default class PostingRow extends Component {
     dispatch(empToggleModal(modalValues));
   }
 
+  _setUpApplicantListModal() {
+    const { id, title, officeName } = this.props.posting;
+    const modalValues = {
+      vacancyId: id,
+      title,
+      officeName,
+      modalName: 'applicantListModal'
+    };
+    this.props.dispatch(empToggleModal(modalValues));
+  }
+
   _getApplicants() {
     fetch(`/api/employer/vacancies/${this.props.posting.id}/applicants`, {
       method: 'GET',
       credentials: 'same-origin'
     })
     .then(response => response.json())
+    .then(console.log)
     .catch(console.error);
   }
 
@@ -128,7 +142,7 @@ export default class PostingRow extends Component {
             <div className='btn-container'>
               <button
                 className='button edit'
-                onClick={this._setUpEditModal}>
+                onClick={this._setUpPostingModal}>
                 <i className='fa fa-pencil' />
               </button>
               <button
@@ -138,12 +152,10 @@ export default class PostingRow extends Component {
               </button>
               <button
                 className='button edit'
-                onClick={this._getApplicants}
+                onClick={this._setUpApplicantListModal}
                 disabled={!applicantCount}>
                 <i className='fa fa-user' /> {applicantCount} Applicants
               </button>
-
-
             </div>
           </div>
         </article>

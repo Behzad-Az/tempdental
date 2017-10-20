@@ -3,6 +3,7 @@ import applControlBar from 'reducers/ApplicantPage/ControlBar';
 import applVacancies from 'reducers/ApplicantPage/Vacancies';
 import empControlBar from 'reducers/EmployerPage/ControlBar';
 import empPostings from 'reducers/EmployerPage/Postings';
+import empApplicants from 'reducers/EmployerPage/Applicants';
 import navbar from 'reducers/Global/Navbar';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   applVacancies,
   empControlBar,
   empPostings,
+  empApplicants,
   navbar
 });

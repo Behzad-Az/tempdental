@@ -19,7 +19,8 @@ const initialState = Map({
   modals: {
     officeModal: false,
     postingModal: false,
-    deletePostingModal: false
+    deletePostingModal: false,
+    applicantListModal: false
   },
   modalValues: {}
 });

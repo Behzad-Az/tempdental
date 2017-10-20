@@ -19,7 +19,16 @@ function empGetPostings() {
   .then(response => response.json());
 }
 
+function empGetApplList(vacancyId) {
+  return fetch(`/api/employer/vacancies/${vacancyId}/applicants`, {
+    method: 'GET',
+    credentials: 'same-origin'
+  })
+  .then(response => response.json());
+}
+
 export default {
   empGetControlData,
-  empGetPostings
+  empGetPostings,
+  empGetApplList
 };
