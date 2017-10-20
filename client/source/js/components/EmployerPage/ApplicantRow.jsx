@@ -28,7 +28,6 @@ export default class PostingModal extends Component {
       }
     })
     .then(response => {
-      // console.log("i'm here asdaskjdhakjsdhaksjhdkajshdkjashdkjh: ", appl);
       if (response.ok) {
         dispatch(empDeleteAppl(appl.id))
         dispatch(empDecrementApplCount(appl.vacancy_id));

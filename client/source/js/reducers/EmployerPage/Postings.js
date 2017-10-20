@@ -26,11 +26,10 @@ const actionsMap = {
 
   [EMP_DECREMENT_POSTING_APPL_COUNT]: (state, action) => {
     let applicantCounts = [ ...state.get('applicantCounts') ];
-    console.log("i'm here action:", action.vacancyId);
-    console.log("i'm here count.vacancy_id:", applicantCounts[0].vacancy_id);
-    // const index = applicantCounts.indexOf(count => count.vacancy_id == action.vacancyId);
-    console.log("i'm here index: ", applicantCounts[0].vacancy_id === action.vacancyId);
-    // applicantCounts[index].count = parseInt(applicantCounts[inde]);
+    const index = applicantCounts.findIndex(count => count.vacancy_id == action.vacancyId);
+    if (index > -1) {
+      applicantCounts[index].count = parseInt(applicantCounts[index].count) - 1;
+    }
     return state.merge(Map({ applicantCounts }));
   },
 
