@@ -50,7 +50,6 @@ export default class ControlBar extends Component {
     this._handleChange = this._handleChange.bind(this);
     this._validateForm = this._validateForm.bind(this);
     this._handleManualReload = this._handleManualReload.bind(this);
-    this._handleAutoReload = this._handleAutoReload.bind(this);
     this._toggleModal = this._toggleModal.bind(this);
     this._setUpNotifModal = this._setUpNotifModal.bind(this);
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
@@ -69,17 +68,17 @@ export default class ControlBar extends Component {
   }
 
   _setUpNotifModal() {
-    const { userInfo } = this.props;
+    const { get_notified, search_ft, search_pt, search_temp, search_distance, address, lat, lng } = this.props.userInfo;
     this._toggleModal({
       action: '_edit',
-      getNotified: userInfo.get_notified || true,
-      searchFt: userInfo.search_ft,
-      searchPt: userInfo.search_pt && false,
-      searchTemp: userInfo.search_temp,
-      searchDistance: userInfo.search_distance,
-      address: userInfo.address,
-      lat: userInfo.lat,
-      lng: userInfo.lng,
+      getNotified: get_notified,
+      searchFt: search_ft,
+      searchPt: search_pt,
+      searchTemp: search_temp,
+      searchDistance: search_distance,
+      address,
+      lat,
+      lng,
       modalName: 'notifModal'
     });
   }
@@ -105,18 +104,6 @@ export default class ControlBar extends Component {
       searchDistance,
       jobTypeArr
     }));
-  }
-
-  _handleAutoReload() {
-    const { startDate, endDate, dispatch } = this.props;
-    dispatch(applLoadVacancies({
-      freshReload: true,
-      offsetQuery: 0,
-      manualSearch: false,
-      startDate,
-      endDate
-    }));
-    dispatch(applGetControlData());
   }
 
   _renderCompAfterData() {
@@ -261,10 +248,7 @@ export default class ControlBar extends Component {
           { this._renderCompAfterData() }
         </div>
         <div className='modals'>
-          <NotifModal
-            toggleModal={() => this._toggleModal({ modalName: 'notifModal' })}
-            reload={this._handleAutoReload}
-          />
+          <NotifModal toggleModal={() => this._toggleModal({ modalName: 'notifModal' })} />
           <ResumeModal toggleModal={() => this._toggleModal({ modalName: 'resumeModal' })} />
           <WithdrawAllModal toggleModal={() => this._toggleModal({ modalName: 'withdrawAllModal' })} />
         </div>

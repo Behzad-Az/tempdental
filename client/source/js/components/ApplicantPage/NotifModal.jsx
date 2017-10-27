@@ -3,12 +3,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Switch from 'react-toggle-switch';
 import 'react-toggle-switch/dist/css/switch.min.css';
-import { applModalHandleChng, applModalAddressChng } from 'actions/ApplicantPage/ControlBar';
+import { applModalHandleChng, applModalAddressChng, applGetControlData } from 'actions/ApplicantPage/ControlBar';
+import { applLoadVacancies } from 'actions/ApplicantPage/Vacancies';
+// import {
+//   applGetControlData,
+//   applHandleControlChng,
+//   applHandleControlAddress,
+//   applToggelModal
+// } from 'actions/ApplicantPage/ControlBar';
 import GoogleAddressBar from './GoogleAddressBar.jsx';
 
 @connect(state => ({
   modals: state.applControlBar.get('modals'),
-  modalValues: state.applControlBar.get('modalValues')
+  modalValues: state.applControlBar.get('modalValues'),
+  startDate: state.applControlBar.get('startDate'),
+  endDate: state.applControlBar.get('endDate')
 }))
 
 export default class NotifModal extends Component {
@@ -16,7 +25,8 @@ export default class NotifModal extends Component {
     modals: PropTypes.object,
     modalValues: PropTypes.object,
     toggleModal: PropTypes.func,
-    reload: PropTypes.func,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
     dispatch: PropTypes.func
   }
 
@@ -25,6 +35,7 @@ export default class NotifModal extends Component {
     this._handleChange = this._handleChange.bind(this);
     this._handleSwitch = this._handleSwitch.bind(this);
     this._handleNotifUpdate = this._handleNotifUpdate.bind(this);
+    this._handleAutoReload = this._handleAutoReload.bind(this);
   }
 
   _handleChange(event) {
@@ -42,7 +53,7 @@ export default class NotifModal extends Component {
   }
 
   _handleNotifUpdate() {
-    const { toggleModal, reload, modalValues } = this.props;
+    const { toggleModal, modalValues } = this.props;
     fetch('/api/currentuser/notifsettings', {
       method: 'PUT',
       credentials: 'same-origin',
@@ -50,7 +61,7 @@ export default class NotifModal extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.props.modalValues)
+      body: JSON.stringify(modalValues)
     })
     .then(response => response.ok ?
       console.log("i'm here notif settings update") :
@@ -58,11 +69,24 @@ export default class NotifModal extends Component {
     )
     .catch(console.error)
     .then(toggleModal)
-    .then(reload);
+    .then(this._handleAutoReload);
+  }
+
+  _handleAutoReload() {
+    const { startDate, endDate, dispatch } = this.props;
+    dispatch(applLoadVacancies({
+      freshReload: true,
+      offsetQuery: 0,
+      manualSearch: false,
+      startDate,
+      endDate
+    }));
+    dispatch(applGetControlData());
   }
 
   render() {
     const { modals, toggleModal, modalValues, dispatch } = this.props;
+    console.log("i'm here 4: ", modalValues);
     return (
       <div className={modals.notifModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
