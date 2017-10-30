@@ -71,7 +71,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTableIfNotExists('applications', t => {
       t.string('id', 11).notNullable().unique();
       t.string('rand_msg_num', 5).notNullable();
-      t.boolean('candidate_applied').notNullable().defaultTo(false);
+      t.timestamp('candidate_apply_date');
       t.boolean('employer_deleted').notNullable().defaultTo(false);
       t.string('candidate_id', 11).notNullable().references('users.id');
       t.string('vacancy_id', 11).notNullable().references('vacancies.id');

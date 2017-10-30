@@ -16,7 +16,7 @@ const postNewTextReply = (req, res, knex) => {
     .where('candidate_id', candidateId)
     .andWhere('rand_msg_num', replyText.replace(/N/g, 'Y'))
     .whereNull('deleted_at')
-    .update({ candidate_applied: replyText[0] === 'Y' })
+    .update({ candidate_apply_date: replyText[0] === 'Y' ? knex.fn.now() : null })
     .returning('vacancy_id');
 
   const getVacancyInfo = vacancyId => knex('vacancies')

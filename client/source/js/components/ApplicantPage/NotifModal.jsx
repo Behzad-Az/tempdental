@@ -86,7 +86,6 @@ export default class NotifModal extends Component {
 
   render() {
     const { modals, toggleModal, modalValues, dispatch } = this.props;
-    console.log("i'm here 4: ", modalValues);
     return (
       <div className={modals.notifModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />

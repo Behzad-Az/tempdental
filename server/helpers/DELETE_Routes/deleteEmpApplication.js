@@ -5,7 +5,6 @@ const deleteEmpApplication = (req, res, knex, user_id) => {
 
   const deleteApplication = () => knex('applications')
     .where({ id, vacancy_id, candidate_id })
-    // .andWhere('candidate_applied', true)
     .whereNull('deleted_at')
     .update({ employer_deleted: true })
     .returning('id');

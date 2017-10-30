@@ -5,15 +5,15 @@ const deleteApplApplication = (req, res, knex, user_id) => {
   const withdrawApplication = () => knex('applications')
     .where('candidate_id', user_id)
     .andWhere('vacancy_id', vacancy_id)
-    .andWhere('candidate_applied', true)
+    .whereNotNull('candidate_apply_date')
     .whereNull('deleted_at')
-    .update({ candidate_applied: false });
+    .update({ candidate_apply_date: null });
 
   const withdrawAllApplications = () => knex('applications')
     .where('candidate_id', user_id)
-    .andWhere('candidate_applied', true)
+    .whereNotNull('candidate_apply_date')
     .whereNull('deleted_at')
-    .update({ candidate_applied: false });
+    .update({ candidate_apply_date: null });
 
   const determineFcn = () => vacancy_id === '_all' ? withdrawAllApplications() : withdrawApplication();
 

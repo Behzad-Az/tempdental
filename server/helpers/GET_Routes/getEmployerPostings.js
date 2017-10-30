@@ -30,7 +30,7 @@ const getEmployerPostings = (req, res, knex, user_id) => {
   const getPostingApplicantCounts = postingIds => knex('applications')
     .select('vacancy_id')
     .count('id')
-    .where('candidate_applied', true)
+    .whereNotNull('candidate_apply_date')
     .andWhere('employer_deleted', false)
     .whereNull('deleted_at')
     .groupBy('vacancy_id');
@@ -40,7 +40,10 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     postings = foundPostings;
     return getPostingApplicantCounts(postings.map(posting => posting.id));
   })
-  .then(applicantCounts => res.send({ postings, applicantCounts }))
+  .then(applicantCounts => {
+    console.log("i'm here 3: ", applicantCounts);
+    res.send({ postings, applicantCounts });
+  })
   .catch(err => {
     console.error('Error inside getEmployerPostings.js: ', err);
     res.status(400).end();

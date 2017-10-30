@@ -28,7 +28,7 @@ const getApplicantVacanciesAuto = (req, res, knex, user_id) => {
   const getUserApplications = () => knex('applications')
     .select('vacancy_id')
     .where('candidate_id', user_id)
-    .andWhere('candidate_applied', true)
+    .whereNotNull('candidate_apply_date')
     .whereNull('deleted_at');
 
   getUserInfo()

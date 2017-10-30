@@ -10,7 +10,7 @@ const getVacancyApplicants = (req, res, knex, user_id) => {
     )
     .where('vacancies.id', req.params.vacancy_id)
     .andWhere('offices.owner_id', user_id)
-    .andWhere('applications.candidate_applied', true)
+    .whereNotNull('applications.candidate_apply_date')
     .andWhere('applications.employer_deleted', false)
     .whereNull('applications.deleted_at')
     .whereNull('offices.deleted_at')

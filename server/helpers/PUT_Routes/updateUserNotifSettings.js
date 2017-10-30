@@ -8,8 +8,6 @@ const updateUserNotifSettings = (req, res, knex, user_id) => {
   const search_temp = req.body.searchTemp;
   const get_notified = req.body.getNotified;
 
-  console.log("i'm here 6: ", {get_notified});
-
   knex.raw(`update users set
     geog_gis_loc=ST_GeographyFromText('SRID=4326; POINT(${lng} ${lat})'),
     lat=${lat},
