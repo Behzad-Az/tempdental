@@ -26,6 +26,7 @@ export default class PostingRow extends Component {
     this._setUpPostingModal = this._setUpPostingModal.bind(this);
     this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
     this._setUpApplicantListModal = this._setUpApplicantListModal.bind(this);
+    this._renderApplicationBtn = this._renderApplicationBtn.bind(this);
   }
 
   _findDateInfo(date) {
@@ -85,11 +86,34 @@ export default class PostingRow extends Component {
     dispatch(empToggleModal(modalValues));
   }
 
-  render() {
+  _renderApplicationBtn() {
     const { applCounts, posting } = this.props;
     const applCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id ? acc + 1 : acc, 0);
     const newApplCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id && !appl.employer_viewed ? acc + 1 : acc, 0);
-    const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = posting;
+    const applicantText = applCounts > 1 ? 'Applicants' : 'Applicant';
+    if (applCount && newApplCount) {
+      return (
+        <button className='button edit' onClick={this._setUpApplicantListModal}>
+          <i className='fa fa-user' /> {applCount} Appl. <i className='fa fa-circle' />{newApplCount} New
+        </button>
+      );
+    } else if (applCount) {
+      return (
+        <button className='button edit' onClick={this._setUpApplicantListModal}>
+          <i className='fa fa-user' /> {applCount} {applCount > 1 ? 'Applicants' : 'Applicant'}
+        </button>
+      );
+    } else {
+      return (
+        <button className='button edit' onClick={this._setUpApplicantListModal} disabled>
+          <i className='fa fa-user' /> No Applicant
+        </button>
+      );
+    }
+  }
+
+  render() {
+    const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = this.props.posting;
     return (
       <div className='box posting-row'>
         <article className='media'>
@@ -137,19 +161,14 @@ export default class PostingRow extends Component {
               <button
                 className='button edit'
                 onClick={this._setUpPostingModal}>
-                <i className='fa fa-pencil' />
+                <i className='fa fa-pencil' /> Edit
               </button>
               <button
                 className='button remove'
                 onClick={this._setUpDeleteModal}>
-                <i className='fa fa-trash' />
+                <i className='fa fa-trash' /> Remove
               </button>
-              <button
-                className='button edit'
-                onClick={this._setUpApplicantListModal}
-                disabled={!applCount}>
-                <i className='fa fa-user' /> {applCount} Applicants | {newApplCount} New
-              </button>
+              { this._renderApplicationBtn() }
             </div>
           </div>
         </article>

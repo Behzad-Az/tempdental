@@ -32,7 +32,8 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     .whereIn('vacancy_id', postingIds)
     .andWhere('employer_deleted', false)
     .whereNotNull('candidate_apply_date')
-    .whereNull('deleted_at');
+    .whereNull('deleted_at')
+    .orderBy('candidate_apply_date', 'desc');
 
   getPostings()
   .then(foundPostings => {
