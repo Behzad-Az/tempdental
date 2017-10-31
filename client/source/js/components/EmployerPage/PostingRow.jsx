@@ -40,7 +40,7 @@ export default class PostingRow extends Component {
     const { type, start_date, end_date } = this.props.posting;
     return type === 'Temp' ?
       <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
-      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (expected start date)</p>;
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (start date)</p>;
   }
 
   _findTimePassed(date) {
@@ -158,6 +158,7 @@ export default class PostingRow extends Component {
               <GoogleMapWindow lat={lat} lng={lng} />
             </div>
             <div className='btn-container'>
+              { this._renderApplicationBtn() }
               <button
                 className='button edit'
                 onClick={this._setUpPostingModal}>
@@ -168,7 +169,6 @@ export default class PostingRow extends Component {
                 onClick={this._setUpDeleteModal}>
                 <i className='fa fa-trash' /> Remove
               </button>
-              { this._renderApplicationBtn() }
             </div>
           </div>
         </article>

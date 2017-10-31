@@ -40,7 +40,7 @@ export default class VacancyRow extends Component {
     const { type, start_date, end_date } = this.props.vacancy;
     return type === 'Temp' ?
       <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} to {this._findDateInfo(end_date)}</p> :
-      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (expected start date)</p>;
+      <p><i className='fa fa-calendar' /> {this._findDateInfo(start_date)} (start date)</p>;
   }
 
   _handleApply() {

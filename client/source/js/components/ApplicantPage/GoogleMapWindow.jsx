@@ -137,7 +137,7 @@ export default class AsyncGettingStartedExample extends Component {
           <div style={{ width: '100%', height: '100%' }} />
         }
         mapElement={
-          <div style={{ width: '150px', height: '150px' }} />
+          <div style={{ width: '125px', height: '125px' }} />
         }
         onMapLoad={this._handleMapLoad}
         onMapClick={this._handleMapClick}

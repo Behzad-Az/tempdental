@@ -38,7 +38,6 @@ const actionsMap = {
     }));
   },
   [EMP_GET_APPL_LIST_SUCCESS]: (state, action) => {
-    console.log("i'm here asdjkashdkajshdkajshdkjashd: ", action.data.applications);
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
