@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { empDeleteAppl } from 'actions/EmployerPage/Applicants';
+import { empDeleteAppl } from 'actions/EmployerPage/Applications';
 import { empDecrementApplCount } from 'actions/EmployerPage/Postings';
 
 @connect()
@@ -30,7 +30,7 @@ export default class PostingModal extends Component {
     .then(response => {
       if (response.ok) {
         dispatch(empDeleteAppl(appl.id))
-        dispatch(empDecrementApplCount(appl.vacancy_id));
+        dispatch(empDecrementApplCount(appl.id));
       }
     })
     .catch(console.error);

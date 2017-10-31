@@ -83,7 +83,7 @@ const getApplicantVacanciesManual = require('./helpers/GET_Routes/getApplicantVa
 const getApplicantControlBarInfo = require('./helpers/GET_Routes/getApplicantControlBarInfo.js');
 const getEmployerOffices = require('./helpers/GET_Routes/getEmployerOffices.js');
 const getEmployerPostings = require('./helpers/GET_Routes/getEmployerPostings.js');
-const getVacancyApplicants = require('./helpers/GET_Routes/getVacancyApplicants.js');
+const getVacancyApplications = require('./helpers/GET_Routes/getVacancyApplications.js');
 
 const postNewVacancy = require('./helpers/POST_Routes/postNewVacancy.js');
 const postNewTextReply = require('./helpers/POST_Routes/postNewTextReply.js');
@@ -121,8 +121,8 @@ app.get('/api/employer/vacancies', (req, res) => {
   getEmployerPostings(req, res, knex, 'aWg8Sya0i3V');
 });
 
-app.get('/api/employer/vacancies/:vacancy_id/applicants', (req, res) => {
-  getVacancyApplicants(req, res, knex, 'aWg8Sya0i3V');
+app.get('/api/employer/vacancies/:vacancy_id/applications', (req, res) => {
+  getVacancyApplications(req, res, knex, 'aWg8Sya0i3V');
 });
 
 // // ***************************************************

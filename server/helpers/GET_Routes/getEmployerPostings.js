@@ -28,7 +28,7 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     .orderBy('vacancies.created_at');
 
   const getApplCounts = postingIds => knex('applications')
-    .select('id', 'vacancy_id', 'created_at')
+    .select('id', 'vacancy_id', 'created_at', 'employer_viewed')
     .whereIn('vacancy_id', postingIds)
     .andWhere('employer_deleted', false)
     .whereNotNull('candidate_apply_date')

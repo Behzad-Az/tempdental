@@ -5,22 +5,22 @@ import {
   EMP_GET_APPL_LIST_START,
   EMP_GET_APPL_LIST_ERROR,
   EMP_GET_APPL_LIST_SUCCESS
-} from 'actions/EmployerPage/Applicants';
+} from 'actions/EmployerPage/Applications';
 
 const initialState = Map({
   dataLoaded: false,
   pageError: false,
-  applicants: [],
+  applications: [],
   asyncLoading: false,
   asyncError: null
 });
 
 const actionsMap = {
   [EMP_DELETE_APPL]: (state, action) => {
-    let applicants = [ ...state.get('applicants') ];
-    const index = applicants.findIndex(appl => appl.id === action.applicationId);
-    if (index > -1) { applicants.splice(index, 1); }
-    return state.merge(Map({ applicants }));
+    let applications = [ ...state.get('applications') ];
+    const index = applications.findIndex(appl => appl.id === action.applicationId);
+    if (index > -1) { applications.splice(index, 1); }
+    return state.merge(Map({ applications }));
   },
 
   [EMP_GET_APPL_LIST_START]: (state, action) => {
@@ -38,12 +38,13 @@ const actionsMap = {
     }));
   },
   [EMP_GET_APPL_LIST_SUCCESS]: (state, action) => {
+    console.log("i'm here asdjkashdkajshdkajshdkjashd: ", action.data.applications);
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
       pageError: false,
       dataLoaded: true,
-      applicants: action.data.applicants
+      applications: action.data.applications
     }));
   },
 };

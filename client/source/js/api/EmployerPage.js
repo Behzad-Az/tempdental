@@ -20,7 +20,7 @@ function empGetPostings() {
 }
 
 function empGetApplList(vacancyId) {
-  return fetch(`/api/employer/vacancies/${vacancyId}/applicants`, {
+  return fetch(`/api/employer/vacancies/${vacancyId}/applications`, {
     method: 'GET',
     credentials: 'same-origin'
   })

@@ -5,13 +5,12 @@ const deleteEmpApplication = (req, res, knex, user_id) => {
 
   const deleteApplication = () => knex('applications')
     .where({ id, vacancy_id, candidate_id })
-    .whereNull('deleted_at')
-    .update({ employer_deleted: true })
-    .returning('id');
-
+    .andWhere('employer_viewed', true)
+    // .whereNull('deleted_at')
+    .update({ employer_deleted: true });
 
   deleteApplication()
-  .then(id => res.send(true))
+  .then(() => res.send(true))
   .catch(err => {
     console.error('Error inside deleteApplApplication.js: ', err);
     res.status(400).end();

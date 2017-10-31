@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { empToggleModal } from 'actions/EmployerPage/ControlBar';
-import { empGetApplList } from 'actions/EmployerPage/Applicants';
 import GoogleMapWindow from 'components/ApplicantPage/GoogleMapWindow.jsx';
 import moment from 'moment';
 
@@ -89,6 +88,7 @@ export default class PostingRow extends Component {
   render() {
     const { applCounts, posting } = this.props;
     const applCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id ? acc + 1 : acc, 0);
+    const newApplCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id && !appl.employer_viewed ? acc + 1 : acc, 0);
     const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = posting;
     return (
       <div className='box posting-row'>
@@ -148,7 +148,7 @@ export default class PostingRow extends Component {
                 className='button edit'
                 onClick={this._setUpApplicantListModal}
                 disabled={!applCount}>
-                <i className='fa fa-user' /> {applCount} Applicants
+                <i className='fa fa-user' /> {applCount} Applicants | {newApplCount} New
               </button>
             </div>
           </div>

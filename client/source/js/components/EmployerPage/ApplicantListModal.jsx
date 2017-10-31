@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { empGetApplList } from 'actions/EmployerPage/Applicants';
+import { empGetApplList } from 'actions/EmployerPage/Applications';
 import ApplicantRow from 'components/EmployerPage/ApplicantRow.jsx';
 
 @connect(state => ({
   modals: state.empControlBar.get('modals'),
   modalValues: state.empControlBar.get('modalValues'),
-  applicants: state.empApplicants.get('applicants'),
-  pageError: state.empApplicants.get('pageError'),
-  dataLoaded: state.empApplicants.get('dataLoaded')
+  applications: state.empApplications.get('applications'),
+  pageError: state.empApplications.get('pageError'),
+  dataLoaded: state.empApplications.get('dataLoaded')
 }))
 
 export default class ApplicantListModal extends Component {
   static propTypes = {
     modals: PropTypes.object,
     modalValues: PropTypes.object,
-    applicants: PropTypes.array,
+    applications: PropTypes.array,
     pageError: PropTypes.bool,
     dataLoaded: PropTypes.bool,
     toggleModal: PropTypes.func,
@@ -36,7 +36,7 @@ export default class ApplicantListModal extends Component {
   }
 
   _renderCompAfterData() {
-    const { dataLoaded, pageError, applicants, modalValues } = this.props;
+    const { dataLoaded, pageError, applications, modalValues } = this.props;
     if (dataLoaded && pageError) {
       return (
         <p className='page-msg'>
@@ -48,7 +48,8 @@ export default class ApplicantListModal extends Component {
       return (
         <div className='applicants-container'>
           <p className='title position-info'>{modalValues.title} @ {modalValues.officeName}</p>
-          { applicants.map(appl => <ApplicantRow key={appl.id} appl={appl} /> ) }
+          { applications.map(appl => <ApplicantRow key={appl.id} appl={appl} /> ) }
+          { !applications.length && <p>No more open application.</p> }
         </div>
       );
     } else {
@@ -62,7 +63,7 @@ export default class ApplicantListModal extends Component {
   }
 
   render() {
-    const { toggleModal, modals, applicants, modalValues } = this.props;
+    const { toggleModal, modals } = this.props;
     return (
       <div className={modals.applicantListModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={toggleModal} />
