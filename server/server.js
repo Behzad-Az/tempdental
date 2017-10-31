@@ -102,15 +102,15 @@ const deleteEmpVacancy = require('./helpers/DELETE_Routes/deleteEmpVacancy.js');
 // ***************************************************
 
 app.get('/api/applicant/vacancies-auto', (req, res) => {
-  getApplicantVacanciesAuto(req, res, knex, 'bKm2Tzg1z1H');
+  getApplicantVacanciesAuto(req, res, knex, 'aaaaaaaaaaa');
 });
 
 app.get('/api/applicant/vacancies-manual', (req, res) => {
-  getApplicantVacanciesManual(req, res, knex, 'bKm2Tzg1z1H');
+  getApplicantVacanciesManual(req, res, knex, 'aaaaaaaaaaa');
 });
 
 app.get('/api/applicant/controlbar', (req, res) => {
-  getApplicantControlBarInfo(req, res, knex, 'bKm2Tzg1z1H');
+  getApplicantControlBarInfo(req, res, knex, 'aaaaaaaaaaa');
 });
 
 app.get('/api/employer/offices', (req, res) => {
@@ -129,7 +129,7 @@ app.get('/api/employer/vacancies/:vacancy_id/applicants', (req, res) => {
 // // ROUTES - POST
 // // ***************************************************
 app.post('/api/applicant/applications', (req, res) => {
-  postNewApplication(req, res, knex, 'bKm2Tzg1z1H', randIdString);
+  postNewApplication(req, res, knex, 'aaaaaaaaaaa', randIdString);
 });
 
 app.post('/api/employer/vacancies', (req, res) => {
@@ -148,7 +148,7 @@ app.post('/text_replies', (req, res) => {
 //   updateUserProfile(req, res, knex, req.session.user_id, googleMapsClient);
 // });
 app.put('/api/currentuser/notifsettings', (req, res) => {
-  updateUserNotifSettings(req, res, knex, 'bKm2Tzg1z1H');
+  updateUserNotifSettings(req, res, knex, 'aaaaaaaaaaa');
 });
 
 app.put('/api/employer/vacancies/:vacancy_id', (req, res) => {
@@ -160,7 +160,7 @@ app.put('/api/employer/vacancies/:vacancy_id', (req, res) => {
 // // ROUTES - DELETE
 // // ***************************************************
 app.delete('/api/applicant/applications/:vacancy_id', (req, res) => {
-  deleteApplApplication(req, res, knex, 'bKm2Tzg1z1H');
+  deleteApplApplication(req, res, knex, 'aaaaaaaaaaa');
 });
 
 app.delete('/api/employer/vacancies/:vacancy_id', (req, res) => {

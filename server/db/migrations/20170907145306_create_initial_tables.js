@@ -41,9 +41,9 @@ exports.up = function(knex, Promise) {
       t.string('id', 11).notNullable().unique();
       t.string('title', 30).notNullable();
       t.string('description', 500).notNullable();
+      t.string('type', 4).notNullable();
       t.date('start_date').notNullable();
       t.date('end_date');
-      t.string('type', 4).notNullable();
       t.boolean('anonymous').notNullable();
       t.string('office_id', 11).notNullable().references('offices.id');
       t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
@@ -51,31 +51,33 @@ exports.up = function(knex, Promise) {
       t.timestamp('deleted_at');
     }),
 
-    knex.schema.createTableIfNotExists('vacancy_dates', t => {
-      t.bigIncrements('id');
-      t.date('start_date').notNullable();
-      t.date('end_date').notNullable().defaultTo('2099-01-01');
-      t.string('vacancy_id', 11).notNullable().references('vacancies.id');
-      t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
-      t.timestamp('deleted_at');
-    }),
+    // knex.schema.createTableIfNotExists('vacancy_dates', t => {
+    //   t.bigIncrements('id');
+    //   t.date('start_date').notNullable();
+    //   t.date('end_date').notNullable().defaultTo('2099-01-01');
+    //   t.string('vacancy_id', 11).notNullable().references('vacancies.id');
+    //   t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    //   t.timestamp('deleted_at');
+    // }),
 
-    knex.schema.createTableIfNotExists('applicant_avail_dates', t => {
-      t.bigIncrements('id');
-      t.date('date').notNullable();
-      t.string('applicant_id', 11).notNullable().references('users.id');
-      t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
-      t.timestamp('deleted_at');
-    }),
+    // knex.schema.createTableIfNotExists('applicant_avail_dates', t => {
+    //   t.bigIncrements('id');
+    //   t.date('date').notNullable();
+    //   t.string('applicant_id', 11).notNullable().references('users.id');
+    //   t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    //   t.timestamp('deleted_at');
+    // }),
 
     knex.schema.createTableIfNotExists('applications', t => {
       t.string('id', 11).notNullable().unique();
       t.string('rand_msg_num', 5).notNullable();
       t.timestamp('candidate_apply_date');
+      t.boolean('employer_viewed').notNullable().defaultTo(false);
       t.boolean('employer_deleted').notNullable().defaultTo(false);
       t.string('candidate_id', 11).notNullable().references('users.id');
       t.string('vacancy_id', 11).notNullable().references('vacancies.id');
       t.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      t.timestamp('updated_at');
       t.timestamp('deleted_at');
     })
 
@@ -85,8 +87,8 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('applications'),
-    knex.schema.dropTable('applicant_avail_dates'),
-    knex.schema.dropTable('vacancy_dates'),
+    // knex.schema.dropTable('applicant_avail_dates'),
+    // knex.schema.dropTable('vacancy_dates'),
     knex.schema.dropTable('vacancies'),
     knex.schema.dropTable('offices'),
     knex.schema.dropTable('users')

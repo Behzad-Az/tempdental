@@ -14,10 +14,10 @@ export function empDeletePosting(vacancyId) {
   };
 }
 
-export function empDecrementApplCount(vacancyId) {
+export function empDecrementApplCount(applId) {
   return {
     type: EMP_DECREMENT_POSTING_APPL_COUNT,
-    vacancyId
+    applId
   };
 }
 

@@ -34,7 +34,6 @@ export default class PostingModal extends Component {
       }
     })
     .catch(console.error);
-    // .then(toggleModal);
   }
 
   render() {

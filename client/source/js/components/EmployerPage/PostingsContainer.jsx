@@ -8,7 +8,6 @@ import PostingRow from './PostingRow.jsx';
   dataLoaded: state.empPostings.get('dataLoaded'),
   pageError: state.empPostings.get('pageError'),
   postings: state.empPostings.get('postings'),
-  applicantCounts: state.empPostings.get('applicantCounts'),
   selectedOffices: state.empControlBar.get('selectedOffices')
 }))
 
@@ -17,14 +16,12 @@ export default class PostingsContainer extends Component {
     dataLoaded: PropTypes.bool,
     pageError: PropTypes.bool,
     postings: PropTypes.array,
-    applicantCounts: PropTypes.array,
     selectedOffices: PropTypes.array,
     dispatch: PropTypes.func
   }
 
   constructor() {
     super();
-    this._findApplicantCount = this._findApplicantCount.bind(this);
     this._renderPostingRows = this._renderPostingRows.bind(this);
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
   }
@@ -33,27 +30,15 @@ export default class PostingsContainer extends Component {
     this.props.dispatch(empGetPostings());
   }
 
-  _findApplicantCount(posting) {
-    const { applicantCounts } = this.props;
-    const applicantCount = applicantCounts.find(count => count.vacancy_id === posting.id);
-    return applicantCount ? parseInt(applicantCount.count) : 0;
-  }
-
   _renderPostingRows() {
     const { selectedOffices, postings } = this.props;
     const filteredPostings = selectedOffices.length ?
-                             postings.filter(posting => selectedOffices.includes(posting.office_id)) :
-                             postings;
-    if (filteredPostings.length) {
-      return filteredPostings.map(posting =>
-        <PostingRow
-          key={posting.id}
-          posting={posting}
-          applicantCount={this._findApplicantCount(posting)} />
-      );
-    } else {
-      return <p className='has-text-centered'>No posting found.</p>;
-    }
+     postings.filter(posting => selectedOffices.includes(posting.office_id)) :
+     postings;
+
+    return filteredPostings.length ?
+      filteredPostings.map(posting => <PostingRow key={posting.id} posting={posting} /> ) :
+      <p className='has-text-centered'>No posting found.</p>;
   }
 
   _renderCompAfterData() {

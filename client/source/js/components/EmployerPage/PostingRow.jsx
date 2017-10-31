@@ -7,13 +7,15 @@ import { empGetApplList } from 'actions/EmployerPage/Applicants';
 import GoogleMapWindow from 'components/ApplicantPage/GoogleMapWindow.jsx';
 import moment from 'moment';
 
-@connect()
+@connect(state => ({
+  applCounts: state.empPostings.get('applCounts')
+}))
 
 export default class PostingRow extends Component {
 
   static propTypes = {
     posting: PropTypes.object,
-    applicantCount: PropTypes.number,
+    applCounts: PropTypes.array,
     dispatch: PropTypes.func
   }
 
@@ -46,7 +48,8 @@ export default class PostingRow extends Component {
   }
 
   _setUpPostingModal() {
-    const { start_date, end_date, title, description, type, anonymous, office_id, id } = this.props.posting;
+    const { posting, dispatch } = this.props;
+    const { start_date, end_date, title, description, type, anonymous, office_id, id } = posting;
     const modalValues = {
       action: '_edit',
       startDate: moment(start_date.slice(0, 10), 'YYYY-MM-DD'),
@@ -59,7 +62,7 @@ export default class PostingRow extends Component {
       postingId: id,
       modalName: 'postingModal'
     };
-    this.props.dispatch(empToggleModal(modalValues));
+    dispatch(empToggleModal(modalValues));
   }
 
   _setUpDeleteModal() {
@@ -72,19 +75,21 @@ export default class PostingRow extends Component {
   }
 
   _setUpApplicantListModal() {
-    const { id, title, officeName } = this.props.posting;
+    const { posting, dispatch } = this.props;
+    const { id, title, officeName } = posting;
     const modalValues = {
       vacancyId: id,
       title,
       officeName,
       modalName: 'applicantListModal'
     };
-    this.props.dispatch(empToggleModal(modalValues));
+    dispatch(empToggleModal(modalValues));
   }
 
   render() {
-    const { applicantCount } = this.props;
-    const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = this.props.posting;
+    const { applCounts, posting } = this.props;
+    const applCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id ? acc + 1 : acc, 0);
+    const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = posting;
     return (
       <div className='box posting-row'>
         <article className='media'>
@@ -142,8 +147,8 @@ export default class PostingRow extends Component {
               <button
                 className='button edit'
                 onClick={this._setUpApplicantListModal}
-                disabled={!applicantCount}>
-                <i className='fa fa-user' /> {applicantCount} Applicants
+                disabled={!applCount}>
+                <i className='fa fa-user' /> {applCount} Applicants
               </button>
             </div>
           </div>

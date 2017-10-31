@@ -12,7 +12,7 @@ const initialState = Map({
   dataLoaded: false,
   pageError: false,
   postings: [],
-  applicantCounts: [],
+  applCounts: [],
   asyncLoading: false,
   asyncError: null
 });
@@ -20,17 +20,15 @@ const initialState = Map({
 const actionsMap = {
   [EMP_DELETE_POSTING]: (state, action) => {
     const { vacancyId } = action;
-    const postings = vacancyId === '_all' ? [] : state.get('postings').filter(posting => posting.id !== vacancyId);
-    return state.merge(Map({ postings }));
+    return state.merge(Map({
+      postings: vacancyId === '_all' ? [] : state.get('postings').filter(posting => posting.id !== vacancyId)
+    }));
   },
 
   [EMP_DECREMENT_POSTING_APPL_COUNT]: (state, action) => {
-    let applicantCounts = [ ...state.get('applicantCounts') ];
-    const index = applicantCounts.findIndex(count => count.vacancy_id == action.vacancyId);
-    if (index > -1) {
-      applicantCounts[index].count = parseInt(applicantCounts[index].count) - 1;
-    }
-    return state.merge(Map({ applicantCounts }));
+    return state.merge(Map({
+      applCounts: state.get('applCounts').filter(appl => appl.id !== action.applId)
+    }));
   },
 
   [EMP_GET_POSTINGS_START]: (state, action) => {
@@ -48,14 +46,14 @@ const actionsMap = {
     }));
   },
   [EMP_GET_POSTINGS_SUCCESS]: (state, action) => {
-    const { postings, applicantCounts } = action.data;
+    const { postings, applCounts } = action.data;
     return state.merge(Map({
       asyncLoading: false,
       asyncError: null,
       pageError: false,
       dataLoaded: true,
       postings,
-      applicantCounts
+      applCounts
     }));
   },
 };

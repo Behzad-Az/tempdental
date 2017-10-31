@@ -1,0 +1,24 @@
+.login-page {
+  background-color: $default_bg_color; padding: 0 $default_margin; min-height: 100vh; overflow: auto;
+
+  .page-msg {
+    font-size: 16px; text-align: center;
+    .fa, .sr-only { font-size: 16px; padding: 3px }
+  }
+
+  .main-container {
+    padding: $top_margin $default_margin $default_margin 270px; width: $main_container_width; min-width: $default_min_container_width; display: inline-block;
+
+    .header {
+      background-color: $dark_blue; color: white; padding: 5px 10px; font-weight: bold; margin-bottom: $default_margin/2; overflow: auto;
+      .fa { float: right; }
+    }
+
+    .end-msg {
+      text-align: center; margin: $default_margin/2 0;
+      .button { background-color: $dark_blue; color: white; &:hover { background-color: darken($dark_blue, 10%); } }
+    }
+
+  }
+
+}

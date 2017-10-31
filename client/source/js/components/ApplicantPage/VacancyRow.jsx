@@ -79,7 +79,6 @@ export default class VacancyRow extends Component {
   }
 
   render() {
-
     const { alreadyApplied } = this.props;
     const { type, title, officeName, description, address, created_at, anonymous, lat, lng } = this.props.vacancy;
     const blurred = anonymous ? 'blurred' : '';

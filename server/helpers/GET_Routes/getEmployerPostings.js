@@ -27,23 +27,19 @@ const getEmployerPostings = (req, res, knex, user_id) => {
     .whereNull('offices.deleted_at')
     .orderBy('vacancies.created_at');
 
-  const getPostingApplicantCounts = postingIds => knex('applications')
-    .select('vacancy_id')
-    .count('id')
-    .whereNotNull('candidate_apply_date')
+  const getApplCounts = postingIds => knex('applications')
+    .select('id', 'vacancy_id', 'created_at')
+    .whereIn('vacancy_id', postingIds)
     .andWhere('employer_deleted', false)
-    .whereNull('deleted_at')
-    .groupBy('vacancy_id');
+    .whereNotNull('candidate_apply_date')
+    .whereNull('deleted_at');
 
   getPostings()
   .then(foundPostings => {
     postings = foundPostings;
-    return getPostingApplicantCounts(postings.map(posting => posting.id));
+    return getApplCounts(postings.map(posting => posting.id));
   })
-  .then(applicantCounts => {
-    console.log("i'm here 3: ", applicantCounts);
-    res.send({ postings, applicantCounts });
-  })
+  .then(applCounts => res.send({ postings, applCounts }))
   .catch(err => {
     console.error('Error inside getEmployerPostings.js: ', err);
     res.status(400).end();
