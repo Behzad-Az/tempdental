@@ -34,7 +34,6 @@ export default class ApplicantListModal extends Component {
     const { modalValues, dispatch } = this.props;
     if (nextProps.modals.applicantListModal && nextProps.modalValues.vacancyId !== modalValues.vacancyId) {
       dispatch(empGetApplList(nextProps.modalValues.vacancyId));
-      // dispatch(empPostingApplViewed(nextProps.modalValues.vacancyId));
     }
   }
 
@@ -72,9 +71,8 @@ export default class ApplicantListModal extends Component {
   }
 
   render() {
-    const { toggleModal, modals } = this.props;
     return (
-      <div className={modals.applicantListModal ? 'modal is-active' : 'modal'}>
+      <div className={this.props.modals.applicantListModal ? 'modal is-active' : 'modal'}>
         <div className='modal-background' onClick={this._toggleModal} />
         <div className='modal-card'>
           <header className='modal-card-head'>

@@ -132,7 +132,7 @@ export default class PostingRow extends Component {
                 </strong>
                 <br />
                 <strong>
-                  <Link to={`https://www.google.com/maps/place/${address.replace(/ /g,"+")}`} target='_blank'>
+                  <Link to={`https://www.google.com/maps/place/${address}`} target='_blank'>
                     @{officeName}
                   </Link>
                 </strong>
@@ -149,19 +149,25 @@ export default class PostingRow extends Component {
                 <br />
                 { this._renderDates() }
                 <hr />
-                <i className='fa fa-clock-o' /> 9AM to 5PM
+                <i className='fa fa-clock-o' />9AM to 5PM
                 <br />
-                <Link to={`https://www.google.com/maps/place/${address.replace(/ /g,"+")}`} target='_blank'>
-                  <i className='fa fa-map-marker' /> {address}
+                <Link to={`https://www.google.com/maps/place/${address}`} target='_blank'>
+                  <i className='fa fa-map-marker' />{address}
                 </Link>
                 <br />
+                { anonymous && <p><i className='fa fa-user-secret' />Anonymous Posting</p> }
                 Created { this._findTimePassed(created_at) }
-                { anonymous && <p>*This posting was listed anonymously</p> }
               </div>
+
+
+
+
+
+
             </div>
           </div>
           <div className='media-right'>
-            <div className='map-container '>
+            <div className='map-container'>
               <GoogleMapWindow lat={lat} lng={lng} />
             </div>
             <div className='btn-container'>
