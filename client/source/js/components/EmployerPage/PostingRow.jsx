@@ -161,23 +161,21 @@ export default class PostingRow extends Component {
             </div>
           </div>
           <div className='media-right'>
-            <div className='chert'>
-              <div className='map-container'>
-                <GoogleMapWindow lat={lat} lng={lng} />
-              </div>
-              <div className='btn-container'>
-                { this._renderApplicationBtn() }
-                <button
-                  className='button edit'
-                  onClick={this._setUpPostingModal}>
-                  <i className='fa fa-pencil' />Edit
-                </button>
-                <button
-                  className='button remove'
-                  onClick={this._setUpDeleteModal}>
-                  <i className='fa fa-trash' />Remove
-                </button>
-              </div>
+            <div className='map-container'>
+              <GoogleMapWindow lat={lat} lng={lng} />
+            </div>
+            <div className='btn-container'>
+              { this._renderApplicationBtn() }
+              <button
+                className='button edit'
+                onClick={this._setUpPostingModal}>
+                <i className='fa fa-pencil' />Edit
+              </button>
+              <button
+                className='button remove'
+                onClick={this._setUpDeleteModal}>
+                <i className='fa fa-trash' />Remove
+              </button>
             </div>
           </div>
         </article>

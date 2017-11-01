@@ -46,8 +46,17 @@
     display: block;
     .media-right {
       width: 100%; display: block; margin: 0; text-align: center;
-      .chert { display: inline-block; margin: auto; }
-      .map-container, .btn-container { display: inline-block; width: 129px; vertical-align: bottom; margin: $default_margin/4 $default_margin/4 $default_margin/4 0; }
+      // .chert { display: inline-block; margin: auto; }
+      .map-container, .btn-container { display: inline-block; width: 129px; vertical-align: top; margin: $default_margin/4 $default_margin/4 $default_margin/4 0; }
+    }
+  }
+
+  .applicant-page .main-container .vacancies-container .vacancy-row .media {
+    display: block;
+    .media-right {
+      width: 100%; display: block; margin: 0; text-align: center;
+      // .chert { display: inline-block; margin: auto; }
+      .map-container, .btn-container { display: inline-block; width: 129px; vertical-align: top; margin: $default_margin/4 $default_margin/4 $default_margin/4 0; .button { margin-top: $default_margin*2; } }
     }
   }
 

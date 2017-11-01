@@ -135,7 +135,7 @@ export default class VacancyRow extends Component {
             </div>
             <div className='btn-container'>
               <button
-                className={alreadyApplied ? 'button apply-btn is-warning' : 'button apply-btn'}
+                className={alreadyApplied ? 'button is-warning' : 'button'}
                 onClick={alreadyApplied ? this._handleWithdrawApplication : this._handleApply}
               >
                 {alreadyApplied ? 'Withdraw' : 'Apply Now!'}

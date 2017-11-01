@@ -20,7 +20,7 @@
         .media {
           .fa { font-size: 12px; vertical-align: baseline; padding-right: $default_margin/4; }
           .media-content {
-            .new-appl-notif { color: $bad_red; font-weight: bold; text-align: center; span { cursor: pointer; } }
+            .new-appl-notif { color: $bad_red; font-weight: bold; span { cursor: pointer; } }
             hr { margin: $default_margin/2 0; }
             a { color: $dark_blue; &:hover { color: $pumpkin; } }
           }
