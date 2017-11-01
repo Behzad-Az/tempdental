@@ -48,7 +48,7 @@ export default class PostingModal extends Component {
           </div>
           <div className='media-content'>
 
-            <button className='button delete is-dark' onClick={this._handleDeleteAppl} />
+            <button className='button delete is-dark' title='Discard Application' onClick={this._handleDeleteAppl} />
 
             <div className='content'>
               <p>

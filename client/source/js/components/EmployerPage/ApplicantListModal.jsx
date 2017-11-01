@@ -77,14 +77,13 @@ export default class ApplicantListModal extends Component {
         <div className='modal-card'>
           <header className='modal-card-head'>
             <p className='modal-card-title'>Applications</p>
-            <button className='delete' aria-label='close' onClick={this._toggleModal} />
+            <button className='delete' aria-label='close' title='Close' onClick={this._toggleModal} />
           </header>
           <section className='modal-card-body'>
             { this._renderCompAfterData() }
           </section>
           <footer className='modal-card-foot'>
-            <button className='button is-success' onClick={null}>Yo Yo</button>
-            <button className='button' onClick={this._toggleModal}>Never mind</button>
+            <button className='button' onClick={this._toggleModal}>Close</button>
           </footer>
         </div>
       </div>
