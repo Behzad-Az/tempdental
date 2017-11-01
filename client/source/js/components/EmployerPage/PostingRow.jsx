@@ -27,6 +27,7 @@ export default class PostingRow extends Component {
     this._setUpDeleteModal = this._setUpDeleteModal.bind(this);
     this._setUpApplicantListModal = this._setUpApplicantListModal.bind(this);
     this._renderApplicationBtn = this._renderApplicationBtn.bind(this);
+    this._renderNewApplNotif = this._renderNewApplNotif.bind(this);
   }
 
   _findDateInfo(date) {
@@ -89,15 +90,7 @@ export default class PostingRow extends Component {
   _renderApplicationBtn() {
     const { applCounts, posting } = this.props;
     const applCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id ? acc + 1 : acc, 0);
-    const newApplCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id && !appl.employer_viewed ? acc + 1 : acc, 0);
-    const applicantText = applCounts > 1 ? 'Applicants' : 'Applicant';
-    if (applCount && newApplCount) {
-      return (
-        <button className='button edit' onClick={this._setUpApplicantListModal}>
-          <i className='fa fa-user' /> {applCount} Appl. <i className='fa fa-circle' />{newApplCount} New
-        </button>
-      );
-    } else if (applCount) {
+    if (applCount) {
       return (
         <button className='button edit' onClick={this._setUpApplicantListModal}>
           <i className='fa fa-user' /> {applCount} {applCount > 1 ? 'Applicants' : 'Applicant'}
@@ -112,6 +105,19 @@ export default class PostingRow extends Component {
     }
   }
 
+  _renderNewApplNotif() {
+    const { applCounts, posting } = this.props;
+    const newApplCount = applCounts.reduce((acc, appl) => appl.vacancy_id === posting.id && !appl.employer_viewed ? acc + 1 : acc, 0);
+    if (newApplCount) {
+      return (
+        <p className='new-appl-notif'>
+          <span onClick={this._setUpApplicantListModal}><i className='fa fa-circle' />{newApplCount} {newApplCount > 1 ? 'New Applicants' : 'New Applicant'}</span>
+          <br />
+        </p>
+      );
+    }
+  }
+
   render() {
     const { type, officeName, address, description, created_at, title, lat, lng, anonymous } = this.props.posting;
     return (
@@ -119,6 +125,7 @@ export default class PostingRow extends Component {
         <article className='media'>
           <div className='media-content'>
             <div className='content'>
+              { this._renderNewApplNotif() }
               <div>
                 <strong>
                   [{type}] {title}

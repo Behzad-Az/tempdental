@@ -19,6 +19,11 @@
         background-color: white; padding: $default_margin/2; margin: 0 0 $default_margin/2 0; border: 1px darken($default_bg_color, 20%) solid; font-size: 14px;
         .media {
           .fa { font-size: 12px; vertical-align: baseline; padding-right: $default_margin/4; }
+          .media-content {
+            .new-appl-notif { color: $bad_red; font-weight: bold; text-align: center; span { cursor: pointer; } }
+            hr { margin: $default_margin/2 0; }
+            a { color: $dark_blue; &:hover { color: $pumpkin; } }
+          }
           .media-right {
             width: 129px;
             .map-container, .gm-style { overflow: hidden; border: #bbb solid 2px; border-radius: 50%; width: 100%; background-color: #fff; }
@@ -32,8 +37,6 @@
               }
             }
           }
-          hr { margin: $default_margin/2 0; }
-          a { color: $dark_blue; &:hover { color: $pumpkin; } }
         }
       }
     }
@@ -46,10 +49,6 @@
           margin: 0 $default_margin/4 $default_margin/2 $default_margin/4; width: 230px; height: 100%;
           .card-content {
             padding: 1.5rem 1.5rem 0.5rem 1.5rem;
-
-            // .card-image {
-            //   .map-container, .gm-style { overflow: hidden; border: #bbb solid 2px; border-radius: 50%; width: 124px; height: 124px; background-color: #fff; margin: auto; }
-            // }
             .content {
               max-height: 300px; overflow: scroll;
               .name { font-weight: bold; margin: 10px 0; }
@@ -77,6 +76,7 @@
         .media-left { border-radius: 50%; overflow: hidden; }
         .media-content{
           .button.delete { float: right; }
+          .content .is-italic { font-style: italic; }
           .btns-row {
             display: flex; flex-wrap: wrap; flex-direction: row;
             .button { margin-right: $default_margin/4; margin-bottom: $default_margin/4; &:last-child { margin-bottom: 0; } }

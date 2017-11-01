@@ -2,6 +2,7 @@ import api from 'api/EmployerPage';
 
 export const EMP_DELETE_POSTING = 'EMP_DELETE_POSTING';
 export const EMP_DECREMENT_POSTING_APPL_COUNT = 'EMP_DECREMENT_POSTING_APPL_COUNT';
+export const EMP_POSTING_APPL_VIEWED = 'EMP_POSTING_APPL_VIEWED';
 
 export const EMP_GET_POSTINGS_START = 'EMP_GET_POSTINGS_START';
 export const EMP_GET_POSTINGS_ERROR = 'EMP_GET_POSTINGS_ERROR';
@@ -18,6 +19,13 @@ export function empDecrementApplCount(applId) {
   return {
     type: EMP_DECREMENT_POSTING_APPL_COUNT,
     applId
+  };
+}
+
+export function empPostingApplViewed(vacancyId) {
+  return {
+    type: EMP_POSTING_APPL_VIEWED,
+    vacancyId
   };
 }
 

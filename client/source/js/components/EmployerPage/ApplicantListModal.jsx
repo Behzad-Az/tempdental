@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { empGetApplList } from 'actions/EmployerPage/Applications';
+import { empPostingApplViewed } from 'actions/EmployerPage/Postings';
 import ApplicantRow from 'components/EmployerPage/ApplicantRow.jsx';
 
 @connect(state => ({
@@ -26,12 +27,14 @@ export default class ApplicantListModal extends Component {
   constructor() {
     super();
     this._renderCompAfterData = this._renderCompAfterData.bind(this);
+    this._toggleModal = this._toggleModal.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { modalValues, dispatch } = this.props;
     if (nextProps.modals.applicantListModal && nextProps.modalValues.vacancyId !== modalValues.vacancyId) {
       dispatch(empGetApplList(nextProps.modalValues.vacancyId));
+      // dispatch(empPostingApplViewed(nextProps.modalValues.vacancyId));
     }
   }
 
@@ -62,22 +65,28 @@ export default class ApplicantListModal extends Component {
     }
   }
 
+  _toggleModal() {
+    const { toggleModal, modalValues, dispatch } = this.props;
+    dispatch(empPostingApplViewed(modalValues.vacancyId));
+    toggleModal();
+  }
+
   render() {
     const { toggleModal, modals } = this.props;
     return (
       <div className={modals.applicantListModal ? 'modal is-active' : 'modal'}>
-        <div className='modal-background' onClick={toggleModal} />
+        <div className='modal-background' onClick={this._toggleModal} />
         <div className='modal-card'>
           <header className='modal-card-head'>
             <p className='modal-card-title'>Applications</p>
-            <button className='delete' aria-label='close' onClick={toggleModal} />
+            <button className='delete' aria-label='close' onClick={this._toggleModal} />
           </header>
           <section className='modal-card-body'>
             { this._renderCompAfterData() }
           </section>
           <footer className='modal-card-foot'>
             <button className='button is-success' onClick={null}>Yo Yo</button>
-            <button className='button' onClick={toggleModal}>Never mind</button>
+            <button className='button' onClick={this._toggleModal}>Never mind</button>
           </footer>
         </div>
       </div>

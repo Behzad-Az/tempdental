@@ -37,7 +37,7 @@ export default class PostingModal extends Component {
   }
 
   render() {
-    const { name, prefix, email, phone, intro } = this.props.appl;
+    const { name, prefix, email, phone, intro, employer_viewed } = this.props.appl;
     return (
       <div className='box applicantion-row'>
         <article className='media'>
@@ -53,7 +53,7 @@ export default class PostingModal extends Component {
             <div className='content'>
               <p>
                 <strong>
-                  {prefix} {name}
+                  {prefix} {name} { !employer_viewed && <span className='is-italic'> - New!</span>}
                 </strong>
                 <br />
                 {intro}
